@@ -1,5 +1,5 @@
 # dotfiles
-dotfiles managed with rcm
+dotfiles managed with [rcm](https://github.com/thoughtbot/rcm)
 
 ## Installation
 1. `xcode-select --install`
