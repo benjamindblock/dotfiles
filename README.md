@@ -9,6 +9,7 @@ dotfiles managed with rcm
 5. `:PlugInstall`
 6. `git config --global user.name [name]`
 7. `git config --global user.email [email]`
+8. Launch `Hammerspoon`
 
 ## Updates
 1. `cd $HOME/.dotfiles`
