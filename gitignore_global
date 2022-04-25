@@ -1,0 +1,12 @@
+todo.txt
+.DS_Store
+.bundle
+.env
+.git/
+/log
+/node_modules/
+/tmp
+/vendor
+log/*.log
+tmp/**/*
+/tags
