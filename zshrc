@@ -16,7 +16,6 @@ export LSCOLORS=ExGxBxDxCxEgEdxbxgxcxd
 
 # A few custom commands
 alias ll="ls -Ahltr"
-alias rm="rm -i"
 
 # Open up source files easily
 alias todo="vi ~/Documents/todo.txt"
