@@ -8,5 +8,15 @@ dotfiles managed with rcm
 4. `vi .vimrc`
 5. `:PlugInstall`
 
+## Updates
+1. `cd $HOME/.dotfiles`
+2. `git checkout main`
+3. `git pull origin main`
+4. `rcup -v`
+5. Optional: `$HOME/.dotfiles/setup`
+
 ## TODO
 - How to manage work VS. personal git users with `gitconfig` file? Link to a private file?
+- Add fonts for `kitty` to use
+- Add inform6 compiler installation
+- Add additional interactive fiction tools
