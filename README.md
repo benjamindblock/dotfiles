@@ -20,3 +20,5 @@ dotfiles managed with [rcm](https://github.com/thoughtbot/rcm)
 
 ## TODO
 - Add additional interactive fiction tools
+- Logitech options
+- Karabiner JSON doesn't seem to be working

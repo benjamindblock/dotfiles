@@ -61,6 +61,10 @@ let g:ale_list_window_size = 5
 " Use the line number column for ALE signs
 set signcolumn=number
 
+" Custom filetype for Inform6 with comment type defined
+autocmd BufNewFile,BufRead *.inf set filetype=inform
+autocmd FileType inform setlocal commentstring=!\ %s
+
 " Background color fix for Kitty
 let &t_ut=''
 
