@@ -7,6 +7,8 @@ dotfiles managed with rcm
 3. `$HOME/.dotfiles/setup`
 4. `vi .vimrc`
 5. `:PlugInstall`
+6. `git config --global user.name [name]`
+7. `git config --global user.email [email]`
 
 ## Updates
 1. `cd $HOME/.dotfiles`
@@ -16,7 +18,4 @@ dotfiles managed with rcm
 5. Optional: `$HOME/.dotfiles/setup`
 
 ## TODO
-- How to manage work VS. personal git users with `gitconfig` file? Link to a private file?
-- Add fonts for `kitty` to use
-- Add inform6 compiler installation
 - Add additional interactive fiction tools
