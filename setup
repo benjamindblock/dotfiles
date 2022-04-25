@@ -16,6 +16,22 @@ env RCRC=$HOME/.dotfiles/rcrc rcup
 # Validate previous step
 rcup
 
+# Run OSX customizations
+./osx
+
 # Install all brew formulae and casks
 cd $HOME/.config
 brew bundle
+
+# Source shell
+cd $HOME
+source ~/.zshrc
+
+# Install Inform6 compiler
+git clone git@gitlab.com:DavidGriffith/inform6unix.git
+cd inform6unix
+make submodules
+make
+sudo make install
+cd ..
+rm -d inform6unix
