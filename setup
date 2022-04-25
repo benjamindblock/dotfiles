@@ -1,4 +1,21 @@
 #!/usr/bin/env bash
 
+# Install Homebrew
+curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh
+
+# Install vim-plug
 curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
     https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+
+# Install RCM for dotfiles management
+brew install rcm
+
+# Create dotfiles in $HOME with RCM
+env RCRC=$HOME/.dotfiles/rcrc rcup
+
+# Validate previous step
+rcup
+
+# Install all brew formulae and casks
+cd $HOME/.config
+brew bundle
