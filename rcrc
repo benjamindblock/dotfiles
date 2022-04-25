@@ -1,0 +1,2 @@
+UNDOTTED="osx Brewfile"
+EXCLUDES="*.md LICENSE"
