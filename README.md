@@ -17,3 +17,6 @@ dotfiles managed with rcm
 
 ## TODO
 - How to manage work VS. personal git users with `gitconfig` file? Link to a private file?
+- Add fonts for `kitty` to use
+- Add inform6 compiler installation
+- Add additional interactive fiction tools
