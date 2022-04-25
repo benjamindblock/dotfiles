@@ -13,7 +13,7 @@ dotfiles managed with rcm
 2. `git checkout main`
 3. `git pull origin main`
 4. `rcup -v`
-5. [Optional: `$HOME/.dotfiles/setup`]
+5. Optional: `$HOME/.dotfiles/setup`
 
 ## TODO
 - How to manage work VS. personal git users with `gitconfig` file? Link to a private file?
