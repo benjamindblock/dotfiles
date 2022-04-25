@@ -1,0 +1,76 @@
+# # Installation dependencies and settings
+# -----------------------------------------------------------------------------
+cask_args appdir: "/Applications"
+
+tap "homebrew/bundle"
+tap "homebrew/cask"
+tap "homebrew/cask-fonts"
+tap "homebrew/core"
+tap "homebrew/services"
+tap "heroku/brew"
+
+# Programming languages
+# -----------------------------------------------------------------------------
+brew "node"
+
+# Programming language managers
+# -----------------------------------------------------------------------------
+brew "nodenv"
+brew "pipenv"
+brew "pyenv"
+brew "rbenv"
+
+# Database
+# -----------------------------------------------------------------------------
+brew "postgis"
+brew "postgresql"
+
+# CLI Tools or other end-use software
+# -----------------------------------------------------------------------------
+brew "ack"
+brew "awscli"
+brew "ffmpeg"
+brew "freetds"
+brew "git"
+brew "gron"
+brew "heroku"
+brew "htop"
+brew "irssi"
+brew "rcm"
+brew "redis"
+brew "sdvc"
+brew "shellcheck"
+brew "vim"
+brew "wget"
+brew "yarn"
+brew "youtube-dl"
+brew "zsh-syntax-highlighting"
+
+# Terminal games & MUD
+# -----------------------------------------------------------------------------
+brew "brogue"
+brew "stone-soup"
+brew "tintin"
+
+# Interactive fiction
+# -----------------------------------------------------------------------------
+brew "frobtads"
+brew "frotz"
+brew "glulxe"
+
+# Cask applications
+# -----------------------------------------------------------------------------
+cask "audacity"
+cask "chromedriver"
+cask "flux"
+cask "google-chrome"
+cask "hammerspoon"
+cask "karabiner-elements"
+cask "kitty"
+cask "nordvpn"
+cask "postico"
+cask "slack"
+cask "spotify"
+cask "transmission"
+cask "vlc"
+cask "zoom"
