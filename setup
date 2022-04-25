@@ -34,3 +34,6 @@ make
 sudo make install
 cd ..
 rm -r inform6unix
+
+# Install tamzen font
+cp $HOME/.config/fonts/* $HOME/Library/Fonts/
