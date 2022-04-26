@@ -32,7 +32,7 @@ call plug#end()
 
 " Theme
 set termguicolors
-colorscheme freyeday
+colorscheme bdb_light
 " colorscheme bdb
 
 " Highlight the current line

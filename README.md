@@ -16,7 +16,12 @@ dotfiles managed with [rcm](https://github.com/thoughtbot/rcm)
 2. `git checkout main`
 3. `git pull origin main`
 4. `rcup -v`
-5. Optional: `$HOME/.dotfiles/setup`
+5. source ~/.zshrc
+6. `vi .vimrc`
+7. `:PlugInstall`
+8. `:PlugClean`
+9. Reload kitty
+10. Optional: `$HOME/.dotfiles/setup`
 
 ## TODO
 - Add additional interactive fiction tools

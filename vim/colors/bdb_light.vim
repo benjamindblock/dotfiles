@@ -1,4 +1,4 @@
-" Name:         freyeday
+" Name:         bdb_light (Based on freyeday)
 " Description:  Light vim colorscheme for the Friday and other *days.
 " Author:       Maxim Kim <habamax@gmail.com>
 " Maintainer:   Maxim Kim <habamax@gmail.com>
@@ -37,7 +37,7 @@ hi LineNr guifg=#717171 guibg=#E4E4E4 gui=NONE cterm=NONE
 hi FoldColumn guifg=#8a8a8a guibg=#ffffff gui=NONE cterm=NONE
 hi CursorLine guifg=NONE guibg=#dadada gui=NONE cterm=NONE
 hi CursorColumn guifg=NONE guibg=#dadada gui=NONE cterm=NONE
-hi CursorLineNr guifg=NONE guibg=#dadada gui=bold cterm=bold
+hi CursorLineNr guifg=#D75E5F guibg=#dadada gui=bold cterm=bold
 hi QuickFixLine guifg=NONE guibg=#dadada gui=NONE cterm=NONE
 hi SignColumn guifg=NONE guibg=NONE gui=NONE ctermfg=NONE ctermbg=NONE cterm=NONE
 hi Underlined guifg=#af5f00 guibg=NONE gui=underline cterm=underline
@@ -64,16 +64,27 @@ hi SpellCap guifg=#d75f5f guibg=NONE guisp=#d75f5f gui=undercurl cterm=underline
 hi SpellLocal guifg=#af5f00 guibg=NONE guisp=#af5f00 gui=undercurl cterm=underline
 hi SpellRare guifg=#d7af5f guibg=NONE guisp=#d7af5f gui=undercurl cterm=underline
 hi Comment guifg=#8a8a8a guibg=NONE gui=NONE cterm=NONE
-hi Identifier guifg=#5f5faf guibg=NONE gui=NONE cterm=NONE
+hi Identifier guifg=#000000 guibg=NONE gui=NONE cterm=NONE
 hi Function guifg=#000000 guibg=NONE gui=NONE cterm=NONE
-hi Statement guifg=#005faf guibg=NONE gui=NONE cterm=NONE
-hi Constant guifg=#d75f5f guibg=NONE gui=NONE cterm=NONE
+hi Statement guifg=#000000 guibg=NONE gui=NONE cterm=NONE
+hi Constant guifg=#000000 guibg=NONE gui=NONE cterm=NONE
 hi String guifg=#008700 guibg=NONE gui=NONE cterm=NONE
 hi Character guifg=#008700 guibg=NONE gui=NONE cterm=NONE
 hi PreProc guifg=#000000 guibg=NONE gui=NONE cterm=NONE
-hi Type guifg=#0087d7 guibg=NONE gui=NONE cterm=NONE
-hi Special guifg=#5f8700 guibg=NONE gui=NONE cterm=NONE
-hi Directory guifg=#000000 guibg=NONE gui=bold cterm=bold
+hi Type guifg=#000000 guibg=NONE gui=NONE cterm=NONE
+hi Special guifg=#000000 guibg=NONE gui=NONE cterm=NONE
+hi Directory guifg=#5F5FAF guibg=NONE gui=bold cterm=bold
 hi Conceal guifg=#8a8a8a guibg=NONE gui=NONE cterm=NONE
 hi Ignore guifg=NONE guibg=NONE gui=NONE ctermfg=NONE ctermbg=NONE cterm=NONE
 hi Title guifg=#000000 guibg=NONE gui=bold cterm=bold
+
+hi ALEError guifg         = #000000 guibg=NONE cterm=underline
+hi! link ALEStyleError       ALEError
+hi! link ALEWarning          ALEError
+hi! link ALEStyleWarning     ALEError
+hi! link ALEInfo             ALEError
+hi ALEErrorSign guifg     = #F60000 guibg=#e4e4e4 cterm=bold
+hi! link ALEStyleErrorSign   ALEErrorSign
+hi ALEWarningSign guifg   = #2BAB00 guibg=#e4e4e4 cterm=bold
+hi! link ALEStyleWarningSign ALEWarningSign
+hi! link ALEInfoSign         ALEWarningSign
