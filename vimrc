@@ -34,7 +34,8 @@ call plug#end()
 
 " Theme
 set termguicolors
-colorscheme bdb
+colorscheme freyeday
+" colorscheme bdb
 
 " Highlight the current line
 set cursorline

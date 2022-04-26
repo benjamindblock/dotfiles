@@ -5,10 +5,10 @@ parse_git_branch() {
 setopt PROMPT_SUBST
 
 # PROMPT for dark themes, no bold
-PROMPT='%F{253}%6~%F{105}%B$(parse_git_branch) %b%F{253}\$ '
+# PROMPT='%F{253}%6~%F{105}%B$(parse_git_branch) %b%F{253}\$ '
 
 # PROMPT for light themes, no bold
-# PROMPT='%F{0}%3~%F{27}%B$(parse_git_branch) %b%F{0}\$ '
+PROMPT='%F{0}%3~%F{27}%B$(parse_git_branch) %b%F{0}\$ '
 
 # Colored prompt
 export CLICOLOR=1
