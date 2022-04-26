@@ -14,6 +14,8 @@ Plug 'https://github.com/tpope/vim-commentary.git'
 Plug 'https://github.com/tpope/vim-endwise.git'
 " TPope Vinegar (netrw improvements)
 Plug 'https://github.com/tpope/vim-vinegar.git'
+" TPope Surround
+Plug 'https://github.com/tpope/vim-surround.git'
 " Command-T
 Plug 'wincent/command-t', {
   \   'do': 'cd ruby/command-t/ext/command-t && ruby extconf.rb && make'
@@ -22,13 +24,9 @@ Plug 'wincent/command-t', {
 Plug 'https://github.com/dense-analysis/ale.git'
 " Iceberg
 Plug 'https://github.com/cocopon/iceberg.vim.git'
-" Microtone
-Plug 'https://github.com/rstacruz/vim-microtone.git'
-" Raider
-Plug 'https://github.com/axvr/raider.vim'
-" Goyo
+" Goyo for prose writing
 Plug 'https://github.com/junegunn/goyo.vim.git'
-" Vim-Pencil
+" Vim-Pencil for prose writing
 Plug 'https://github.com/preservim/vim-pencil.git'
 call plug#end()
 
