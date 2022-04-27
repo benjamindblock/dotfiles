@@ -33,9 +33,9 @@ hi SpecialKey guifg=#bcbcbc guibg=NONE gui=NONE cterm=NONE
 hi Folded guifg=#8a8a8a guibg=#ffffff gui=NONE cterm=NONE
 hi Visual guifg=#eeeeee guibg=#005faf gui=NONE cterm=NONE
 hi VisualNOS guifg=#eeeeee guibg=#005faf gui=NONE cterm=NONE
-hi LineNr guifg=#000000 guibg=#E4E4E4 gui=NONE cterm=NONE
+hi LineNr guifg=#ffffff guibg=#8A8A8A gui=NONE cterm=NONE
 hi FoldColumn guifg=#8a8a8a guibg=#ffffff gui=NONE cterm=NONE
-hi CursorLine guifg=NONE guibg=#dadada gui=NONE cterm=NONE
+hi CursorLine guifg=NONE guibg=#E1DDCE gui=NONE cterm=NONE
 hi CursorColumn guifg=NONE guibg=#dadada gui=NONE cterm=NONE
 hi CursorLineNr guifg=#D75E5F guibg=#dadada gui=bold cterm=bold
 hi QuickFixLine guifg=NONE guibg=#dadada gui=NONE cterm=NONE
@@ -47,7 +47,7 @@ hi ModeMsg guifg=#000000 guibg=#d7af5f gui=NONE cterm=NONE
 hi WarningMsg guifg=#af5f00 guibg=NONE gui=NONE cterm=NONE
 hi MoreMsg guifg=#005faf guibg=NONE gui=NONE cterm=NONE
 hi Question guifg=#af5f00 guibg=NONE gui=NONE cterm=NONE
-hi Todo guifg=#000000 guibg=#eeeeee gui=bold cterm=bold
+hi Todo guifg=#000000 guibg=#f2eede gui=bold cterm=bold
 hi MatchParen guifg=#eeeeee guibg=#0087d7 gui=NONE cterm=NONE
 hi Search guifg=#eeeeee guibg=#5f8700 gui=NONE cterm=NONE
 hi IncSearch guifg=#000000 guibg=#d7af5f gui=NONE cterm=NONE

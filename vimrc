@@ -32,8 +32,7 @@ call plug#end()
 
 " Theme
 set termguicolors
-colorscheme bdb_paper
-" colorscheme bdb
+colorscheme bdb_light
 
 " Highlight the current line
 set cursorline
