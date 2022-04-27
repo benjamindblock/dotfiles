@@ -7,9 +7,18 @@ dotfiles managed with [rcm](https://github.com/thoughtbot/rcm)
 3. `$HOME/.dotfiles/setup`
 4. `vi $HOME/.vimrc`
 5. `:PlugInstall`
-6. `git config --global user.name [name]`
-7. `git config --global user.email [email]`
-8. Launch `Hammerspoon.app`, select: `keep in menu`, `always launch at startup`
+6. To specify Git email addess: add a file `.gitconfig` to `~/Projects` and list:
+```
+[user]
+  email = example@email.com
+```
+By default these will be the credentials in the root `.gitconfig`:
+```
+[user]
+  name = Ben Block
+  email = benjamindblock@gmail.com
+```
+7. Launch `Hammerspoon.app`, select: `keep in menu`, `always launch at startup`
 
 ## Updates
 1. `cd $HOME/.dotfiles`

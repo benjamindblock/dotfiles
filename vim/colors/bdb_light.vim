@@ -73,7 +73,7 @@ hi Character          guifg=#216609 guibg=NONE gui=NONE cterm=NONE
 hi PreProc            guifg=#000000 guibg=NONE gui=NONE cterm=NONE
 hi Type               guifg=#000000 guibg=NONE gui=NONE cterm=NONE
 hi Special            guifg=#000000 guibg=NONE gui=NONE cterm=NONE
-hi Directory          guifg=#5F5FAF guibg=NONE gui=bold cterm=bold
+hi Directory          guifg=#0035EA guibg=NONE gui=bold cterm=bold
 hi Conceal            guifg=#8a8a8a guibg=NONE gui=NONE cterm=NONE
 hi Ignore             guifg=NONE guibg=NONE gui=NONE ctermfg=NONE ctermbg=NONE cterm=NONE
 hi Title              guifg=#000000 guibg=NONE gui=bold cterm=bold

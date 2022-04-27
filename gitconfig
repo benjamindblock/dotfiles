@@ -1,3 +1,8 @@
+[user]
+	name = Ben Block
+	email = benjamindblock@gmail.com
+[includeIf "gitdir:~/Projects/"]
+  path = ~/Projects/.gitconfig
 [color]
 	ui = true
 [alias]
@@ -16,6 +21,3 @@
   rb = !git branch -v --sort=committerdate | tail -30
 [core]
 	excludesfile = /Users/benjaminblock/.gitignore_global
-[user]
-	name = Ben Block
-	email = benjamindblock@gmail.com
