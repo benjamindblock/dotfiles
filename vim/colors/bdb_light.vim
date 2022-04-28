@@ -12,7 +12,7 @@ set background=light
 hi clear
 let g:colors_name = 'bdb_light'
 
-hi Normal             guifg=#000000 guibg=#eeeeee gui=NONE cterm=NONE
+hi Normal             guifg=#000000 guibg=#f7f7f7 gui=NONE cterm=NONE
 hi EndOfBuffer        guifg=#bcbcbc guibg=NONE gui=NONE cterm=NONE
 hi Statusline         guifg=#eeeeee guibg=#5f8787 gui=bold cterm=bold
 hi StatuslineNC       guifg=#000000 guibg=#bcbcbc gui=NONE cterm=NONE
@@ -47,7 +47,7 @@ hi ModeMsg            guifg=#000000 guibg=#d7af5f gui=NONE cterm=NONE
 hi WarningMsg         guifg=#af5f00 guibg=NONE gui=NONE cterm=NONE
 hi MoreMsg            guifg=#005faf guibg=NONE gui=NONE cterm=NONE
 hi Question           guifg=#af5f00 guibg=NONE gui=NONE cterm=NONE
-hi Todo               guifg=#000000 guibg=#eeeeee gui=bold cterm=bold
+hi Todo               guifg=#000000 guibg=#f7f7f7 gui=bold cterm=bold
 hi MatchParen         guifg=#eeeeee guibg=#0087d7 gui=NONE cterm=NONE
 hi Search             guifg=#eeeeee guibg=#4E84FF gui=bold cterm=bold
 hi IncSearch          guifg=#000000 guibg=#FCAD38 gui=NONE cterm=NONE

@@ -8,7 +8,7 @@ setopt PROMPT_SUBST
 # PROMPT='%F{253}%6~%F{105}%B$(parse_git_branch) %b%F{253}\$ '
 
 # PROMPT for light themes, no bold
-PROMPT='%F{0}%3~%F{27}%B$(parse_git_branch) %b%F{0}\$ '
+PROMPT='%F{16}%3~%F{27}%B$(parse_git_branch) %b%F{16}\$ '
 
 # Colored prompt
 export CLICOLOR=1
