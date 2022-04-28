@@ -37,7 +37,7 @@ hi LineNr             guifg=#ffffff guibg=#8A8A8A gui=NONE cterm=NONE
 hi FoldColumn         guifg=#8a8a8a guibg=#ffffff gui=NONE cterm=NONE
 hi CursorLine         guifg=NONE guibg=#dddddd gui=NONE cterm=NONE
 hi CursorColumn       guifg=NONE guibg=#dadada gui=NONE cterm=NONE
-hi CursorLineNr       guifg=#E07223 guibg=#dddddd gui=bold cterm=bold
+hi CursorLineNr       guifg=#000000 guibg=#dddddd gui=bold cterm=bold
 hi QuickFixLine       guifg=NONE guibg=#dadada gui=NONE cterm=NONE
 hi SignColumn         guifg=NONE guibg=NONE gui=NONE ctermfg=NONE ctermbg=NONE cterm=NONE
 hi Underlined         guifg=#af5f00 guibg=NONE gui=underline cterm=underline
@@ -48,9 +48,9 @@ hi WarningMsg         guifg=#af5f00 guibg=NONE gui=NONE cterm=NONE
 hi MoreMsg            guifg=#005faf guibg=NONE gui=NONE cterm=NONE
 hi Question           guifg=#af5f00 guibg=NONE gui=NONE cterm=NONE
 hi Todo               guifg=#000000 guibg=#f7f7f7 gui=bold cterm=bold
-hi MatchParen         guifg=#eeeeee guibg=#0087d7 gui=NONE cterm=NONE
+hi MatchParen         guifg=#33374c guibg=#bec0c9 gui=bold cterm=bold 
 hi Search             guifg=#eeeeee guibg=#4B74D2 gui=bold cterm=bold
-hi IncSearch          guifg=#000000 guibg=#EBB600 gui=NONE cterm=NONE
+hi IncSearch          guifg=#000000 guibg=#EAA088 gui=NONE cterm=NONE
 hi WildMenu           guifg=#000000 guibg=#d7af5f gui=NONE cterm=NONE
 hi ColorColumn        guifg=NONE guibg=#ffffff gui=NONE cterm=NONE
 hi Cursor             guifg=#eeeeee guibg=#1c1c1c gui=NONE cterm=NONE
@@ -68,7 +68,7 @@ hi Identifier         guifg=#000000 guibg=NONE gui=NONE cterm=NONE
 hi Function           guifg=#000000 guibg=NONE gui=NONE cterm=NONE
 hi Statement          guifg=#000000 guibg=NONE gui=NONE cterm=NONE
 hi Constant           guifg=#000000 guibg=NONE gui=NONE cterm=NONE
-hi String             guifg=#216609 guibg=NONE gui=NONE cterm=NONE
+hi String             guifg=#777777 guibg=NONE gui=NONE cterm=NONE
 hi Character          guifg=#216609 guibg=NONE gui=NONE cterm=NONE
 hi PreProc            guifg=#000000 guibg=NONE gui=NONE cterm=NONE
 hi Type               guifg=#000000 guibg=NONE gui=NONE cterm=NONE
