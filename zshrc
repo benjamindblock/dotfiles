@@ -5,10 +5,10 @@ parse_git_branch() {
 setopt PROMPT_SUBST
 
 # PROMPT for dark themes, no bold
-# PROMPT='%F{253}%6~%F{105}%B$(parse_git_branch) %b%F{253}\$ '
+PROMPT='%F{253}%6~%F{105}%B$(parse_git_branch) %b%F{253}\$ '
 
 # PROMPT for light themes, no bold
-PROMPT='%F{16}%3~%F{59}%B$(parse_git_branch) %b%F{16}\$ '
+# PROMPT='%F{16}%3~%F{59}%B$(parse_git_branch) %b%F{16}\$ '
 
 # Colored prompt
 export CLICOLOR=1
@@ -45,3 +45,5 @@ export EDITOR=vi
 # Setting a custom StarDict path
 export STARDICT_DATA_DIR=~/usr/share/stardict/dic
 export ZCODE_PATH=/usr/local/share/zcode:/usr/local/share/zcode/infocom:$HOME/.zcode
+
+alias irssi="irssi --config=<((cat ~/.irssi/chatnets && cat ~/.irssi/config))"

@@ -19,6 +19,17 @@ By default these will be the credentials in the root `.gitconfig`:
   email = benjamindblock@gmail.com
 ```
 7. Launch `Hammerspoon.app`, select: `keep in menu`, `always launch at startup`
+8. Add a file `.irssi/chatnets` with your credentials:
+```
+chatnets = {
+  libera = {
+    type = "IRC";
+    nick = "<nick>";
+    realname = "<realname>";
+    autosendcmd = "/^msg NickServ IDENTIFY <nick> <password>; wait 2000";
+  };
+};
+```
 
 ## Updates
 1. `cd $HOME/.dotfiles`
