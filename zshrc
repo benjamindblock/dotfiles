@@ -23,6 +23,9 @@ alias kc="vi ~/.config/kitty/kitty.conf"
 alias vimrc="vi ~/.vimrc"
 alias zshrc="vi ~/.zshrc"
 
+# View images in kitty
+alias icat="kitty +kitten icat --align=left"
+
 source /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 autoload -Uz compinit && compinit
 
