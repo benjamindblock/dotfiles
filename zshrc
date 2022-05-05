@@ -43,10 +43,12 @@ export EDITOR=vi
 
 # Fix for Command-T issue
 # Ref: https://github.com/wincent/command-t/issues/341
-# export PATH="/usr/local/opt/ruby/bin/:$PATH"
+export PATH="/usr/local/opt/ruby/bin/:$PATH"
 
 # Setting a custom StarDict path
 export STARDICT_DATA_DIR=~/usr/share/stardict/dic
 export ZCODE_PATH=/usr/local/share/zcode:/usr/local/share/zcode/infocom:$HOME/.zcode
 
 alias irssi="irssi --config=<((cat ~/.irssi/chatnets && cat ~/.irssi/config))"
+
+export KITTY_LISTEN_ON=unix:/tmp/mykitty-$PPID
