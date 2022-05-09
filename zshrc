@@ -43,7 +43,7 @@ export EDITOR=vi
 
 # Fix for Command-T issue
 # Ref: https://github.com/wincent/command-t/issues/341
-export PATH="/usr/local/opt/ruby/bin/:$PATH"
+# export PATH="/usr/local/opt/ruby/bin/:$PATH"
 
 # Setting a custom StarDict path
 export STARDICT_DATA_DIR=~/usr/share/stardict/dic

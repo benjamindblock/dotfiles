@@ -34,7 +34,7 @@ call plug#end()
 
 " Theme
 set termguicolors
-colorscheme bdb
+colorscheme bdb_blue
 
 " Highlight the current line
 set cursorline
@@ -269,7 +269,7 @@ augroup END
 let w:ProseModeOn = 0
 
 function EnableProseMode()
-	setlocal spell spelllang=en_us
+  setlocal nocursorline nospell
 	Goyo 66
 	SoftPencil
 	echo "Prose Mode On"
