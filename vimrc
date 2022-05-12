@@ -30,6 +30,8 @@ Plug 'https://github.com/cocopon/iceberg.vim.git'
 Plug 'https://github.com/junegunn/goyo.vim.git'
 " Vim-Pencil for prose writing
 Plug 'https://github.com/preservim/vim-pencil.git'
+" VOoM Outliner
+Plug 'https://github.com/vim-voom/VOoM.git'
 call plug#end()
 
 " Theme
@@ -44,6 +46,12 @@ set title
 
 " Display line numbers
 set number
+
+" Easily copy and paste in an out of Vim
+set clipboard=unnamed
+
+" Change split size with the mouse
+set mouse=n
 
 " Ale linter settings
 let g:ale_linters = {
@@ -154,28 +162,6 @@ endif
 :let g:ruby_indent_block_style = 'do'
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" SHOW ALE ERRORS IN STATUS LINE
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-function! LinterStatus() abort
-  let l:counts = ale#statusline#Count(bufnr(''))
-
-  let l:all_errors = l:counts.error + l:counts.style_error
-  let l:all_non_errors = l:counts.total - l:all_errors
-
-  return l:counts.total == 0 ? 'ALE: No issues ' : printf(
-  \   'ALE: %dW %dE ',
-  \   all_non_errors,
-  \   all_errors
-  \)
-endfunction
-
-set statusline=
-set statusline+=%m
-set statusline+=\ %f
-set statusline+=%=
-set statusline+=\ %{LinterStatus()}
-
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " SWITCH BETWEEN TEST AND PRODUCTION CODE
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 function! OpenTestAlternate()
@@ -266,6 +252,9 @@ augroup vimrcEx
   autocmd bufnewfile,bufread *.jsx set filetype=javascript.jsx
 augroup END
 
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Prose Mode
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 let w:ProseModeOn = 0
 
 function EnableProseMode()
