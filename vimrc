@@ -49,6 +49,12 @@ set title
 " Display line numbers
 set number
 
+" Easily copy and paste in an out of Vim
+set clipboard=unnamed
+
+" Change split size with the mouse
+set mouse=n
+
 " Ale linter settings
 let g:ale_linters = {
 \   'ruby': ['rubocop', 'reek'],
@@ -248,7 +254,9 @@ augroup vimrcEx
   autocmd bufnewfile,bufread *.jsx set filetype=javascript.jsx
 augroup END
 
-" Prose mode for writing in markdown
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Prose Mode
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 function EnableProseMode()
   setlocal nocursorline nospell linebreak
 	Goyo 120
