@@ -30,11 +30,15 @@ Plug 'https://github.com/cocopon/iceberg.vim.git'
 Plug 'https://github.com/junegunn/goyo.vim.git'
 " Vim-Pencil for prose writing
 Plug 'https://github.com/preservim/vim-pencil.git'
+" VOoM Outliner
+Plug 'https://github.com/vim-voom/VOoM.git'
+" FastFold
+Plug 'https://github.com/Konfekt/FastFold.git'
 call plug#end()
 
 " Theme
 set termguicolors
-colorscheme bdb_blue
+colorscheme bdb
 
 " Highlight the current line
 set cursorline
@@ -154,28 +158,6 @@ endif
 :let g:ruby_indent_block_style = 'do'
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" SHOW ALE ERRORS IN STATUS LINE
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-function! LinterStatus() abort
-  let l:counts = ale#statusline#Count(bufnr(''))
-
-  let l:all_errors = l:counts.error + l:counts.style_error
-  let l:all_non_errors = l:counts.total - l:all_errors
-
-  return l:counts.total == 0 ? 'ALE: No issues ' : printf(
-  \   'ALE: %dW %dE ',
-  \   all_non_errors,
-  \   all_errors
-  \)
-endfunction
-
-set statusline=
-set statusline+=%m
-set statusline+=\ %f
-set statusline+=%=
-set statusline+=\ %{LinterStatus()}
-
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " SWITCH BETWEEN TEST AND PRODUCTION CODE
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 function! OpenTestAlternate()
@@ -212,9 +194,6 @@ augroup vimrcEx
   " Clear all autocmds in the group
   autocmd!
 
-  " Commenting out line width for now for text files
-  " autocmd FileType text setlocal textwidth=78
-
   " Syntax highlighting for todo.txt
   autocmd BufNewFile,BufRead [Tt]odo.txt set filetype=todo
   autocmd BufNewFile,BufRead *.[Tt]odo.txt set filetype=todo
@@ -238,6 +217,9 @@ augroup vimrcEx
 
   " *.md is markdown
   autocmd! BufNewFile,BufRead *.md setlocal ft=mkd
+
+  " Setup Voom automatically with markdown
+  " autocmd BufRead *.md Voom markdown
 
   " Don't syntax highlight markdown because it's often wrong
   autocmd! FileType mkd setlocal syn=off
@@ -266,34 +248,18 @@ augroup vimrcEx
   autocmd bufnewfile,bufread *.jsx set filetype=javascript.jsx
 augroup END
 
-let w:ProseModeOn = 0
-
+" Prose mode for writing in markdown
 function EnableProseMode()
-  setlocal nocursorline nospell
-	Goyo 66
+  setlocal nocursorline nospell linebreak
+	Goyo 120
 	SoftPencil
-	echo "Prose Mode On"
+  Voom markdown
+	echo "Prose Mode"
 endfu
 
-function DisableProseMode()
-	Goyo!
-	NoPencil
-	setlocal nospell
-	echo "Prose Mode Off"
-endfu
-
-function ToggleProseMode()
-	if w:ProseModeOn == 0
-		call EnableProseMode()
-		let w:ProseModeOn = 1
-	else
-		call DisableProseMode()
-	endif
-endfu
-
+" Enter ProseMode
 command Prose call EnableProseMode()
-command UnProse call DisableProseMode()
-command ToggleProse call ToggleProseMode()
+nnoremap <leader>p :Prose<CR>
 
 function ScratchBufferize()
 	setlocal buftype=nofile
