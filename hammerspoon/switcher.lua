@@ -1,5 +1,5 @@
 -- if you want to use a different keyboard combo, define it here.
-local hyper = {"cmd", "ctrl"}
+local hyper = {"shift", "ctrl"}
 
 -- define your own shortcut list here
 local windows = {
