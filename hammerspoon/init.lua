@@ -4,3 +4,4 @@ end)
 hs.alert.show("Config loaded")
 
 require("windows")
+require("switcher")
