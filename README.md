@@ -7,9 +7,10 @@ dotfiles managed with [rcm](https://github.com/thoughtbot/rcm)
 3. `~/.dotfiles/setup`
 4. `vi ~/.vimrc`
 5. `:PlugInstall`
-6. To specify Git email addess: add a file `.gitconfig` to `~/Projects` and list:
+6. To specify a different git email/name to commit with, add a `.gitconfig` to `~/Projects` with:
 ```
 [user]
+  name = Example Name
   email = example@email.com
 ```
 These are the default settings in `~/.gitconfig`:
