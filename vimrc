@@ -38,13 +38,19 @@ call plug#end()
 
 " Theme
 set termguicolors
-colorscheme bdb
+colorscheme iceberg
 
 " Highlight the current line
 set cursorline
 
 " Display title of file/folder
 set title
+
+" VOOm width
+let g:voom_tree_width=38
+
+" Leave Markdown formatting characters in place
+let g:pencil#conceallevel=0
 
 " Display line numbers
 set number
@@ -70,10 +76,6 @@ let g:ale_list_window_size = 5
 
 " Use the line number column for ALE signs
 set signcolumn=number
-
-" Custom filetype for Inform6 with comment type defined
-autocmd BufNewFile,BufRead *.inf set filetype=inform
-autocmd FileType inform setlocal commentstring=!\ %s
 
 " Background color fix for Kitty
 let &t_ut=''
@@ -200,41 +202,35 @@ augroup vimrcEx
   " Clear all autocmds in the group
   autocmd!
 
+  " Custom filetype for Inform6 with comment type defined
+  autocmd! BufNewFile,BufRead *.inf set filetype=inform
+  autocmd! FileType inform set commentstring=!\ %s
+
   " Syntax highlighting for todo.txt
-  autocmd BufNewFile,BufRead [Tt]odo.txt set filetype=todo
-  autocmd BufNewFile,BufRead *.[Tt]odo.txt set filetype=todo
+  autocmd! BufNewFile,BufRead [Tt]odo.txt set filetype=todo
+  autocmd! BufNewFile,BufRead *.[Tt]odo.txt set filetype=todo
 
   " Jump to last cursor position unless it's invalid or in an event handler
-  autocmd BufReadPost *
+  autocmd! BufReadPost *
     \ if line("'\"") > 0 && line("'\"") <= line("$") |
     \   exe "normal g`\"" |
     \ endif
 
-  " For ruby, autoindent with two spaces, always expand tabs
-  autocmd FileType ruby,haml,eruby,yaml,html,sass,cucumber set ai sw=2 sts=2 et
+  " For Ruby et. al., autoindent with two spaces, always expand tabs
+  autocmd! FileType ruby,haml,eruby,yaml,html,sass,cucumber set ai sw=2 sts=2 et
 
   " Python settings
-  autocmd FileType python set sw=4 sts=4 et
+  autocmd! FileType python set sw=4 sts=4 et
 
+  " Sass
   autocmd! BufRead,BufNewFile *.sass setfiletype sass
 
-  autocmd BufRead *.mkd  set ai formatoptions=tcroqn2 comments=n:&gt;
-  autocmd BufRead *.markdown  set ai formatoptions=tcroqn2 comments=n:&gt;
+  " Markdown settings
+  autocmd! BufRead *.mkd  set ai formatoptions=tcroqn2 comments=n:&gt;
+  autocmd! BufRead *.markdown  set ai formatoptions=tcroqn2 comments=n:&gt;
 
-  " *.md is markdown
-  autocmd! BufNewFile,BufRead *.md setlocal ft=mkd
-
-  " Setup Voom automatically with markdown
-  " autocmd BufRead *.md Voom markdown
-
-  " Don't syntax highlight markdown because it's often wrong
-  autocmd! FileType mkd setlocal syn=off
-
-  " javascript
+  " JS
   autocmd! FileType javascript set sw=2 sts=2 expandtab
-
-  " Expand tabs in Go. Was gofmt raised in a barn?!
-  autocmd! FileType go set sw=4 sts=4 expandtab | retab
 
   " Two-space indents in json
   autocmd! FileType json set sw=2 sts=2 expandtab
@@ -242,16 +238,6 @@ augroup vimrcEx
   " Hitting K in a Ruby file opens rdoc, which completely breaks the terminal
   " to the point of having to kill vim and do `reset`. Unmap it entirely.
   nnoremap K <Nop>
-
-  " Compute syntax highlighting from beginning of file. (By default, vim only
-  " looks 200 lines back, which can make it highlight code incorrectly in some
-  " long files.)
-  autocmd BufEnter * :syntax sync fromstart
-
-  " Vim 8.2 adds built-in JSX support which seems broken. Setting these
-  " filetypes lets the installed plugins deal with JSX/TSX instead.
-  autocmd bufnewfile,bufread *.tsx set filetype=typescript.tsx
-  autocmd bufnewfile,bufread *.jsx set filetype=javascript.jsx
 augroup END
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -259,8 +245,9 @@ augroup END
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 function EnableProseMode()
   setlocal nocursorline nospell linebreak
-	Goyo 120
+	Goyo 110
 	SoftPencil
+  setlocal cole=2
   Voom markdown
 	echo "Prose Mode"
 endfu
@@ -268,6 +255,23 @@ endfu
 " Enter ProseMode
 command Prose call EnableProseMode()
 nnoremap <leader>p :Prose<CR>
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Note taking mode
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+function EnableNoteMode()
+  setlocal nospell linebreak
+	SoftPencil
+  setlocal cole=2
+  Voom markdown
+	echo "Prose Mode"
+endfu
+
+" Enter ProseMode
+command Note call EnableNoteMode()
+nnoremap <leader>n :Note<CR>
+" let g:pencil#conceallevel = 3
+" let g:vim_markdown_folding_disabled=1
 
 function ScratchBufferize()
 	setlocal buftype=nofile
