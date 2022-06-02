@@ -4,15 +4,16 @@ dotfiles managed with [rcm](https://github.com/thoughtbot/rcm)
 ## Bootstap / Installation
 1. `xcode-select --install`
 2. `git clone git@github.com:benjamindblock/dotfiles.git .dotfiles`
-3. `$HOME/.dotfiles/setup`
-4. `vi $HOME/.vimrc`
+3. `~/.dotfiles/setup`
+4. `vi ~/.vimrc`
 5. `:PlugInstall`
-6. To specify Git email addess: add a file `.gitconfig` to `~/Projects` and list:
+6. To specify a different git email/name to commit with, add a `.gitconfig` to `~/Projects` with:
 ```
 [user]
+  name = Example Name
   email = example@email.com
 ```
-By default these will be the credentials in the root `.gitconfig`:
+These are the default settings in `~/.gitconfig`:
 ```
 [user]
   name = Ben Block
@@ -32,11 +33,11 @@ chatnets = {
 ```
 
 ## Updates
-1. `cd $HOME/.dotfiles`
+1. `cd ~/.dotfiles`
 2. `git checkout main`
 3. `git pull origin main`
 4. `rcup -v`
-5. Optional: `$HOME/.dotfiles/setup`
+5. Optional: `~/.dotfiles/setup`
 6. Optional: re-source applications (Vim, Kitty, zsh, etc.)
 
 ## TODO
