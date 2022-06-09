@@ -5,6 +5,7 @@ set nocompatible
 
 " Enable and plugins
 filetype plugin on
+syntax on
 
 " Plug-in installation calls for vim-plug
 call plug#begin('~/.vim/plugged')
@@ -38,7 +39,7 @@ call plug#end()
 
 " Theme
 set termguicolors
-colorscheme iceberg
+colorscheme bdb
 
 " Highlight the current line
 set cursorline
@@ -201,14 +202,6 @@ nnoremap <leader>. :call OpenTestAlternate()<cr>
 augroup vimrcEx
   " Clear all autocmds in the group
   autocmd!
-
-  " Custom filetype for Inform6 with comment type defined
-  autocmd! BufNewFile,BufRead *.inf set filetype=inform
-  autocmd! FileType inform set commentstring=!\ %s
-
-  " Syntax highlighting for todo.txt
-  autocmd! BufNewFile,BufRead [Tt]odo.txt set filetype=todo
-  autocmd! BufNewFile,BufRead *.[Tt]odo.txt set filetype=todo
 
   " Jump to last cursor position unless it's invalid or in an event handler
   autocmd! BufReadPost *
