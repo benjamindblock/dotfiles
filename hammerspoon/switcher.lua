@@ -3,10 +3,10 @@ local hyper = {"shift", "ctrl"}
 
 -- define your own shortcut list here
 local windows = {
-	c = "Google Chrome",
-	f = "Finder",
-	k = "kitty",
-	s = "Slack",
+	-- c = "Google Chrome",
+	-- f = "Finder",
+	-- k = "kitty",
+	-- s = "Slack",
 }
 
 -- if the app has to be launched by a different name
