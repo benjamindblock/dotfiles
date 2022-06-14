@@ -46,7 +46,9 @@ export EDITOR=vi
 # export PATH="/usr/local/opt/ruby/bin/:$PATH"
 
 # Setting a custom StarDict path
-export STARDICT_DATA_DIR=~/usr/share/stardict/dic
+export STARDICT_DATA_DIR=$HOME/usr/share/stardict/dic:$HOME/.stardict/dic
+
+# Setting path for ZCode games
 export ZCODE_PATH=/usr/local/share/zcode:/usr/local/share/zcode/infocom:$HOME/.zcode
 
 alias irssi="irssi --config=<((cat ~/.irssi/chatnets && cat ~/.irssi/config))"

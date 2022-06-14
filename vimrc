@@ -14,8 +14,6 @@ Plug 'https://github.com/tpope/vim-commentary.git'
 Plug 'https://github.com/tpope/vim-endwise.git'
 " TPope Vinegar (netrw improvements)
 Plug 'https://github.com/tpope/vim-vinegar.git'
-" TPope Surround
-Plug 'https://github.com/tpope/vim-surround.git'
 " AsyncRun
 Plug 'https://github.com/skywind3000/asyncrun.vim.git'
 " Command-T
@@ -38,7 +36,7 @@ call plug#end()
 
 " Theme
 set termguicolors
-colorscheme iceberg
+colorscheme bdb
 
 " Highlight the current line
 set cursorline
@@ -48,9 +46,6 @@ set title
 
 " VOOm width
 let g:voom_tree_width=38
-
-" Leave Markdown formatting characters in place
-let g:pencil#conceallevel=0
 
 " Display line numbers
 set number
@@ -228,6 +223,7 @@ augroup vimrcEx
   " Markdown settings
   autocmd! BufRead *.mkd  set ai formatoptions=tcroqn2 comments=n:&gt;
   autocmd! BufRead *.markdown  set ai formatoptions=tcroqn2 comments=n:&gt;
+  autocmd! FileType markdown set sw=4 sts=4 et 
 
   " JS
   autocmd! FileType javascript set sw=2 sts=2 expandtab
@@ -248,6 +244,7 @@ function EnableProseMode()
 	Goyo 110
 	SoftPencil
   setlocal cole=2
+  set conceallevel=0
   Voom markdown
 	echo "Prose Mode"
 endfu
@@ -263,23 +260,21 @@ function EnableNoteMode()
   setlocal nospell linebreak
 	SoftPencil
   setlocal cole=2
+  set conceallevel=0
   Voom markdown
-	echo "Prose Mode"
+	echo "Note Mode"
 endfu
 
-" Enter ProseMode
+" Enter NoteMode
 command Note call EnableNoteMode()
 nnoremap <leader>n :Note<CR>
-" let g:pencil#conceallevel = 3
-" let g:vim_markdown_folding_disabled=1
 
+" Open a StarDict definition in a ScratchBuffer
 function ScratchBufferize()
 	setlocal buftype=nofile
 	setlocal bufhidden=hide
 	setlocal noswapfile
 endfu
-
-" Open a StarDict definition in a ScratchBuffer
 nnoremap <leader>d :new \| read ! sdcv <C-R><C-W> <CR>:call ScratchBufferize() <CR>:normal gg<CR>
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
