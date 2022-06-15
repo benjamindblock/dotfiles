@@ -2,7 +2,7 @@
 # and modified by BB
 
 options.cmdlog_histfile      = '~/.visidata/history/%Y%m.vd'
-options.disp_note_none       =  '⌀'                  # visible contents of a cell whose value is Nonedisp_truncator
+options.disp_note_none       =  ''                  # visible contents of a cell whose value is Nonedisp_truncator
 options.disp_oddspace        =  '·'                  # displayable character for odd whitespace
 options.disp_unprintable     =  '.'                  # substitute character for unprintables
 options.disp_column_sep      =  '|'                  # separator between columns
@@ -15,11 +15,9 @@ options.disp_more_left       =  '<'                  # header note indicating mo
 options.disp_more_right      =  '>'                  # header note indicating more columns to the right
 options.disp_error_val       =  '!'                  # displayed contents for computation exception
 options.disp_ambig_width     =  '1'                  # width to use for unicode chars marked ambiguous
-options.color_default        =  '60 mediumpurple4'   # the default color
-options.color_default_hdr    =  '24 deepskyblue4 bold underline' # color of the column headers
-options.color_current_row    =  '64 chartreuse4 underline'       # color of the cursor row
-options.color_current_hdr    =  'red bold reverse underline'     # color of the header for the cursor column
-options.color_current_col    =  'red reverse'        # color of the cursor column
+options.color_default        =  '253 grey85'         # the default color
+options.color_default_hdr    =  '57 blueviolet bold' # color of the column headers
+options.color_current_col    =  '178 gold3 bold'     # color of the cursor column
 options.color_column_sep     =  '130 darkorange3'    # color of column separators
 options.color_key_col        =  'blue'               # color of key columns
 options.color_hidden_col     =  '8'                  # color of hidden columns on metasheets
