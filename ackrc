@@ -11,4 +11,13 @@
 # Add types ack doesn't know about
 --type-set=MARKDOWN=md,mkd,markdown
 
+# Standard directories to ignore in a Rails app
 --ignore-dir=.gem
+--ignore-dir=log
+--ignore-dir=_static
+--ignore-dir=storage
+--ignore-dir=support
+--ignore-dir=coverage
+--ignore-dir=tmp
+
+--ignore-file=is:tags
