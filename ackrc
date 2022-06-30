@@ -19,5 +19,7 @@
 --ignore-dir=support
 --ignore-dir=coverage
 --ignore-dir=tmp
+--ignore-dir=public
+--ignore-dir=vendor
 
 --ignore-file=is:tags
