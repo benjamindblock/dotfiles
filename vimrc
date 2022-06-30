@@ -57,6 +57,9 @@ set clipboard=unnamed
 " Change split size with the mouse
 set mouse=n
 
+" Only look at tags and current file for autocomplete
+set complete=.,t
+
 " Ale linter settings
 let g:ale_linters = {
 \   'ruby': ['rubocop', 'reek'],
@@ -69,6 +72,8 @@ let g:ale_sign_warning = '??'
 let g:ale_sign_info = 'oo'
 let g:ale_linters_explicit = 1
 let g:ale_list_window_size = 5
+nmap <silent> <C-k> <Plug>(ale_previous_wrap)
+nmap <silent> <C-j> <Plug>(ale_next_wrap)
 
 " Use the line number column for ALE signs
 set signcolumn=number

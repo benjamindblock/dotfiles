@@ -9,6 +9,7 @@ tap "homebrew/core"
 tap "homebrew/services"
 tap "heroku/brew"
 tap "saulpw/vd"
+tap "universal-ctags/universal-ctags"
 
 # Programming languages
 # -----------------------------------------------------------------------------
@@ -41,6 +42,7 @@ brew "rcm"
 brew "redis"
 brew "sdcv"
 brew "shellcheck"
+brew "universal-ctags"
 brew "vim"
 brew "visidata"
 brew "wget"

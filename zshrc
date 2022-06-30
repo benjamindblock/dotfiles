@@ -10,6 +10,10 @@ PROMPT='%F{253}%6~%F{105}%B$(parse_git_branch) %b%F{253}\$ '
 # PROMPT for light themes, no bold
 # PROMPT='%F{16}%3~%F{59}%B$(parse_git_branch) %b%F{16}\$ '
 
+# kitty setup for alt+arrow key to jump words
+bindkey "\e[1;3D" backward-word # ⌥←
+bindkey "\e[1;3C" forward-word # ⌥→
+
 # Colored prompt
 export CLICOLOR=1
 export LSCOLORS=ExGxBxDxCxEgEdxbxgxcxd

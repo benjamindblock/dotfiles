@@ -19,5 +19,8 @@
   l = "!. ~/.githelpers && pretty_git_log"
   la = !git l --all
   rb = !git branch -v --sort=committerdate | tail -30
+	ctags = !.git/hooks/ctags
 [core]
 	excludesfile = /Users/benjaminblock/.gitignore_global
+[init]
+	templatedir = ~/.git_template
