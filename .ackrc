@@ -1,0 +1,32 @@
+# Ref: https://github.com/garybernhardt/dotfiles/blob/main/.ackrc
+
+# Lexically sort filenames
+--sort-files
+
+--type-add=ruby=rake,haml
+--type-add=vim=vimrc
+--type-add=js=json
+--type-set=css=sass
+
+# Add types ack doesn't know about
+--type-set=MARKDOWN=md,mkd,markdown
+
+# Standard directories to ignore in a Rails app
+--ignore-dir=.gem
+--ignore-dir=log
+--ignore-dir=_static
+--ignore-dir=storage
+--ignore-dir=support
+--ignore-dir=coverage
+--ignore-dir=tmp
+--ignore-dir=public
+--ignore-dir=vendor
+--ignore-dir=app/assets/builds
+
+--ignore-file=is:tags
+--ignore-file=is:yarn.lock
+--ignore-file=is:yarn.log
+--ignore-file=is:yarn-error.log
+
+# Color
+--color-match=black on_cyan

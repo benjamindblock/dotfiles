@@ -1,0 +1,109 @@
+# # Installation dependencies and settings
+# -----------------------------------------------------------------------------
+cask_args appdir: "/Applications"
+
+tap "homebrew/bundle"
+tap "homebrew/cask"
+tap "homebrew/cask-fonts"
+tap "homebrew/core"
+tap "homebrew/services"
+tap "heroku/brew"
+tap "saulpw/vd"
+tap "universal-ctags/universal-ctags"
+tap "bbc/audiowaveform"
+
+# Programming languages
+# -----------------------------------------------------------------------------
+brew "bash"
+brew "node"
+brew "sbcl"
+brew "tcl-tk"
+
+# Programming language managers
+# -----------------------------------------------------------------------------
+brew "nodenv"
+brew "rbenv"
+
+# Database
+# -----------------------------------------------------------------------------
+brew "postgis"
+brew "postgresql@14"
+brew "sqlite3"
+
+# CLI Tools or other end-use software
+# -----------------------------------------------------------------------------
+brew "TheZoraiz/ascii-image-converter/ascii-image-converter"
+brew "ack"
+brew "agg"
+brew "asciinema"
+brew "audiowaveform"
+brew "automake"
+brew "awscli"
+brew "darkhttpd"
+brew "fd"
+brew "ffmpeg"
+brew "fish"
+brew "fisher"
+brew "freetds"
+brew "fzy"
+brew "gh"
+brew "git"
+brew "groff"
+brew "gron"
+brew "heroku"
+brew "htop"
+brew "hyperfine"
+brew "imagemagick"
+brew "mosh"
+brew "normalize"
+brew "prettier"
+brew "ouch"
+brew "rcm"
+brew "recutils"
+brew "redis"
+brew "rg"
+brew "rlwrap"
+brew "sdcv"
+brew "shellcheck"
+brew "tree"
+brew "universal-ctags"
+brew "vim"
+brew "visidata"
+brew "weechat"
+brew "wget"
+brew "woff2"
+brew "xsv"
+brew "yarn"
+brew "youtube-dl"
+
+# Terminal games & MUD
+# -----------------------------------------------------------------------------
+brew "brogue"
+brew "stone-soup"
+brew "tintin"
+
+# Interactive fiction
+# -----------------------------------------------------------------------------
+brew "frobtads"
+brew "frotz"
+brew "glulxe"
+
+# Cask applications
+# -----------------------------------------------------------------------------
+cask "audacity"
+cask "calibre"
+cask "chromedriver"
+cask "flux"
+cask "google-chrome"
+cask "hammerspoon"
+cask "inform"
+cask "karabiner-elements"
+cask "kitty"
+cask "mullvadvpn"
+cask "postico"
+cask "slack"
+cask "spotify"
+cask "transmission"
+cask "vlc"
+cask "zoom"
+cask "zotero"

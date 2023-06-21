@@ -1,0 +1,112 @@
+#!/usr/bin/env bash
+
+if [[ "$(uname)" != "Darwin" ]]; then
+  echo "Not on MacOS, exiting..."
+  exit 1
+fi
+
+# Disable menu bar transparency
+defaults write NSGlobalDomain AppleEnableMenuBarTransparency -bool false
+
+# Always show scrollbars
+defaults write NSGlobalDomain AppleShowScrollBars -string "Always"
+
+# Disable opening and closing window animations
+defaults write NSGlobalDomain NSAutomaticWindowAnimationsEnabled -bool false
+
+# Disable Mission Control Animations
+defaults write com.apple.dock expose-animation-duration -int 0
+
+# Increase window resize speed for Cocoa applications
+defaults write NSGlobalDomain NSWindowResizeTime -float 0.001
+
+# Disable auto-correct
+defaults write NSGlobalDomain NSAutomaticSpellingCorrectionEnabled -bool false
+
+# Require password immediately after sleep or screen saver begins
+defaults write com.apple.screensaver askForPassword -int 1
+defaults write com.apple.screensaver askForPasswordDelay -int 0
+
+# Allow quitting Finder via ⌘ + Q; doing so will also hide desktop icons
+defaults write com.apple.finder QuitMenuItem -bool true
+
+# Disable window animations and Get Info animations in Finder
+defaults write com.apple.finder DisableAllAnimations -bool true
+
+# Show all filename extensions in Finder
+defaults write NSGlobalDomain AppleShowAllExtensions -bool true
+
+# Show hidden files
+defaults write com.apple.finder AppleShowAllFiles -string "YES"
+
+# Show status bar in Finder
+defaults write com.apple.finder ShowStatusBar -bool true
+
+# Display full POSIX path as Finder window title
+defaults write com.apple.finder _FXShowPosixPathInTitle -bool true
+
+# Avoid creating .DS_Store files on network volumes
+defaults write com.apple.desktopservices DSDontWriteNetworkStores -bool true
+
+# Disable the warning when changing a file extension
+defaults write com.apple.finder FXEnableExtensionChangeWarning -bool false
+
+# Show item info below desktop icons
+/usr/libexec/PlistBuddy -c "Set :DesktopViewSettings:IconViewSettings:showItemInfo true" ~/Library/Preferences/com.apple.finder.plist
+
+# Enable snap-to-grid for desktop icons
+/usr/libexec/PlistBuddy -c "Set :DesktopViewSettings:IconViewSettings:arrangeBy grid" ~/Library/Preferences/com.apple.finder.plist
+
+# Show the ~/Library folder
+chflags nohidden ~/Library
+
+# Enable highlight hover effect for the grid view of a stack (Dock)
+defaults write com.apple.dock mouse-over-hilte-stack -bool true
+
+# Enable spring loading for all Dock items
+defaults write com.apple.dock enable-spring-load-actions-on-all-items -bool true
+
+# Show indicator lights for open applications in the Dock
+defaults write com.apple.dock show-process-indicators -bool true
+
+# Don’t animate opening applications from the Dock
+defaults write com.apple.dock launchanim -bool false
+
+# Remove the auto-hiding Dock delay
+defaults write com.apple.Dock autohide-delay -float 0
+
+# Remove the animation when hiding/showing the Dock (actually, make it fast. If you want to remove, use 0)
+defaults write com.apple.dock autohide-time-modifier -float 0.25
+
+# Enable the 2D Dock
+defaults write com.apple.dock no-glass -bool true
+
+# Automatically hide and show the Dock
+defaults write com.apple.dock autohide -bool true
+
+# Move Dock to the left (can be 'left', 'right', 'bottom')
+defaults write com.apple.dock 'orientation' -string 'left'
+
+# Disable shadow in screenshots
+defaults write com.apple.screencapture disable-shadow -bool true
+
+# opening and closing windows and popovers
+defaults write -g NSAutomaticWindowAnimationsEnabled -bool false
+
+# showing and hiding sheets, resizing preference windows, zooming windows
+# float 0 doesn't work
+defaults write -g NSWindowResizeTime -float 0.001
+
+# showing the Dock
+defaults write com.apple.dock autohide-time-modifier -float 0
+defaults write com.apple.dock autohide-delay -float 0
+
+# showing and hiding Mission Control, command+numbers
+defaults write com.apple.dock expose-animation-duration -float 0
+
+# showing and hiding Launchpad
+defaults write com.apple.dock springboard-show-duration -float 0
+
+# Kill affected applications
+for app in Finder Dock SystemUIServer; do killall "$app" > /dev/null 2>&1; done
+echo "OSX Hacks Done. Note that some of these changes require a logout/restart to take effect."

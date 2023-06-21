@@ -1,0 +1,25 @@
+[user]
+	name = Ben Block
+	email = benjamindblock@gmail.com
+[includeIf "gitdir:~/Projects/"]
+  path = ~/Projects/.gitconfig
+[color]
+	ui = true
+[alias]
+  st = status
+  ci = commit --verbose
+  co = checkout
+  di = diff --find-copies-harder
+  dc = diff --find-copies-harder --cached
+  amend = commit --amend
+  aa = add --all
+  fa = fetch --all
+  r = !GIT_NO_PAGER=1 git l -30
+  ra = !git r --all
+  l = "!. ~/.githelpers && pretty_git_log"
+  la = !git l --all
+  rb = !git branch -v --sort=committerdate | tail -30
+[core]
+	excludesfile = ~/.gitignore_global
+[init]
+	defaultBranch = main

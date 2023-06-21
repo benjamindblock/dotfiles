@@ -1,0 +1,43 @@
+#!/usr/bin/env bash
+
+# Install Homebrew
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+echo '# Set PATH, MANPATH, etc., for Homebrew.' >> /Users/bdb/.zprofile
+echo 'eval "$(/opt/homebrew/bin/brew shellenv)"' >> /Users/bdb/.zprofile
+eval "$(/opt/homebrew/bin/brew shellenv)"
+
+# Install vim-plug
+curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
+    https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+
+# Install RCM for dotfiles management
+brew install rcm
+
+# Create dotfiles in $HOME with RCM
+env RCRC=$HOME/.dotfiles/rcrc rcup
+
+# Validate previous step
+rcup
+
+# Run OSX customizations
+chmod +x ./osx
+./osx
+
+# Install all brew formulae and casks
+cd $HOME/.config
+brew bundle
+
+# Setup Projects directory
+cd $HOME
+mkdir Projects
+
+# Install Finder-Vim-Mode plugin for Karabiner
+open "karabiner://karabiner/assets/complex_modifications/import?url=https://github.com/chrisgrieser/finder-vim-mode/releases/latest/download/finder-vim.json"
+curl -sL "https://raw.githubusercontent.com/chrisgrieser/finder-vim-mode/main/finder-vim-cheatsheet.png" -o "$HOME/.config/karabiner/assets/finder-vim-mode-cheatsheet.png"
+
+# Install z for fish
+fisher install jethrokuan/z
+
+# Install Quicklisp
+curl -O https://beta.quicklisp.org/quicklisp.lisp
+sbcl --load quicklisp.lisp
