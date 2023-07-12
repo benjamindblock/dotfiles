@@ -30,24 +30,9 @@ alias ll="ls -Ahltr"
 alias ls="ls -G"
 alias vi="vim"
 alias vimrc="vim ~/.vimrc"
+alias bashrc="vim ~/.bashrc"
 alias todo="vi ~/Documents/todo.txt"
 alias follow="tail -f -n +1"
-export LSCOLORS="ExGxBxDxCxEgEdxbxgxcxd"
-export GREP_OPTIONS="--color"
-
-# Homebrew
-export PATH=/opt/homebrew/bin:${PATH}
-
-# Obviously.
-export EDITOR=/usr/bin/vim
-
-# Personal binaries
-export PATH=${PATH}:/usr/local/bin
-export PATH="~/bin:${PATH}"
-export PATH=${PATH}:~/etc/scripts
-
-export BASH_LOADABLES_PATH=${BASH_LOADABLES_PATH}:~/local/bash
-
 # Change up a variable number of directories
 # E.g:
 #   cu   -> cd ../
