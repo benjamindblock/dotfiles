@@ -52,15 +52,7 @@ Plug 'https://github.com/cocopon/iceberg.vim.git'
 Plug 'https://github.com/andymass/vim-matchup.git'
 " vim-rec
 Plug 'https://github.com/zaid/vim-rec.git'
-" Moving to Vlime for now.
-" Slimv
-" Plug 'https://github.com/kovisoft/slimv.git'
 call plug#end()
-
-" Swank commands for Lisp development
-" let g:slimv_swank_cmd = 'Dispatch! ~/bin/start_swank'
-" let g:slimv_repl_split=4
-" let g:paredit_mode=0
 
 " Vlime config
 let g:vlime_leader=","
@@ -314,12 +306,12 @@ augroup END
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 function EnableProseMode()
   setlocal nocursorline nospell linebreak
-	Goyo 110
-	SoftPencil
+  Goyo 110
+  SoftPencil
   setlocal cole=2
   set conceallevel=0
   Voom markdown
-	echo "Prose Mode"
+  echo "Prose Mode"
 endfu
 
 " Enter ProseMode
@@ -331,7 +323,7 @@ nnoremap <leader>p :Prose<CR>
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 function EnableVOoM()
   Voom markdown
-	echo "Note Mode"
+  echo "Note Mode"
 endfu
 
 command VOoM call EnableVOoM()
@@ -339,9 +331,9 @@ nnoremap <leader>n :VOoM<CR>
 
 " Open a StarDict definition in a ScratchBuffer
 function ScratchBufferize()
-	setlocal buftype=nofile
-	setlocal bufhidden=hide
-	setlocal noswapfile
+  setlocal buftype=nofile
+  setlocal bufhidden=hide
+  setlocal noswapfile
 endfu
 nnoremap <leader>d :new \| read ! sdcv <C-R><C-W> <CR>:call ScratchBufferize() <CR>:normal gg<CR>
 
