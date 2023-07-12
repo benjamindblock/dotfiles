@@ -109,6 +109,11 @@ txtblu='\[\e[0;34m\]' # Blue
 txtpur='\[\e[0;35m\]' # Purple
 txtcyn='\[\e[0;36m\]' # Cyan
 txtwht='\[\e[0;37m\]' # White
+# TODO: Add remaining bright colors.
+brtred='\[\e[0;91m\]' # Bright Red
+brtgrn='\[\e[0;92m\]' # Bright Green
+brtblu='\[\e[0;94m\]' # Bright Blue
+brtpur='\[\e[0;95m\]' # Bright Pur
 bldblk='\[\e[1;30m\]' # Black - Bold
 bldred='\[\e[1;31m\]' # Red
 bldgrn='\[\e[1;32m\]' # Green
@@ -157,7 +162,7 @@ git_colon() {
     fi
 }
 
-export PS1="${txtgrn}[\A]${txtrst}:${txtblu}[\w]${txtrst}\$(git_colon)${txtylw}\$(git_prompt) ${txtred}|${txtrst} "
+export PS1="${txtgrn}[\A]${txtrst}:${brtpur}[\w]${txtrst}\$(git_colon)${txtcyn}\$(git_prompt) ${brtred}|${txtrst} "
 export PS4='+${BASH_SOURCE[0]##*/}($LINENO)/${FUNCNAME[0]}> '
 
 source ~/bin/git-completion.sh

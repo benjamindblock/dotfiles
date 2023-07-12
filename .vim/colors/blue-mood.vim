@@ -72,11 +72,13 @@ exe 'hi ModeMsg guifg='s:whitesmoke
 exe 'hi MoreMsg guifg='s:whitesmoke' cterm=NONE'
 exe 'hi Question guifg='s:whitesmoke
 exe 'hi WildMenu guifg='s:red' guibg='s:yellow' gui=NONE cterm=NONE'
-exe 'hi TabLine      guifg='s:bfbfbf' guibg='s:black' gui=reverse cterm=reverse'
-exe 'hi TabLineFill  guifg='s:bfbfbf' guibg='s:lightgray
-exe 'hi TabLineSel   guifg='s:black' guibg='s:bfbfbf' gui=NONE'
 exe 'hi SignColumn guibg='s:dodgerblue4
 exe 'hi SpellCap guisp='s:gold
+
+highlight! CurSearch guifg=#bfbfbf guibg=#000000 cterm=NONE
+highlight! TabLine guifg=#000000 guibg=#eaebdb gui=NONE cterm=NONE
+highlight! TabLineFill guifg=#000000 guibg=#eaebdb gui=NONE cterm=NONE
+highlight! TabLineSel guifg=#000000 guibg=#c9cabc gui=bold cterm=bold
 
 exe 'hi Boolean guifg='s:cyan3' gui=NONE cterm=NONE'  
 exe 'hi Character guifg='s:cyan  
