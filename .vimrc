@@ -4,7 +4,7 @@
 set nocompatible
 
 " Bash
-set shell=/bin/bash
+set shell=bash
 
 " Enable and plugins
 filetype plugin on
@@ -65,7 +65,7 @@ let g:netrw_altv=1
 
 " Theme
 set termguicolors
-colorscheme bdb_light
+colorscheme peachpuff
 
 " Highlight the current line
 set cursorline
@@ -94,7 +94,7 @@ let g:ale_linters = {
 \   'ruby': ['rubocop', 'reek'],
 \   'eruby': ['erblint'],
 \   'javascript': ['eslint'],
-\   'elixir': ['elixir-ls']
+\   'tcl': ['nagelfar'],
 \}
 let g:ale_sign_error = '!!'
 let g:ale_sign_warning = '??'
