@@ -52,6 +52,8 @@ Plug 'https://github.com/cocopon/iceberg.vim.git'
 Plug 'https://github.com/andymass/vim-matchup.git'
 " vim-rec
 Plug 'https://github.com/zaid/vim-rec.git'
+" Github Colors
+Plug 'https://github.com/cormacrelf/vim-colors-github'
 call plug#end()
 
 " Vlime config
@@ -65,7 +67,12 @@ let g:netrw_altv=1
 
 " Theme
 set termguicolors
-colorscheme peachpuff
+colorscheme github
+
+" Search
+highlight! Search guibg=#d0d0d0 guifg=#000000 gui=none cterm=none
+highlight! IncSearch guibg=#aec8ee guifg=#000000 gui=underline cterm=underline
+highlight! CurSearch guibg=#aec8ee guifg=#000000 gui=none cterm=none
 
 " Highlight the current line
 set cursorline
@@ -285,6 +292,8 @@ augroup vimrcEx
   autocmd! BufRead *.mkd  set ai formatoptions=tcroqn2 comments=n:&gt;
   autocmd! BufRead *.markdown  set ai formatoptions=tcroqn2 comments=n:&gt;
   autocmd! FileType markdown set sw=4 sts=4 et 
+
+  autocmd! BufRead *.vcl set sw=4 sts=4 et
 
   " JS
   autocmd! FileType javascript set sw=2 sts=2 expandtab
