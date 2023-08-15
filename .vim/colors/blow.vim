@@ -28,7 +28,7 @@ endfun
 " ==========================
 " Color Variables
 " ==========================
-let s:forestGreen1 = {'gui': '#023d3b'}
+let s:forestGreen1 = {'gui': '#023634'}
 let s:forestGreen2 = {'gui': '#06312f'}
 let s:forestGreen3 = {'gui': '#108D8A'}
 let s:lightGreen = {'gui': '#74CC6C'}
@@ -38,7 +38,7 @@ let s:gray = {'gui': '#C6C6C6'}
 let s:black = {'gui': '#1E0701'}
 let s:black2 = {'gui': '#050505'}
 let s:black3 = {'gui': '#D1CDCE'}
-let s:white1 = {'gui': '#CFD2C2'}
+let s:white1 = {'gui': '#eeeeee'}
 let s:white2 = {'gui': '#D6BD99'}
 let s:white3 = {'gui': '#EDF9F9'}
 let s:white4 = {'gui': '#80CBC2'}
