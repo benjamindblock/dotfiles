@@ -8,7 +8,6 @@ set shell=bash
 
 " Enable and plugins
 filetype plugin on
-syntax on
 
 " Bracketed paste
 let &t_BE = "\e[?2004h"
@@ -46,14 +45,22 @@ Plug 'https://github.com/junegunn/rainbow_parentheses.vim.git'
 Plug 'https://github.com/vlime/vlime.git'
 " Parinfer
 Plug 'https://github.com/bhurlow/vim-parinfer.git'
-" Iceberg
-Plug 'https://github.com/cocopon/iceberg.vim.git'
 " Match-up
 Plug 'https://github.com/andymass/vim-matchup.git'
 " vim-rec
 Plug 'https://github.com/zaid/vim-rec.git'
 " Github Colors
 Plug 'https://github.com/cormacrelf/vim-colors-github'
+" HTML5 indentation fixes
+Plug 'https://github.com/othree/html5.vim'
+" Odin
+Plug 'https://github.com/Tetralux/odin.vim.git'
+" Iceberg
+Plug 'https://github.com/cocopon/iceberg.vim.git'
+" Apprentice
+Plug 'https://github.com/romainl/Apprentice.git'
+" Nightfly
+Plug 'https://github.com/bluz71/vim-nightfly-colors.git'
 call plug#end()
 
 " Vlime config
@@ -67,12 +74,15 @@ let g:netrw_altv=1
 
 " Theme
 set termguicolors
-colorscheme github
+set background=dark
+colorscheme nightfly
+syntax on
 
-" Search
-highlight! Search guibg=#d0d0d0 guifg=#000000 gui=none cterm=none
-highlight! IncSearch guibg=#aec8ee guifg=#000000 gui=underline cterm=underline
-highlight! CurSearch guibg=#aec8ee guifg=#000000 gui=none cterm=none
+"Ctrl+Shift+up move line above"
+nmap <C-S-Up> :m -2<CR>
+
+"Ctrl+Shift+down move line below
+nmap <C-S-Down> :m +1<CR>
 
 " Highlight the current line
 set cursorline
@@ -268,11 +278,6 @@ augroup vimrcEx
   " Clear all autocmds in the group
   autocmd!
 
-  " Zettelkasten.
-  autocmd! FileType zet set autoread
-  " Set template
-  autocmd! BufNewFile [0-9]\\\{14\}.md :silent 0r ~/.vim/templates/zettelkasten.md
-
   " Jump to last cursor position unless it's invalid or in an event handler
   autocmd! BufReadPost *
     \ if line("'\"") > 0 && line("'\"") <= line("$") |
@@ -325,7 +330,7 @@ endfu
 
 " Enter ProseMode
 command Prose call EnableProseMode()
-nnoremap <leader>p :Prose<CR>
+nnoremap ,p :Prose<CR>
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Note taking mode
@@ -336,7 +341,7 @@ function EnableVOoM()
 endfu
 
 command VOoM call EnableVOoM()
-nnoremap <leader>n :VOoM<CR>
+nnoremap ,n :VOoM<CR>
 
 " Open a StarDict definition in a ScratchBuffer
 function ScratchBufferize()
@@ -344,7 +349,7 @@ function ScratchBufferize()
   setlocal bufhidden=hide
   setlocal noswapfile
 endfu
-nnoremap <leader>d :new \| read ! sdcv <C-R><C-W> <CR>:call ScratchBufferize() <CR>:normal gg<CR>
+nnoremap ,d :new \| read ! sdcv <C-R><C-W> <CR>:call ScratchBufferize() <CR>:normal gg<CR>
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " RUNNING TESTS

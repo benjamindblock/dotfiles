@@ -16,7 +16,7 @@ let g:colors_name = 'morning'
 let s:t_Co = exists('&t_Co') && !has('gui_running') ? (&t_Co ?? 0) : -1
 
 if (has('termguicolors') && &termguicolors) || has('gui_running')
-  let g:terminal_ansi_colors = ['#e4e4e4', '#a52a2a', '#ff00ff', '#6a0dad', '#008787', '#2e8b57', '#6a5acd', '#bcbcbc', '#0000ff', '#a52a2a', '#ff00ff', '#6a0dad', '#008787', '#2e8b57', '#6a5acd', '#000000']
+  let g:terminal_ansi_colors = ['#e4e4e4', '#a52a2a', '#0000ff', '#6a0dad', '#007a7a', '#2e8b57', '#6a5acd', '#bcbcbc', '#6e6e6e', '#a52a2a', '#0000ff', '#6a0dad', '#007a7a', '#2e8b57', '#6a5acd', '#000000']
 endif
 hi! link Terminal Normal
 hi! link LineNrAbove LineNr
@@ -29,7 +29,7 @@ hi! link StatuslineTermNC StatuslineNC
 hi! link MessageWindow Pmenu
 hi! link PopupNotification Todo
 hi Normal guifg=#000000 guibg=#e4e4e4 gui=NONE cterm=NONE
-hi EndOfBuffer guifg=#0000ff guibg=#cccccc gui=bold cterm=bold
+hi EndOfBuffer guifg=#6e6e6e guibg=#cccccc gui=bold cterm=bold
 hi Folded guifg=#00008b guibg=#d3d3d3 gui=NONE cterm=NONE
 hi CursorLine guifg=NONE guibg=#d3d3d3 gui=NONE cterm=NONE
 hi CursorColumn guifg=NONE guibg=#d3d3d3 gui=NONE cterm=NONE
@@ -47,10 +47,10 @@ hi TabLineFill guifg=NONE guibg=NONE gui=reverse ctermfg=NONE ctermbg=NONE cterm
 hi TabLineSel guifg=#000000 guibg=#e4e4e4 gui=bold cterm=bold
 hi ToolbarLine guifg=NONE guibg=NONE gui=NONE ctermfg=NONE ctermbg=NONE cterm=NONE
 hi ToolbarButton guifg=NONE guibg=#bcbcbc gui=bold cterm=bold
-hi NonText guifg=#0000ff guibg=#bcbcbc gui=bold cterm=bold
+hi NonText guifg=#6e6e6e guibg=#bcbcbc gui=bold cterm=bold
 hi SpecialKey guifg=#bcbcbc guibg=NONE gui=NONE cterm=NONE
 hi Visual guifg=NONE guibg=#d0d0d0 gui=NONE cterm=NONE
-hi VisualNOS guifg=NONE guibg=#0000ff gui=NONE cterm=NONE
+hi VisualNOS guifg=NONE guibg=#6e6e6e gui=NONE cterm=NONE
 hi LineNr guifg=#a52a2a guibg=NONE gui=NONE cterm=NONE
 hi FoldColumn guifg=#00008b guibg=NONE gui=NONE cterm=NONE
 hi SignColumn guifg=#00008b guibg=NONE gui=NONE cterm=NONE
@@ -60,7 +60,7 @@ hi ErrorMsg guifg=#ff0000 guibg=#e4e4e4 gui=reverse cterm=reverse
 hi WarningMsg guifg=#6a0dad guibg=NONE gui=bold cterm=bold
 hi MoreMsg guifg=#2e8b57 guibg=NONE gui=bold cterm=bold
 hi ModeMsg guifg=#000000 guibg=NONE gui=bold cterm=bold
-hi Question guifg=#008787 guibg=NONE gui=bold cterm=bold
+hi Question guifg=#007a7a guibg=NONE gui=bold cterm=bold
 hi Todo guifg=#000000 guibg=#ffff00 gui=NONE cterm=NONE
 hi MatchParen guifg=#e4e4e4 guibg=#6a5acd gui=NONE cterm=NONE
 hi Search guifg=#e4e4e4 guibg=#6a0dad gui=NONE cterm=NONE
@@ -73,16 +73,16 @@ hi SpellBad guifg=#ff0000 guibg=NONE guisp=#ff0000 gui=undercurl cterm=underline
 hi SpellCap guifg=#00d700 guibg=NONE guisp=#00d700 gui=undercurl cterm=underline
 hi SpellLocal guifg=#a52a2a guibg=NONE guisp=#a52a2a gui=undercurl cterm=underline
 hi SpellRare guifg=#2e8b57 guibg=NONE guisp=#2e8b57 gui=undercurl cterm=underline
-hi Comment guifg=#0000ff guibg=NONE gui=NONE cterm=NONE
-hi Constant guifg=#ff00ff guibg=#eeeeee gui=NONE cterm=NONE
-hi Identifier guifg=#008787 guibg=NONE gui=NONE cterm=NONE
+hi Comment guifg=#6e6e6e guibg=NONE gui=NONE cterm=NONE
+hi Constant guifg=#0000ff guibg=NONE gui=NONE cterm=NONE
+hi Identifier guifg=#007a7a guibg=NONE gui=NONE cterm=NONE
 hi Statement guifg=#a52a2a guibg=NONE gui=bold cterm=bold
 hi PreProc guifg=#6a0dad guibg=NONE gui=NONE cterm=NONE
 hi Type guifg=#2e8b57 guibg=NONE gui=bold cterm=bold
 hi Special guifg=#6a5acd guibg=NONE gui=NONE cterm=NONE
 hi Ignore guifg=NONE guibg=NONE gui=NONE ctermfg=NONE ctermbg=NONE cterm=NONE
-hi Directory guifg=#008787 guibg=NONE gui=bold cterm=bold
-hi Conceal guifg=#0000ff guibg=NONE gui=NONE cterm=NONE
+hi Directory guifg=#007a7a guibg=NONE gui=bold cterm=bold
+hi Conceal guifg=#6e6e6e guibg=NONE gui=NONE cterm=NONE
 hi Title guifg=#a52a2a guibg=NONE gui=bold cterm=bold
 hi DiffAdd guifg=#ffffff guibg=#5f875f gui=NONE cterm=NONE
 hi DiffChange guifg=#ffffff guibg=#5f87af gui=NONE cterm=NONE
@@ -361,9 +361,9 @@ if s:t_Co >= 0
 endif
 
 " Background: light
-" Color: comment     #0000ff        21             blue
-" Color: constant    #ff00ff        201            magenta
-" Color: identifier  #008787        30             darkcyan
+" Color: comment     #6e6e6e        21             blue
+" Color: constant    #0000ff        201            magenta
+" Color: identifier  #007a7a        30             darkcyan
 " Color: statement   #a52a2a        124            darkred
 " Color: preproc     #6a0dad        55             darkmagenta
 " Color: type        #2e8b57        29             darkgreen
@@ -388,7 +388,7 @@ endif
 " Color: darkyellow  #878700        100            darkyellow
 " Color: darkblue    #000087        18             darkblue
 " Color: darkmagenta #870087        18             darkmagenta
-" Color: darkcyan    #008787        30             darkcyan
+" Color: darkcyan    #007a7a        30             darkcyan
 " Color: gray        #878787        102            gray
 " Term colors: bg0     statement constant preproc identifier type special bg1
 " Term colors: comment statement constant preproc identifier type special fg0

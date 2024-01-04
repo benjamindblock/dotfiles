@@ -28,7 +28,7 @@ endfun
 " ==========================
 " Color Variables
 " ==========================
-let s:forestGreen1 = {'gui': '#023634'}
+let s:forestGreen1 = {'gui': '#022a28'}
 let s:forestGreen2 = {'gui': '#06312f'}
 let s:forestGreen3 = {'gui': '#108D8A'}
 let s:lightGreen = {'gui': '#74CC6C'}
