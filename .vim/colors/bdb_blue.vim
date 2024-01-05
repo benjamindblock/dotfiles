@@ -26,7 +26,7 @@ hi Directory        ctermbg=NONE ctermfg=6    cterm=NONE           guibg=NONE   
 hi LineNr           ctermbg=NONE ctermfg=8    cterm=NONE           guibg=NONE     guifg=#6194ba  gui=NONE
 hi CursorLineNr     ctermbg=NONE ctermfg=8    cterm=NONE           guibg=#1D2B3C  guifg=#EFAB6A  gui=NONE
 hi CursorColumn     ctermbg=8    ctermfg=7    cterm=NONE           guibg=#395679  guifg=NONE  gui=NONE
-hi CursorLine       ctermbg=8    ctermfg=7    cterm=NONE           guibg=#1D2B3C  guifg=NONE  gui=NONE
+hi CursorLine       ctermbg=8    ctermfg=7    cterm=NONE           guibg=#1b2a3c  guifg=NONE  gui=NONE
 hi ColorColumn      ctermbg=8    ctermfg=NONE cterm=NONE           guibg=#395679  guifg=NONE     gui=NONE
 hi SignColumn       ctermbg=8    ctermfg=NONE cterm=NONE           guibg=#395679  guifg=NONE     gui=NONE
 
@@ -38,7 +38,8 @@ hi Underlined       ctermbg=NONE ctermfg=NONE cterm=UNDERLINE      guibg=NONE   
 hi Visual           ctermbg=NONE ctermfg=7    cterm=REVERSE        guibg=NONE     guifg=#efefef  gui=REVERSE
 hi VisualNOS        ctermbg=NONE ctermfg=NONE cterm=UNDERLINE      guibg=NONE     guifg=NONE     gui=UNDERLINE
 hi MatchParen       ctermbg=NONE ctermfg=3    cterm=NONE           guibg=NONE     guifg=#ecb534  gui=NONE
-hi IncSearch        ctermbg=11   ctermfg=0    cterm=NONE           guibg=#dfc56d  guifg=#24364b  gui=NONE
+hi IncSearch        ctermbg=11   ctermfg=0    cterm=NONE           guibg=#62d6b6  guifg=#24364b  gui=NONE
+hi CurSearch        ctermbg=11   ctermfg=0    cterm=NONE           guibg=#62d6b6  guifg=#24364b  gui=NONE
 hi Search           ctermbg=11   ctermfg=0    cterm=NONE           guibg=#dfc56d  guifg=#24364b  gui=NONE
 
 " hi StatusLine       ctermbg=0    ctermfg=8    cterm=NONE           guibg=#24364b  guifg=#6194ba  gui=NONE

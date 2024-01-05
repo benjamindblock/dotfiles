@@ -33,6 +33,16 @@ alias vimrc="vim ~/.vimrc"
 alias bashrc="vim ~/.bashrc"
 alias todo="vi ~/Documents/todo.txt"
 alias follow="tail -f -n +1"
+
+# tmux-related aliases & functions
+alias tls="tmux ls"
+
+# Attach a tmux session
+function ta {
+  local session="$1"
+  tmux attach -t "$session"
+}
+
 # Change up a variable number of directories
 # E.g:
 #   cu   -> cd ../
