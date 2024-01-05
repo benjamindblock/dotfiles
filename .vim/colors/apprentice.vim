@@ -15,7 +15,7 @@ let g:colors_name = 'apprentice'
 
 let s:t_Co = exists('&t_Co') && !empty(&t_Co) && &t_Co > 1 ? &t_Co : 1
 
-hi Normal guifg=#dde1de guibg=#000000 gui=NONE cterm=NONE
+hi Normal guifg=#dde1de guibg=#121212 gui=NONE cterm=NONE
 hi NonText guifg=#585858 guibg=NONE gui=NONE cterm=NONE
 hi EndOfBuffer guifg=#585858 guibg=NONE gui=NONE cterm=NONE
 " hi LineNr guifg=#6c6c6c guibg=#1c1c1c gui=NONE cterm=NONE
@@ -30,8 +30,8 @@ hi Pmenu guifg=#dde1de guibg=#444444 gui=NONE cterm=NONE
 hi PmenuSbar guifg=NONE guibg=#585858 gui=NONE cterm=NONE
 hi PmenuSel guifg=#262626 guibg=#5f8787 gui=NONE cterm=NONE
 hi PmenuThumb guifg=#5f8787 guibg=#5f8787 gui=NONE cterm=NONE
-hi ErrorMsg guifg=#af5f5f guibg=#000000 gui=reverse cterm=reverse
-hi ModeMsg guifg=#87af87 guibg=#000000 gui=reverse cterm=reverse
+hi ErrorMsg guifg=#af5f5f guibg=#121212 gui=reverse cterm=reverse
+hi ModeMsg guifg=#87af87 guibg=#121212 gui=reverse cterm=reverse
 hi MoreMsg guifg=#5f8787 guibg=NONE gui=NONE cterm=NONE
 hi Question guifg=#87af87 guibg=NONE gui=NONE cterm=NONE
 hi WarningMsg guifg=#af5f5f guibg=NONE gui=NONE cterm=NONE
@@ -49,15 +49,15 @@ hi CursorLine guifg=NONE guibg=#303030 gui=NONE cterm=NONE
 " hi StatusLineTermNC guifg=#87875f guibg=#444444 gui=NONE cterm=NONE
 hi StatusLine guifg       = #DDE1DE guibg=#5f5f5f cterm=bold
 hi StatusLineNC guifg     = darkgrey guibg=#5f5f5f cterm=NONE
-hi Visual guifg=#87afd7 guibg=#000000 gui=reverse cterm=reverse
+hi Visual guifg=#87afd7 guibg=#121212 gui=reverse cterm=reverse
 hi VisualNOS guifg=NONE guibg=NONE gui=underline ctermfg=NONE ctermbg=NONE cterm=underline
 " hi VertSplit guifg=#444444 guibg=#444444 gui=NONE cterm=NONE
 hi VertSplit guifg        = #4e4e4e  guibg=NONE cterm=NONE
 hi WildMenu guifg=#262626 guibg=#87afd7 gui=NONE cterm=NONE
-hi DiffAdd guifg=#87afff guibg=#000000 gui=reverse cterm=reverse
-hi DiffChange guifg=#dfdfdf guibg=#000000 gui=reverse cterm=reverse
-hi DiffDelete guifg=#ffdf87 guibg=#000000 gui=reverse cterm=reverse
-hi DiffText guifg=#afafaf guibg=#000000 gui=reverse cterm=reverse
+hi DiffAdd guifg=#87afff guibg=#121212 gui=reverse cterm=reverse
+hi DiffChange guifg=#dfdfdf guibg=#121212 gui=reverse cterm=reverse
+hi DiffDelete guifg=#ffdf87 guibg=#121212 gui=reverse cterm=reverse
+hi DiffText guifg=#afafaf guibg=#121212 gui=reverse cterm=reverse
 " hi IncSearch guifg=#262626 guibg=#af5f5f gui=NONE cterm=NONE
 " hi Search guifg=#262626 guibg=#ffffaf gui=NONE cterm=NONE
 hi IncSearch guifg        = #303030 guibg=#ffd75f cterm=NONE

@@ -1,0 +1,3 @@
+keymap L NEXT
+keymap H PREV
+keymap DEL PREV_PAGE

@@ -19,7 +19,7 @@ let s:comment   = "#69c5b4"
 let s:string    = "#69baf5"
 
 if &background == 'light'
-	let s:black     = "#ffffff"
+	let s:black     = "#e2e2e2"
 	let s:deep      = "#e9eff5"
 	let s:dull      = "#c7cfd6"
 	let s:gray      = "#9097a3"

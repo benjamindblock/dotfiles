@@ -39,21 +39,24 @@ alias follow="tail -f -n +1"
 #   cu 2 -> cd ../../
 #   cu 3 -> cd ../../../
 function cu {
-    local count=$1
-    if [ -z "${count}" ]; then
-        count=1
-    fi
-    local path=""
-    for i in $(seq 1 ${count}); do
-        path="${path}../"
-    done
-    cd $path
+  local count=$1
+  if [ -z "${count}" ]; then
+    count=1
+  fi
+  local path=""
+  for i in $(seq 1 ${count}); do
+    path="${path}../"
+  done
+  cd $path
 }
 
+function mcd {
+  mkdir -p "$1" && cd "$1"
+}
 
 # Open all modified files in vim tabs
 function vimod {
-    vim -p $(git status -suall | awk '{print $2}')
+  vim -p $(git status -suall | awk '{print $2}')
 }
 
 # Open files modified in a git commit in vim tabs; defaults to HEAD.
@@ -61,24 +64,24 @@ function vimod {
 #     virev 49808d5
 #     virev HEAD~3
 function virev {
-    commit=$1
-    if [ -z "${commit}" ]; then
-      commit="HEAD"
+  commit=$1
+  if [ -z "${commit}" ]; then
+    commit="HEAD"
+  fi
+  rootdir=$(git rev-parse --show-toplevel)
+  sourceFiles=$(git show --name-only --pretty="format:" ${commit} | grep -v '^$')
+  toOpen=""
+  for file in ${sourceFiles}; do
+    file="${rootdir}/${file}"
+    if [ -e "${file}" ]; then
+      toOpen="${toOpen} ${file}"
     fi
-    rootdir=$(git rev-parse --show-toplevel)
-    sourceFiles=$(git show --name-only --pretty="format:" ${commit} | grep -v '^$')
-    toOpen=""
-    for file in ${sourceFiles}; do
-      file="${rootdir}/${file}"
-      if [ -e "${file}" ]; then
-        toOpen="${toOpen} ${file}"
-      fi
-    done
-    if [ -z "${toOpen}" ]; then
-      echo "No files were modified in ${commit}"
-      return 1
-    fi
-    vim -p ${toOpen}
+  done
+  if [ -z "${toOpen}" ]; then
+    echo "No files were modified in ${commit}"
+    return 1
+  fi
+  vim -p ${toOpen}
 }
 
 removelink() {
@@ -132,19 +135,19 @@ export GIT_PS1_SHOWCOLORHINTS=true
 export PROMPT_DIRTRIM=3
 
 git_prompt() {
-    local g="$(__gitdir)"
-    if [ -n "$g" ]; then
-        # The __git_ps1 function inserts the current git branch where %s is
-        local GIT_PROMPT=`__git_ps1 "%s"`
-        echo "[${GIT_PROMPT}]"
-    fi
+  local g="$(__gitdir)"
+  if [ -n "$g" ]; then
+    # The __git_ps1 function inserts the current git branch where %s is
+    local GIT_PROMPT=`__git_ps1 "%s"`
+    echo "[${GIT_PROMPT}]"
+  fi
 }
 
 git_colon() {
-    local g="$(__gitdir)"
-    if [ -n "$g" ]; then
-      echo ":"
-    fi
+  local g="$(__gitdir)"
+  if [ -n "$g" ]; then
+    echo ":"
+  fi
 }
 
 export PS1="${txtgrn}[\A]${txtrst}:${txtblu}[\w]${txtrst}\$(git_colon)${txtcyn}\$(git_prompt) ${txtred}|${txtrst} "

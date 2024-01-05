@@ -71,6 +71,8 @@
 .vimrc~
 .visidata/
 .vscode/
+.w3m/cookie
+.w3m/history
 .webdrivers/
 .wget-hsts
 .xbrl-cache/

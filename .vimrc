@@ -1,21 +1,5 @@
 " BB .vimrc
 
-" Vim not Vi
-set nocompatible
-
-" Bash
-set shell=bash
-
-" Enable and plugins
-filetype plugin on
-syntax on
-
-" Bracketed paste
-let &t_BE = "\e[?2004h"
-let &t_BD = "\e[?2004l"
-let &t_PS = "\e[200~"
-let &t_PE = "\e[201~"
-
 " Plug-in installation calls for vim-plug
 call plug#begin('~/.vim/plugged')
 " TPope Commentary
@@ -30,6 +14,8 @@ Plug 'https://github.com/tpope/vim-dispatch.git'
 Plug 'https://github.com/skywind3000/asyncrun.vim.git'
 " ALE (language linting)
 Plug 'https://github.com/dense-analysis/ale.git'
+" Vader (vim testing)
+Plug 'https://github.com/junegunn/vader.vim.git'
 " Goyo for prose writing
 Plug 'https://github.com/junegunn/goyo.vim.git'
 " Vim-Pencil for prose writing
@@ -54,7 +40,24 @@ Plug 'https://github.com/andymass/vim-matchup.git'
 Plug 'https://github.com/zaid/vim-rec.git'
 " Github Colors
 Plug 'https://github.com/cormacrelf/vim-colors-github'
+" Odin syntax highlight+indentation
+Plug 'https://github.com/Tetralux/odin.vim.git'
 call plug#end()
+
+set nocompatible
+set shell=bash
+
+" NOTE: Order matters here.
+set termguicolors
+colorscheme apprentice
+syntax on
+filetype plugin on
+
+" Bracketed paste
+let &t_BE = "\e[?2004h"
+let &t_BD = "\e[?2004l"
+let &t_PS = "\e[200~"
+let &t_PE = "\e[201~"
 
 " Vlime config
 let g:vlime_leader=","
@@ -65,14 +68,12 @@ let g:recutils_no_folding=1
 " Open Netrw splits in the right hand side
 let g:netrw_altv=1
 
-" Theme
-set termguicolors
-colorscheme github
-
 " Search
+highlight! String ctermfg=2 ctermbg=NONE
 highlight! Search guibg=#d0d0d0 guifg=#000000 gui=none cterm=none
 highlight! IncSearch guibg=#aec8ee guifg=#000000 gui=underline cterm=underline
 highlight! CurSearch guibg=#aec8ee guifg=#000000 gui=none cterm=none
+highlight! CursorLine ctermbg=darkgray
 
 " Highlight the current line
 set cursorline
@@ -84,8 +85,8 @@ set title
 let g:voom_tree_width=38
 
 " Display line numbers
-set number                     " Show current line number
-set relativenumber             " Show relative line numbersset number
+set number
+set relativenumber
 
 " Easily copy and paste in an out of Vim
 set clipboard=unnamed
@@ -102,6 +103,7 @@ let g:ale_linters = {
 \   'eruby': ['erblint'],
 \   'javascript': ['eslint'],
 \   'tcl': ['nagelfar'],
+\   'odin': ['ols'],
 \}
 let g:ale_sign_error = '!!'
 let g:ale_sign_warning = '??'
@@ -109,6 +111,17 @@ let g:ale_sign_info = 'oo'
 let g:ale_linters_explicit = 1
 let g:ale_list_window_size = 5
 let g:ale_virtualtext_cursor = 'disabled'
+" let g:ale_odin_ols_config = {
+" \   'initializationOptions': {
+" \     'collections': [
+" \       {
+" \         'name': 'core',
+" \         'path': '/Users/bdb/build/Odin/core'
+" \       }
+" \     ],
+" \     'disable_parser_errors': 'true'
+" \   }
+" \}
 nmap <silent> <C-k> <Plug>(ale_previous_wrap)
 nmap <silent> <C-j> <Plug>(ale_next_wrap)
 
@@ -151,7 +164,7 @@ set shiftwidth=2
 set expandtab      " Make tabs spaces, not <TAB>
 
 " Only redraw when required
-set lazyredraw
+" set lazyredraw
 
 " Show the status line at the bottom
 set ls=2
@@ -171,6 +184,8 @@ nnoremap <leader>, :nohlsearch<CR>
 nnoremap <leader><BS> <C-^>
 " Insert a hash rocket with <c-l>
 imap <c-l> <space>=><space>
+" Unfuck my screen
+nnoremap U :syntax on<cr>:syntax sync fromstart<cr>:redraw!<cr>
 
 " Allow backspacing over everything in insert mode
 set backspace=indent,eol,start
@@ -285,6 +300,9 @@ augroup vimrcEx
   " Python settings
   autocmd! FileType python set sw=4 sts=4 et
 
+  " Odin
+  autocmd! FileType odin set tabstop=4 shiftwidth=4 noexpandtab
+
   " Sass
   autocmd! BufRead,BufNewFile *.sass setfiletype sass
 
@@ -308,6 +326,9 @@ augroup vimrcEx
   " Hitting K in a Ruby file opens rdoc, which completely breaks the terminal
   " to the point of having to kill vim and do `reset`. Unmap it entirely.
   nnoremap K <Nop>
+
+  " Makefile
+  autocmd FileType make set noexpandtab sw=2 sts=2
 augroup END
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -412,3 +433,9 @@ function! RunTests(filename)
       exec ":!bin/rails test " . a:filename
     end
 endfunction
+
+" Insert a default odin main proc with DEBUG info added.
+function! MapOdinMainProc()
+  nnoremap <leader>odin :r~/.vim/snippets/default.odin<CR>
+endfunction
+call MapOdinMainProc()
