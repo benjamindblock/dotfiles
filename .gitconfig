@@ -19,6 +19,8 @@
   l = "!. ~/.githelpers && pretty_git_log"
   la = !git l --all
   rb = !git branch -v --sort=committerdate | tail -30
+  ps = !git push origin "$(git branch --show-current)"
+  pl = !git pull origin "$(git branch --show-current)"
 [core]
 	excludesfile = ~/.gitignore_global
 [init]
