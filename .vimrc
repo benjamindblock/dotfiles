@@ -160,7 +160,7 @@ set wildignore+=*/tmp
 set wildignore+=*/storage
 set wildignore+=*/app/assets/fonts
 
-" Tab and indent settings
+" Default tab and indent settings
 set autoindent     " Autoindent when making new line
 set tabstop=2      " Set tabs to 2 spaces when reading file
 set softtabstop=2  " Set tabs to 2 space when editing
@@ -294,13 +294,13 @@ augroup vimrcEx
     \ endif
 
   " For Ruby et. al., autoindent with two spaces, always expand tabs
-  autocmd! FileType ruby,haml,eruby,yaml,html,sass,cucumber set ai sw=2 sts=2 et
+  autocmd! FileType ruby,haml,eruby,yaml,html,sass,cucumber,sql set ai sw=2 sts=2 et
 
   " Python settings
   autocmd! FileType python set sw=4 sts=4 et
 
   " Odin
-  autocmd! FileType odin set tabstop=4 shiftwidth=4 noexpandtab
+  autocmd! FileType odin set autoindent copyindent preserveindent tabstop=4 shiftwidth=4 softtabstop=0 noexpandtab
 
   " Sass
   autocmd! BufRead,BufNewFile *.sass setfiletype sass

@@ -3,6 +3,7 @@
 .IdentityService/
 .Trash
 .Xauthority
+.ansible/
 .aspnet/
 .aws/
 .bash_history
@@ -36,6 +37,7 @@
 .locus/
 .mix/
 .mono/
+.mysql_history
 .net/
 .netrc
 .node-gyp/
@@ -49,6 +51,7 @@
 .pyenv/
 .python_history
 .rbenv/
+.redbean_history
 .rediscli_history
 .rustup/
 .sbcl_history
@@ -94,6 +97,8 @@ Pictures/
 Projects/
 Public/
 Zotero/
+ansible/
+bin/althttpd
 build/
 calibre/
 go/

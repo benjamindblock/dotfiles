@@ -15,6 +15,7 @@ export CPPFLAGS="-I/opt/homebrew/opt/curl/include"
 ################################################################
 # START PATH MODIFICATIONS
 ################################################################
+export PATH="/opt/homebrew/opt/postgresql@16/bin:${PATH}"
 
 # Homebrew
 export PATH=/opt/homebrew/bin:${PATH}
@@ -32,8 +33,8 @@ export PATH="/opt/homebrew/opt/llvm@14/bin:${PATH}"
 export PATH="/opt/homebrew/opt/bison/bin:${PATH}"
 
 # Odin
-export PATH="${PATH}:~/build/Odin"
-export PATH="${PATH}:~/build/ols"
+export PATH="${PATH}:${HOME}/build/Odin"
+export PATH="${PATH}:${HOME}/build/ols"
 
 ################################################################
 # END PATH MODIFICATIONS
