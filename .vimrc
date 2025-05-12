@@ -8,28 +8,16 @@ Plug 'https://github.com/tpope/vim-commentary.git'
 Plug 'https://github.com/tpope/vim-endwise.git'
 " TPope Vinegar (netrw improvements)
 Plug 'https://github.com/tpope/vim-vinegar.git'
-" TPope Dispatch
-Plug 'https://github.com/tpope/vim-dispatch.git'
-" AsyncRun (used for Frotz / Interactive Fiction)
-Plug 'https://github.com/skywind3000/asyncrun.vim.git'
 " ALE (language linting)
 Plug 'https://github.com/dense-analysis/ale.git'
 " Vader (vim testing)
 Plug 'https://github.com/junegunn/vader.vim.git'
-" Goyo for prose writing
-Plug 'https://github.com/junegunn/goyo.vim.git'
-" Vim-Pencil for prose writing
-Plug 'https://github.com/preservim/vim-pencil.git'
 " VOoM Outliner
 Plug 'https://github.com/vim-voom/VOoM.git'
 " Ripgrep
 Plug 'https://github.com/jremmen/vim-ripgrep.git'
-" Compilers (need the bash for Dispatch)
-Plug 'https://github.com/Konfekt/vim-compilers.git'
 " Rainbow Parentheses
 Plug 'https://github.com/junegunn/rainbow_parentheses.vim.git'
-" Vlime
-Plug 'https://github.com/vlime/vlime.git'
 " Parinfer
 Plug 'https://github.com/bhurlow/vim-parinfer.git'
 " Match-up
@@ -40,12 +28,8 @@ Plug 'https://github.com/zaid/vim-rec.git'
 Plug 'https://github.com/othree/html5.vim'
 " Odin
 Plug 'https://github.com/Tetralux/odin.vim.git'
-" Iceberg
-Plug 'https://github.com/cocopon/iceberg.vim.git'
-" Apprentice
-Plug 'https://github.com/romainl/Apprentice.git'
-" Nightfly
-Plug 'https://github.com/bluz71/vim-nightfly-colors.git'
+" Terraform
+Plug 'https://github.com/hashivim/vim-terraform.git'
 call plug#end()
 
 set nocompatible
@@ -53,8 +37,13 @@ set shell=bash
 
 " NOTE: Order matters here.
 set termguicolors
+set cursorline
 set background=dark
-colorscheme nightfly
+colorscheme torte
+
+" set background=light
+" colorscheme morning
+
 syntax on
 filetype plugin on
 
@@ -63,9 +52,6 @@ let &t_BE = "\e[?2004h"
 let &t_BD = "\e[?2004l"
 let &t_PS = "\e[200~"
 let &t_PE = "\e[201~"
-
-" Vlime config
-let g:vlime_leader=","
 
 " Recutils
 let g:recutils_no_folding=1
@@ -78,9 +64,6 @@ nmap <C-S-Up> :m -2<CR>
 
 "Ctrl+Shift+down move line below
 nmap <C-S-Down> :m +1<CR>
-
-" Highlight the current line
-set cursorline
 
 " Display title of file/folder
 set title
@@ -103,11 +86,12 @@ set complete=.,t
 
 " Ale linter settings
 let g:ale_linters = {
-\   'ruby': ['rubocop', 'reek'],
+\   'ruby': ['rubocop', 'reek', 'sorbet'],
 \   'eruby': ['erblint'],
 \   'javascript': ['eslint'],
 \   'tcl': ['nagelfar'],
 \   'odin': ['ols'],
+\   'python': ['pylint'],
 \}
 let g:ale_sign_error = '!!'
 let g:ale_sign_warning = '??'
@@ -115,17 +99,6 @@ let g:ale_sign_info = 'oo'
 let g:ale_linters_explicit = 1
 let g:ale_list_window_size = 5
 let g:ale_virtualtext_cursor = 'disabled'
-" let g:ale_odin_ols_config = {
-" \   'initializationOptions': {
-" \     'collections': [
-" \       {
-" \         'name': 'core',
-" \         'path': '/Users/bdb/build/Odin/core'
-" \       }
-" \     ],
-" \     'disable_parser_errors': 'true'
-" \   }
-" \}
 nmap <silent> <C-k> <Plug>(ale_previous_wrap)
 nmap <silent> <C-j> <Plug>(ale_next_wrap)
 
@@ -167,9 +140,6 @@ set softtabstop=2  " Set tabs to 2 space when editing
 set shiftwidth=2
 set expandtab      " Make tabs spaces, not <TAB>
 
-" Only redraw when required
-" set lazyredraw
-
 " Show the status line at the bottom
 set ls=2
 set showmatch
@@ -182,12 +152,16 @@ set smartcase
 
 " Adding spacebar as an additional leader
 let mapleader="\<Space>"
+
 " Clear out highlighted search terms
 nnoremap <leader>, :nohlsearch<CR>
+
 " Return to previous buffer with leader+backspace
 nnoremap <leader><BS> <C-^>
+
 " Insert a hash rocket with <c-l>
 imap <c-l> <space>=><space>
+
 " Unfuck my screen
 nnoremap U :syntax on<cr>:syntax sync fromstart<cr>:redraw!<cr>
 
@@ -209,12 +183,6 @@ if &listchars ==# 'eol:$'
   set listchars=tab:>\ ,trail:-,extends:>,precedes:<,nbsp:+
 endif
 
-" Reload Safari with <leader>r if there is a bin/reload
-" file in the current working directory
-if filereadable('bin/reload')
-  nnoremap <leader>r :w\|Dispatch! bin/reload<cr>
-endif
-
 " fzy for fuzzy search
 function! FzyCommand(choice_command, fzy_args, vim_command)
   try
@@ -228,7 +196,6 @@ function! FzyCommand(choice_command, fzy_args, vim_command)
   redraw!
   exec a:vim_command . " " . selection
 endfunction
-
 nnoremap <leader>t :call FzyCommand("fd -t f -H", "", ":e")<cr>
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -331,34 +298,18 @@ augroup vimrcEx
 augroup END
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Prose Mode
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-function EnableProseMode()
-  setlocal nocursorline nospell linebreak
-  Goyo 110
-  SoftPencil
-  setlocal cole=2
-  set conceallevel=0
-  Voom markdown
-  echo "Prose Mode"
-endfu
-
-" Enter ProseMode
-command Prose call EnableProseMode()
-nnoremap ,p :Prose<CR>
-
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Note taking mode
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 function EnableVOoM()
   Voom markdown
   echo "Note Mode"
 endfu
-
 command VOoM call EnableVOoM()
 nnoremap ,n :VOoM<CR>
 
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Open a StarDict definition in a ScratchBuffer
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 function ScratchBufferize()
   setlocal buftype=nofile
   setlocal bufhidden=hide
@@ -432,9 +383,3 @@ function! RunTests(filename)
       exec ":!bin/rails test " . a:filename
     end
 endfunction
-
-" Insert a default odin main proc with DEBUG info added.
-function! MapOdinMainProc()
-  nnoremap <leader>odin :r~/.vim/snippets/default.odin<CR>
-endfunction
-call MapOdinMainProc()

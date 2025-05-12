@@ -1,6 +1,6 @@
 [user]
 	name = Ben Block
-	email = benjamindblock@gmail.com
+	email = bblock@syntaxdata.com
 [includeIf "gitdir:~/Projects/"]
   path = ~/Projects/.gitconfig
 [color]
@@ -11,6 +11,8 @@
   co = checkout
   di = diff --find-copies-harder
   dc = diff --find-copies-harder --cached
+  ddi = -c diff.external=difft diff --find-copies-harder
+  ddc = -c diff.external=difft diff --find-copies-harder --cached
   amend = commit --amend
   aa = add --all
   fa = fetch --all
@@ -25,3 +27,8 @@
 	excludesfile = ~/.gitignore_global
 [init]
 	defaultBranch = main
+[diff]
+  algorithm = histogram
+  colorMoved = plain
+  mnemonicPrefix = true
+  renames = true

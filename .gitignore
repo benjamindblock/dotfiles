@@ -10,7 +10,9 @@
 .bash_sessions/
 .cache/
 .cargo/
+.conda/
 .config/asciinema/install-id
+.config/btop/
 .config/configstore/
 .config/filezilla/
 .config/fontforge/
@@ -31,6 +33,7 @@
 .hex/
 .irb_history
 .julia/
+.keras/
 .kube/
 .lesshst
 .local/
@@ -55,12 +58,14 @@
 .rediscli_history
 .rustup/
 .sbcl_history
+.slack/
 .slime/
 .sqlite_history
 .ssh/
 .tads/
 .templateengine/
 .terminfo
+.terraform.d/
 .tintin/
 .vim/..netrwhist.un~
 .vim/.netrwhist

@@ -28,8 +28,19 @@ hi! link StatusLineTerm StatusLine
 hi! link StatusLineTermNC StatusLineNC
 hi! link MessageWindow Pmenu
 hi! link PopupNotification Todo
-hi Normal guifg=#eeeeee guibg=#000000 gui=NONE cterm=NONE
-hi Comment guifg=#80a0ff guibg=NONE gui=NONE cterm=NONE
+hi Normal guifg=#ffffff guibg=#000000 gui=NONE cterm=NONE
+
+" hi Comment guifg=#80a0ff guibg=NONE gui=NONE cterm=NONE
+" hi def link rubySymbol Constant
+" hi def link rubySymbol Constant
+hi Comment guifg=#999999 guibg=NONE gui=NONE cterm=NONE
+hi String guifg=#80a0ff guibg=NONE gui=NONE cterm=NONE
+" hi def link rubyStringStart String
+" hi def link rubyStringEnd String
+" hi Delimiter guifg=#ffffff guibg=NONE gui=NONE cterm=NONE
+" " hi Delimiter guifg=#80a0ff guibg=NONE gui=NONE cterm=NONE
+" hi def link rubySymbolStart rubySymbol
+
 hi Constant guifg=#ffa0a0 guibg=NONE gui=NONE cterm=NONE
 hi Identifier guifg=#40ffff guibg=NONE gui=NONE cterm=NONE
 hi Statement guifg=#ffff60 guibg=NONE gui=NONE cterm=NONE
@@ -47,7 +58,7 @@ hi CursorLine guifg=NONE guibg=#333333 gui=NONE cterm=NONE
 hi CursorLineNr guifg=#ffff00 guibg=#333333 gui=NONE cterm=NONE
 hi SignColumn guifg=#00ffff guibg=NONE gui=NONE cterm=NONE
 hi FoldColumn guifg=#00ffff guibg=NONE gui=NONE cterm=NONE
-hi ColorColumn guifg=#eeeeee guibg=#8b0000 gui=NONE cterm=NONE
+hi ColorColumn guifg=#ffffff guibg=#8b0000 gui=NONE cterm=NONE
 hi Conceal guifg=#e5e5e5 guibg=#a9a9a9 gui=NONE cterm=NONE
 hi Cursor guifg=#000000 guibg=#00ff00 gui=bold cterm=NONE
 hi lCursor guifg=#000000 guibg=#e5e5e5 gui=NONE cterm=NONE
@@ -78,7 +89,7 @@ hi StatusLineNC guifg=#000000 guibg=#e5e5e5 gui=NONE cterm=NONE
 hi VertSplit guifg=#000000 guibg=#e5e5e5 gui=NONE cterm=NONE
 hi TabLine guifg=#ffffff guibg=#7f7f7f gui=NONE cterm=NONE
 hi TabLineFill guifg=NONE guibg=#000000 gui=reverse cterm=reverse
-hi TabLineSel guifg=#eeeeee guibg=#000000 gui=bold cterm=bold
+hi TabLineSel guifg=#ffffff guibg=#000000 gui=bold cterm=bold
 hi ToolbarLine guifg=NONE guibg=#000000 gui=NONE cterm=NONE
 hi ToolbarButton guifg=#000000 guibg=#e5e5e5 gui=bold cterm=bold
 hi Pmenu guifg=fg guibg=#303030 gui=NONE cterm=NONE
@@ -364,7 +375,7 @@ if s:t_Co >= 0
 endif
 
 " Background: dark
-" Color: foreground     #eeeeee     251            white
+" Color: foreground     #ffffff     251            white
 " Color: background     #000000     16             black
 " Color: color00        #000000     16             black
 " Color: color08        #7f7f7f     102            darkgrey

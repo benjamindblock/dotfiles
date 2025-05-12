@@ -18,7 +18,7 @@ let g:colors_name = "blue-mood"
 
 
 " Define reusable colorvariables.
-let s:dodgerblue4="#104e8b"
+let s:dodgerblue4="#0e467c"
 let s:whitesmoke="#ffffff"
 let s:fg2="#e1e1e1"
 let s:fg3="#cecece"

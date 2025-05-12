@@ -21,7 +21,3 @@ brew bundle
 # Setup Projects directory
 cd $HOME
 mkdir Projects
-
-# Install Quicklisp
-curl -O https://beta.quicklisp.org/quicklisp.lisp
-sbcl --load quicklisp.lisp
