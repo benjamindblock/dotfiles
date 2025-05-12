@@ -1,5 +1,5 @@
 # dotfiles
-Standard git repo in the `~` directory. No other tools.
+Standard git repo in the `~` (`$HOME`) directory. No other tools.
 
 ## Bootstap / Installation
 1. `cd ~`
@@ -9,11 +9,11 @@ Standard git repo in the `~` directory. No other tools.
 5. `bin/setup`
 6. `vi ~/.vimrc`
 7. `:PlugInstall`
-8. To specify a different git email/name to commit with, add a `.gitconfig` to `~/Projects` with:
+8. To specify a different git email/name to commit with for **work**, add a `.gitconfig` to `$HOME/Work` with:
 ```
 [user]
   name = Example Name
-  email = example@email.com
+  email = example@work.com
 ```
 These are the default settings in `~/.gitconfig`:
 ```
@@ -33,7 +33,3 @@ These are the default settings in `~/.gitconfig`:
 
 ## TODO
 - Add `bin/update` in addition to `bin/setup`
-- Add additional interactive fiction tools
-- Karabiner JSON doesn't seem to be working
-- Add Zettelkasten (with `fzf` implementation) in an archive somewhere
-- Add install for F#, Dialog, A-Machine, Virtualfish+Python

@@ -2,22 +2,15 @@
 
 # Install Homebrew
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-echo '# Set PATH, MANPATH, etc., for Homebrew.' >> /Users/bdb/.zprofile
-echo 'eval "$(/opt/homebrew/bin/brew shellenv)"' >> /Users/bdb/.zprofile
-eval "$(/opt/homebrew/bin/brew shellenv)"
 
-# Install vim-plug
-curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
+# Install vim-plug by downloading and placing into ~/.vim
+curl -fLo $HOME/.vim/autoload/plug.vim --create-dirs \
     https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 
 # Run OSX customizations
-chmod +x bin/osx
-bin/osx
+chmod +x $HOME/bin/osx
+$HOME/bin/osx
 
 # Install all brew formulae and casks
 cd $HOME/.config
 brew bundle
-
-# Setup Projects directory
-cd $HOME
-mkdir Projects
