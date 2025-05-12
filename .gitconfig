@@ -1,10 +1,10 @@
 [user]
-	name = Ben Block
-	email = bblock@syntaxdata.com
-[includeIf "gitdir:~/Projects/"]
-  path = ~/Projects/.gitconfig
+  name = Ben Block
+  email = benjamindblock@gmail.com
+[includeIf "gitdir:~/Work/**"]
+  path = ~/Work/.gitconfig
 [color]
-	ui = true
+  ui = true
 [alias]
   st = status
   ci = commit --verbose
@@ -24,9 +24,9 @@
   ps = !git push origin "$(git branch --show-current)"
   pl = !git pull origin "$(git branch --show-current)"
 [core]
-	excludesfile = ~/.gitignore_global
+  excludesfile = ~/.gitignore_global
 [init]
-	defaultBranch = main
+  defaultBranch = main
 [diff]
   algorithm = histogram
   colorMoved = plain
