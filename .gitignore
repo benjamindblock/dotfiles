@@ -90,6 +90,7 @@
 .zcompdump
 .zprofile
 .zsh_sessions/
+.zsh_history
 Applications/
 Desktop/
 Documents/
