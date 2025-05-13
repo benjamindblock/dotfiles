@@ -50,4 +50,7 @@ export GREP_OPTIONS="--color"
 # Kubeconfig
 export KUBECONFIG="$HOME/.kube/kubeconfig-bblock@syntaxdata.com.yaml"
 
+# Brew setup.
+eval "$(/opt/homebrew/bin/brew shellenv)"
+
 source "$HOME/.bashrc"

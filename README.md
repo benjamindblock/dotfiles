@@ -16,10 +16,11 @@ Standard git repo in the `~` (`$HOME`) directory. No other tools.
 6. `git init .`
 7. `git remote add origin git@github.com:benjamindblock/dotfiles.git`
 8. `git pull origin main`
-9. `bin/setup`
-10. `vi ~/.vimrc`
-11. `:PlugInstall`
-12. To specify a different git email/name to commit with for **work**, add a `.gitconfig` to `$HOME/Work` with:
+9. Start a Bash session: `bash`
+10. `bin/setup`
+11. `vi ~/.vimrc`
+12. `:PlugInstall`
+13. To specify a different git email/name to commit with for **work**, add a `.gitconfig` to `$HOME/Work` with:
 ```
 [user]
   name = Example Name
@@ -31,9 +32,9 @@ These are the default settings in `~/.gitconfig`:
   name = Ben Block
   email = benjamindblock@gmail.com
 ```
-9. Launch `Hammerspoon.app`, select: `keep in menu`, `always launch at startup`
-10. To make `bash` the default shell: add `/opt/homebrew/bin/bash` (or wherever `which bash` points to) to `/etc/shells`
-11. `chsh -s /opt/homebrew/bin/bash`
+14. Launch `Hammerspoon.app`, select: `keep in menu`, `always launch at startup`
+15. To make `bash` the default shell: add `/opt/homebrew/bin/bash` (or wherever `which bash` points to) to `/etc/shells`
+16. `chsh -s /opt/homebrew/bin/bash`
 
 ## Updates
 1. `git checkout main`

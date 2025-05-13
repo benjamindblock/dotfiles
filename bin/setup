@@ -1,7 +1,11 @@
 #!/usr/bin/env bash
 
+# Change shell to bash.
+chsh -s /bin/bash
+
 # Install Homebrew
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+/opt/homebrew/bin/brew shellenv
 
 # Install vim-plug by downloading and placing into ~/.vim
 curl -fLo $HOME/.vim/autoload/plug.vim --create-dirs \

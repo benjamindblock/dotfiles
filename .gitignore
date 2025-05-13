@@ -89,6 +89,7 @@
 .zcode/
 .zcompdump
 .zprofile
+.zsh_sessions/
 Applications/
 Desktop/
 Documents/
@@ -101,6 +102,7 @@ Music/
 Pictures/
 Projects/
 Public/
+Work/
 Zotero/
 ansible/
 bin/althttpd

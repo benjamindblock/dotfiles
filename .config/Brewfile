@@ -2,28 +2,16 @@
 # -----------------------------------------------------------------------------
 cask_args appdir: "/Applications"
 
-tap "homebrew/bundle"
-tap "homebrew/cask"
-tap "homebrew/cask-fonts"
-tap "homebrew/core"
-tap "homebrew/services"
-
-# Programming languages
+# Shell
 # -----------------------------------------------------------------------------
 brew "bash"
-brew "node"
-brew "sbcl"
-brew "tcl-tk"
 
 # Programming language managers
 # -----------------------------------------------------------------------------
-brew "nodenv"
-brew "rbenv"
+brew "mise"
 
 # Database
 # -----------------------------------------------------------------------------
-brew "postgis"
-brew "postgresql@14"
 brew "sqlite3"
 
 # CLI Tools or other end-use software
@@ -33,7 +21,7 @@ brew "awscli"
 brew "bcrypt"
 brew "btop"
 brew "darkhttpd"
-brew "difft"
+brew "difftastic"
 brew "direnv"
 brew "fd"
 brew "ffmpeg"
@@ -60,7 +48,6 @@ brew "yarn"
 
 # Interactive fiction
 # -----------------------------------------------------------------------------
-brew "frobtads"
 brew "frotz"
 brew "glulxe"
 
@@ -76,4 +63,3 @@ cask "mullvadvpn"
 cask "postico"
 cask "slack"
 cask "vlc"
-cask "zoom"
