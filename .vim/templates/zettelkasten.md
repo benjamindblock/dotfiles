@@ -1,5 +1,0 @@
-# TITLE
-
-## Tags
-
-## cf.

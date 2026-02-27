@@ -28,6 +28,8 @@ Plug 'https://github.com/othree/html5.vim'
 Plug 'https://github.com/Tetralux/odin.vim.git'
 " vim-ruby
 Plug 'https://github.com/jlcrochet/vim-ruby.git'
+" Terraform
+Plug 'https://github.com/hashivim/vim-terraform.git'
 call plug#end()
 
 set nocompatible
@@ -58,9 +60,6 @@ nmap <C-S-Up> :m -2<CR>
 "Ctrl+Shift+down move line below
 nmap <C-S-Down> :m +1<CR>
 
-" Adding spacebar as an additional leader
-let mapleader="\<Space>"
-
 " Highlight the current line
 set cursorline
 
@@ -85,18 +84,13 @@ set complete=.,t
 
 " ALE linter settings
 let g:ale_linters = {
-\   'ruby': ['rubocop', 'reek'],
+\   'ruby': ['rubocop', 'reek', 'sorbet'],
 \   'eruby': ['erblint'],
 \   'javascript': ['eslint', 'deno'],
 \   'typescript': ['deno'],
 \   'tcl': ['nagelfar'],
 \   'odin': ['ols'],
-\   'lean': ['lake'],
-\   'roc': ['roc_language_server'],
-\}
-" ALE fixer settings
-let g:ale_fixers = {
-\   'roc': ['roc_format', 'roc_annotate'],
+\   'python': ['pylint'],
 \}
 let g:ale_sign_error = '!!'
 let g:ale_sign_warning = '??'
@@ -104,7 +98,6 @@ let g:ale_sign_info = 'oo'
 let g:ale_linters_explicit = 1
 let g:ale_list_window_size = 5
 let g:ale_virtualtext_cursor = 'disabled'
-let g:ale_set_balloons = 1
 let g:ale_history_enabled = 1
 let g:ale_history_log_output = 1
 nmap <silent> <C-k> <Plug>(ale_previous_wrap)
@@ -162,13 +155,16 @@ set hlsearch
 set ignorecase
 set smartcase
 
+" Adding spacebar as an additional leader
+let mapleader="\<Space>"
+
 " Clear out highlighted search terms
 nnoremap <leader>, :nohlsearch<CR>
 
 " Return to previous buffer with leader+backspace
 nnoremap <leader><BS> <C-^>
 
-" Insert a hash rocket with <c-l> because it is annoying to type.
+" Insert a hash rocket with <c-l>
 imap <c-l> <space>=><space>
 
 " Unfuck my screen
@@ -205,7 +201,6 @@ function! FzyCommand(choice_command, fzy_args, vim_command)
   redraw!
   exec a:vim_command . " " . selection
 endfunction
-
 nnoremap <leader>t :call FzyCommand("fd -t f -H", "", ":e")<cr>
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -314,11 +309,12 @@ function EnableVOoM()
   Voom markdown
   echo "Note Mode"
 endfu
-
 command VOoM call EnableVOoM()
 nnoremap ,n :VOoM<CR>
 
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Open a StarDict definition in a ScratchBuffer
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 function ScratchBufferize()
   setlocal buftype=nofile
   setlocal bufhidden=hide

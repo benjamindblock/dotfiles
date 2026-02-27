@@ -2,67 +2,43 @@
 # -----------------------------------------------------------------------------
 cask_args appdir: "/Applications"
 
-tap "homebrew/bundle"
-tap "homebrew/cask"
-tap "homebrew/cask-fonts"
-tap "homebrew/core"
-tap "homebrew/services"
-tap "heroku/brew"
-tap "saulpw/vd"
-tap "universal-ctags/universal-ctags"
-tap "bbc/audiowaveform"
-
-# Programming languages
+# Shell
 # -----------------------------------------------------------------------------
 brew "bash"
-brew "node"
-brew "sbcl"
-brew "tcl-tk"
+brew "fish"
 
 # Programming language managers
 # -----------------------------------------------------------------------------
-brew "nodenv"
-brew "rbenv"
+brew "mise"
 
 # Database
 # -----------------------------------------------------------------------------
-brew "postgis"
-brew "postgresql@14"
 brew "sqlite3"
 
 # CLI Tools or other end-use software
 # -----------------------------------------------------------------------------
-brew "TheZoraiz/ascii-image-converter/ascii-image-converter"
-brew "ack"
-brew "agg"
-brew "ansible@10"
 brew "asciinema"
-brew "audiowaveform"
-brew "automake"
 brew "awscli"
 brew "bcrypt"
+brew "btop"
+brew "curl"
 brew "darkhttpd"
 brew "eza"
+brew "difftastic"
+brew "direnv"
 brew "fd"
 brew "ffmpeg"
-brew "fish"
-brew "fisher"
-brew "freetds"
 brew "fzy"
 brew "gh"
 brew "git"
 brew "groff"
 brew "gron"
-brew "heroku"
 brew "htop"
-brew "hyperfine"
 brew "imagemagick"
-brew "mosh"
-brew "normalize"
+brew "ouch"
+brew "parallel"
 brew "prettier"
 brew "pwgen"
-brew "ouch"
-brew "rcm"
 brew "recutils"
 brew "redis"
 brew "rg"
@@ -74,23 +50,12 @@ brew "tree"
 brew "typst"
 brew "universal-ctags"
 brew "vim"
-brew "visidata"
 brew "weechat"
 brew "wget"
-brew "woff2"
-brew "xsv"
 brew "yarn"
-brew "youtube-dl"
-
-# Terminal games & MUD
-# -----------------------------------------------------------------------------
-brew "brogue"
-brew "stone-soup"
-brew "tintin"
 
 # Interactive fiction
 # -----------------------------------------------------------------------------
-brew "frobtads"
 brew "frotz"
 brew "glulxe"
 
@@ -98,6 +63,7 @@ brew "glulxe"
 # -----------------------------------------------------------------------------
 cask "audacity"
 cask "chromedriver"
+cask "docker"
 cask "flux"
 cask "ghostty"
 cask "google-chrome"
@@ -107,8 +73,5 @@ cask "karabiner-elements"
 cask "mullvadvpn"
 cask "postico"
 cask "slack"
-cask "spotify"
-cask "transmission"
 cask "vlc"
 cask "zoom"
-cask "zotero"

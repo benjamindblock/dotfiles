@@ -37,6 +37,7 @@
 !.vim/**
 .vim/plugged
 .vim/.netrwhist
+.vim/tmp
 
 !.w3m/
 !README.md
@@ -45,4 +46,3 @@
 !bin/**
 
 .DS_Store
-tmp/

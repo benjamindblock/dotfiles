@@ -33,8 +33,38 @@ alias tf="tofu"
 alias vimrc="vim ~/.vimrc"
 alias bashrc="vim ~/.bashrc"
 alias ghostrc="vim ~/.config/ghostty/config"
+alias fishrc="vim ~/.config/fish/config.fish"
 alias todo="vi ~/Documents/todo.txt"
 alias follow="tail -f -n +1"
+alias k="kubectl"
+alias tf="terraform"
+
+function pry {
+  if [ -f ./config/environment.rb ]; then
+    echo "Starting pry with ./config/environment.rb loaded..."
+    bundle exec pry -r ./config/environment.rb
+  elif [ -f Gemfile ]; then
+    echo "Starting pry in Gemfile context..."
+    bundle exec pry
+  else
+    echo "Starting pry..."
+    eval "$(which pry)"
+  fi
+}
+
+# It's annoying to move the Paralus kubeconfig file into .kube all the time...
+function kcfg {
+  kube="${HOME}/.kube"
+  kubeconfig="${HOME}/kubeconfig-bblock@syntaxdata.com.yaml"
+  if [ -f "${kubeconfig}" ]; then
+    cd "${HOME}"
+    mv "${kubeconfig}" "${kube}"
+    cd "-" > /dev/null
+    echo "Moved ${kubeconfig} -> ${kube}"
+  else
+    echo "${kubeconfig} does not exist. Exiting."
+  fi
+}
 
 # tmux-related aliases & functions
 alias tls="tmux ls"
@@ -162,7 +192,7 @@ git_colon() {
   fi
 }
 
-export PS1="${txtgrn}[\A]${txtrst}:${txtblu}[\w]${txtrst}\$(git_colon)${txtcyn}\$(git_prompt) ${txtred}|${txtrst} "
+export PS1="${txtgrn}[\A]${txtrst}:${brtblu}[\w]${txtrst}\$(git_colon)${txtpur}\$(git_prompt) ${txtred}|${txtrst} "
 export PS4='+${BASH_SOURCE[0]##*/}($LINENO)/${FUNCNAME[0]}> '
 
 source ~/bin/git-completion.sh

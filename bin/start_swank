@@ -1,6 +1,0 @@
-#!/usr/bin/env bash
-
-# NOTE: Currently deprecated. Have moved off the Vlime.
-# Once this is official, remove this file.
-kitty @ launch --type=tab --tab-title "sbcl" --keep-focus --no-response --allow-remote-control
-kitty @ send-text --match-tab 'title:^sbcl' "sbcl --load ~/.vim/plugged/slimv/slime/start-swank.lisp\\x0d"

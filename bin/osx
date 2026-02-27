@@ -90,21 +90,21 @@ defaults write com.apple.dock 'orientation' -string 'left'
 # Disable shadow in screenshots
 defaults write com.apple.screencapture disable-shadow -bool true
 
-# opening and closing windows and popovers
+# Opening and closing windows and popovers
 defaults write -g NSAutomaticWindowAnimationsEnabled -bool false
 
-# showing and hiding sheets, resizing preference windows, zooming windows
+# Showing and hiding sheets, resizing preference windows, zooming windows
 # float 0 doesn't work
 defaults write -g NSWindowResizeTime -float 0.001
 
-# showing the Dock
+# Showing the Dock
 defaults write com.apple.dock autohide-time-modifier -float 0
 defaults write com.apple.dock autohide-delay -float 0
 
-# showing and hiding Mission Control, command+numbers
+# Showing and hiding Mission Control, command+numbers
 defaults write com.apple.dock expose-animation-duration -float 0
 
-# showing and hiding Launchpad
+# Showing and hiding Launchpad
 defaults write com.apple.dock springboard-show-duration -float 0
 
 # Kill affected applications
