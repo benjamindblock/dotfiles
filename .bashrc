@@ -37,7 +37,6 @@ alias fishrc="vim ~/.config/fish/config.fish"
 alias todo="vi ~/Documents/todo.txt"
 alias follow="tail -f -n +1"
 alias k="kubectl"
-alias tf="terraform"
 
 function pry {
   if [ -f ./config/environment.rb ]; then
@@ -208,5 +207,3 @@ eval "$(direnv hook bash)"
 # Activate mise
 eval "$(mise activate bash)"
 
-# For claude
-export PATH="$HOME/.local/bin:$PATH"
