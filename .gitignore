@@ -5,6 +5,8 @@
 
 !.claude/
 !.claude/CLAUDE.md
+!.claude/skills/
+!.claude/skills/**
 
 !.config/
 !.config/Brewfile

@@ -10,3 +10,4 @@ tmp/**/*
 /tags
 *.tags
 *.tags.tmp
+SESSION.md

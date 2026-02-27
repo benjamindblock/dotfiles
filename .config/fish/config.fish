@@ -36,7 +36,11 @@ set -gx CPPFLAGS -I/opt/homebrew/opt/curl/include
 # Prompt
 # ==============================================================================
 
-# fish git prompt
+# Do not show any greeting
+set --universal --erase fish_greeting
+function fish_greeting; end
+
+# Git prompt
 set __fish_git_prompt_showuntrackedfiles 'yes'
 set __fish_git_prompt_showdirtystate 'yes'
 set __fish_git_prompt_showstashstate ''
@@ -51,11 +55,11 @@ function fish_prompt
         set_color brblack
         echo -n ':'
         set_color yellow
-        echo -n (basename $PWD)
+        echo -n (string join / (string split -r -m3 / (prompt_pwd))[-3..-1])
     end
-    set_color green
+    set_color brgreen
     printf '%s ' (__fish_git_prompt)
-    set_color red
+    set_color brred
     echo -n '| '
     set_color normal
 end

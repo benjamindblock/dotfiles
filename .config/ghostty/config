@@ -33,7 +33,7 @@ palette = 9=#ffa500
 
 # Green
 palette = 2=#00cd00
-palette = 10=#00ff00
+palette = 10=#4EBA65
 
 # Yellow
 palette = 3=#fdfd5f
@@ -41,7 +41,7 @@ palette = 11=#ffff00
 
 # Blue
 palette = 4=#7FA0FF
-palette = 12=#5c5cff
+palette = 12=#8770ff
 
 # Magenta
 palette = 5=#cd00cd
