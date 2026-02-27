@@ -109,4 +109,5 @@ defaults write com.apple.dock springboard-show-duration -float 0
 
 # Kill affected applications
 for app in Finder Dock SystemUIServer; do killall "$app" > /dev/null 2>&1; done
+
 echo "OSX Hacks Done. Note that some of these changes require a logout/restart to take effect."

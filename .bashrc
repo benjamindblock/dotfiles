@@ -25,12 +25,14 @@ bind "set show-all-if-ambiguous on"
 bind "set menu-complete-display-prefix on"
 
 # Unbreak broken, non-colored terminal
-# export TERM="xterm-kitty"
-alias ll="ls -Ahltr"
-alias ls="ls -G"
+alias l="ls -G"
+alias ll="ls -Ghltr"
+alias lll="ls -GAhltr"
 alias vi="vim"
+alias tf="tofu"
 alias vimrc="vim ~/.vimrc"
 alias bashrc="vim ~/.bashrc"
+alias ghostrc="vim ~/.config/ghostty/config"
 alias todo="vi ~/Documents/todo.txt"
 alias follow="tail -f -n +1"
 
@@ -170,6 +172,11 @@ source ~/bin/z.sh
 # functions from .bashrc
 source "$(which env_parallel.bash)"
 
-# Init env tools for Ruby, Node, Python
-eval "$(rbenv init -)"
-eval "$(nodenv init -)"
+# Init direnv.
+eval "$(direnv hook bash)"
+
+# Activate mise
+eval "$(mise activate bash)"
+
+# For claude
+export PATH="$HOME/.local/bin:$PATH"

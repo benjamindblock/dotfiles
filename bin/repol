@@ -1,0 +1,60 @@
+#!/bin/bash
+# Listen for incoming repo transfers
+
+set -e
+
+PORT=9999
+
+# Display a spinner while a background process runs
+spinner() {
+    local pid=$1
+    local chars='|/-\'
+    local i=0
+    while kill -0 "$pid" 2>/dev/null; do
+        printf "\r  %c " "${chars:$i:1}"
+        i=$(( (i + 1) % 4 ))
+        sleep 0.1
+    done
+    printf "\r    \r"
+}
+
+# Determine extraction directory
+TARGET_DIR="${1:-.}"
+
+# Create target directory if it doesn't exist
+mkdir -p "$TARGET_DIR"
+
+# Check if Tailscale is connected and disconnect if so
+TAILSCALE_WAS_CONNECTED=false
+if command -v tailscale >/dev/null 2>&1 && tailscale status >/dev/null 2>&1; then
+    TAILSCALE_WAS_CONNECTED=true
+    echo "Disconnecting from Tailscale..."
+    tailscale down
+    if tailscale status >/dev/null 2>&1; then
+        echo "Error: Failed to disconnect from Tailscale" >&2
+        exit 1
+    fi
+fi
+
+# Get local IP address
+LOCAL_IP=$(ipconfig getifaddr en0 2>/dev/null || ipconfig getifaddr en1 2>/dev/null || echo "unknown")
+
+echo "Listening on port $PORT..."
+echo "Run on other machine: repos $LOCAL_IP"
+echo "Files will be extracted to: $TARGET_DIR"
+
+nc -l "$PORT" | tar -xzf - -C "$TARGET_DIR" &
+spinner $!
+wait $!
+
+# Reconnect to Tailscale if it was connected before
+if [ "$TAILSCALE_WAS_CONNECTED" = true ]; then
+    echo "Reconnecting to Tailscale..."
+    tailscale up
+    if ! tailscale status >/dev/null 2>&1; then
+        echo "Error: Failed to reconnect to Tailscale" >&2
+        exit 1
+    fi
+fi
+
+echo "Done."

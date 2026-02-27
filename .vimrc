@@ -8,30 +8,16 @@ Plug 'https://github.com/tpope/vim-commentary.git'
 Plug 'https://github.com/tpope/vim-endwise.git'
 " TPope Vinegar (netrw improvements)
 Plug 'https://github.com/tpope/vim-vinegar.git'
-" TPope Dispatch
-Plug 'https://github.com/tpope/vim-dispatch.git'
-" AsyncRun (used for Frotz / Interactive Fiction)
-Plug 'https://github.com/skywind3000/asyncrun.vim.git'
 " ALE (language linting)
 Plug 'https://github.com/dense-analysis/ale.git'
 " Vader (vim testing)
 Plug 'https://github.com/junegunn/vader.vim.git'
-" Goyo for prose writing
-Plug 'https://github.com/junegunn/goyo.vim.git'
-" Vim-Pencil for prose writing
-Plug 'https://github.com/preservim/vim-pencil.git'
 " VOoM Outliner
 Plug 'https://github.com/vim-voom/VOoM.git'
 " Ripgrep
 Plug 'https://github.com/jremmen/vim-ripgrep.git'
-" Compilers (need the bash for Dispatch)
-Plug 'https://github.com/Konfekt/vim-compilers.git'
 " Rainbow Parentheses
 Plug 'https://github.com/junegunn/rainbow_parentheses.vim.git'
-" Vlime
-Plug 'https://github.com/vlime/vlime.git'
-" Parinfer
-Plug 'https://github.com/bhurlow/vim-parinfer.git'
 " Match-up
 Plug 'https://github.com/andymass/vim-matchup.git'
 " vim-rec
@@ -40,12 +26,8 @@ Plug 'https://github.com/zaid/vim-rec.git'
 Plug 'https://github.com/othree/html5.vim'
 " Odin
 Plug 'https://github.com/Tetralux/odin.vim.git'
-" Iceberg
-Plug 'https://github.com/cocopon/iceberg.vim.git'
-" Apprentice
-Plug 'https://github.com/romainl/Apprentice.git'
-" Nightfly
-Plug 'https://github.com/bluz71/vim-nightfly-colors.git'
+" vim-ruby
+Plug 'https://github.com/jlcrochet/vim-ruby.git'
 call plug#end()
 
 set nocompatible
@@ -54,7 +36,7 @@ set shell=bash
 " NOTE: Order matters here.
 set termguicolors
 set background=dark
-colorscheme nightfly
+colorscheme torte
 syntax on
 filetype plugin on
 
@@ -63,9 +45,6 @@ let &t_BE = "\e[?2004h"
 let &t_BD = "\e[?2004l"
 let &t_PS = "\e[200~"
 let &t_PE = "\e[201~"
-
-" Vlime config
-let g:vlime_leader=","
 
 " Recutils
 let g:recutils_no_folding=1
@@ -78,6 +57,9 @@ nmap <C-S-Up> :m -2<CR>
 
 "Ctrl+Shift+down move line below
 nmap <C-S-Down> :m +1<CR>
+
+" Adding spacebar as an additional leader
+let mapleader="\<Space>"
 
 " Highlight the current line
 set cursorline
@@ -95,19 +77,26 @@ set relativenumber
 " Easily copy and paste in an out of Vim
 set clipboard=unnamed
 
-" Change split size with the mouse
+" Mouse support.
 set mouse=n
 
 " Only look at tags and current file for autocomplete
 set complete=.,t
 
-" Ale linter settings
+" ALE linter settings
 let g:ale_linters = {
 \   'ruby': ['rubocop', 'reek'],
 \   'eruby': ['erblint'],
-\   'javascript': ['eslint'],
+\   'javascript': ['eslint', 'deno'],
+\   'typescript': ['deno'],
 \   'tcl': ['nagelfar'],
 \   'odin': ['ols'],
+\   'lean': ['lake'],
+\   'roc': ['roc_language_server'],
+\}
+" ALE fixer settings
+let g:ale_fixers = {
+\   'roc': ['roc_format', 'roc_annotate'],
 \}
 let g:ale_sign_error = '!!'
 let g:ale_sign_warning = '??'
@@ -115,19 +104,12 @@ let g:ale_sign_info = 'oo'
 let g:ale_linters_explicit = 1
 let g:ale_list_window_size = 5
 let g:ale_virtualtext_cursor = 'disabled'
-" let g:ale_odin_ols_config = {
-" \   'initializationOptions': {
-" \     'collections': [
-" \       {
-" \         'name': 'core',
-" \         'path': '/Users/bdb/build/Odin/core'
-" \       }
-" \     ],
-" \     'disable_parser_errors': 'true'
-" \   }
-" \}
+let g:ale_set_balloons = 1
+let g:ale_history_enabled = 1
+let g:ale_history_log_output = 1
 nmap <silent> <C-k> <Plug>(ale_previous_wrap)
 nmap <silent> <C-j> <Plug>(ale_next_wrap)
+nmap <silent> <leader>a <Plug>(ale_detail)
 
 " Use the line number column for ALE signs
 set signcolumn=number
@@ -168,7 +150,7 @@ set shiftwidth=2
 set expandtab      " Make tabs spaces, not <TAB>
 
 " Only redraw when required
-" set lazyredraw
+set lazyredraw
 
 " Show the status line at the bottom
 set ls=2
@@ -180,14 +162,15 @@ set hlsearch
 set ignorecase
 set smartcase
 
-" Adding spacebar as an additional leader
-let mapleader="\<Space>"
 " Clear out highlighted search terms
 nnoremap <leader>, :nohlsearch<CR>
+
 " Return to previous buffer with leader+backspace
 nnoremap <leader><BS> <C-^>
-" Insert a hash rocket with <c-l>
+
+" Insert a hash rocket with <c-l> because it is annoying to type.
 imap <c-l> <space>=><space>
+
 " Unfuck my screen
 nnoremap U :syntax on<cr>:syntax sync fromstart<cr>:redraw!<cr>
 
@@ -207,12 +190,6 @@ set display+=lastline
 " Make set :list display better (showing whitespace chars)
 if &listchars ==# 'eol:$'
   set listchars=tab:>\ ,trail:-,extends:>,precedes:<,nbsp:+
-endif
-
-" Reload Safari with <leader>r if there is a bin/reload
-" file in the current working directory
-if filereadable('bin/reload')
-  nnoremap <leader>r :w\|Dispatch! bin/reload<cr>
 endif
 
 " fzy for fuzzy search
@@ -248,7 +225,7 @@ nnoremap <leader>t :call FzyCommand("fd -t f -H", "", ":e")<cr>
 :let g:ruby_indent_block_style = 'do'
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" SWITCH BETWEEN TEST AND PRODUCTION CODE
+" SWITCH BETWEEN TEST AND PRODUCTION CODE IN RAILS APPS
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 function! OpenTestAlternate()
   let new_file = AlternateForCurrentFile()
@@ -329,23 +306,6 @@ augroup vimrcEx
   " Makefile
   autocmd FileType make set noexpandtab sw=2 sts=2
 augroup END
-
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Prose Mode
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-function EnableProseMode()
-  setlocal nocursorline nospell linebreak
-  Goyo 110
-  SoftPencil
-  setlocal cole=2
-  set conceallevel=0
-  Voom markdown
-  echo "Prose Mode"
-endfu
-
-" Enter ProseMode
-command Prose call EnableProseMode()
-nnoremap ,p :Prose<CR>
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Note taking mode
@@ -432,9 +392,3 @@ function! RunTests(filename)
       exec ":!bin/rails test " . a:filename
     end
 endfunction
-
-" Insert a default odin main proc with DEBUG info added.
-function! MapOdinMainProc()
-  nnoremap <leader>odin :r~/.vim/snippets/default.odin<CR>
-endfunction
-call MapOdinMainProc()

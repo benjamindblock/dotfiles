@@ -29,7 +29,7 @@ hi! link StatusLineTermNC StatusLineNC
 hi! link MessageWindow Pmenu
 hi! link PopupNotification Todo
 hi Normal guifg=#eeeeee guibg=#000000 gui=NONE cterm=NONE
-hi Comment guifg=#80a0ff guibg=NONE gui=NONE cterm=NONE
+hi Comment guifg=#919191 guibg=NONE gui=NONE cterm=NONE
 hi Constant guifg=#ffa0a0 guibg=NONE gui=NONE cterm=NONE
 hi Identifier guifg=#40ffff guibg=NONE gui=NONE cterm=NONE
 hi Statement guifg=#ffff60 guibg=NONE gui=NONE cterm=NONE

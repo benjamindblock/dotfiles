@@ -22,18 +22,14 @@ These are the default settings in `~/.gitconfig`:
   email = benjamindblock@gmail.com
 ```
 9. Launch `Hammerspoon.app`, select: `keep in menu`, `always launch at startup`
-10. To make `bash` the default shell: add `/opt/homebrew/bin/bash` (or wherever `which bash` points to) to `/etc/shells`
-11. `chsh -s /opt/homebrew/bin/bash`
+10. To make `fish` the default shell: add `/opt/homebrew/bin/fish`  to `/etc/shells`
+11. `chsh -s /opt/homebrew/bin/fish`
 
 ## Updates
 1. `git checkout main`
 2. `git pull origin main`
 3. Optional: `bin/setup`
-4. Optional: re-source applications (Vim, Kitty, zsh, etc.)
+4. Quit and restart terminal
 
 ## TODO
 - Add `bin/update` in addition to `bin/setup`
-- Add additional interactive fiction tools
-- Karabiner JSON doesn't seem to be working
-- Add Zettelkasten (with `fzf` implementation) in an archive somewhere
-- Add install for F#, Dialog, A-Machine, Virtualfish+Python

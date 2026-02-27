@@ -1,0 +1,47 @@
+keybind = global:ctrl+grave_accent=toggle_quick_terminal
+
+font-family = "Misc Fixed 6x13"
+font-size = 12
+font-style-italic = false
+font-style-bold = false
+font-style-bold-italic = false
+
+cursor-style = block
+cursor-style-blink = false
+shell-integration-features = no-cursor
+
+# torte palette
+foreground = #ffffff
+background = #000000
+
+# Black
+palette = 0=#000000
+palette = 8=#7f7f7f
+
+# Red
+palette = 1=#fd9f9f
+palette = 9=#ffa500
+
+# Green
+palette = 2=#00cd00
+palette = 10=#00ff00
+
+# Yellow
+palette = 3=#fdfd5f
+palette = 11=#ffff00
+
+# Blue
+palette = 4=#7FA0FF
+palette = 12=#5c5cff
+
+# Magenta
+palette = 5=#cd00cd
+palette = 13=#ff00ff
+
+# Cyan
+palette = 6=#00cdcd
+palette = 14=#00ffff
+
+# White
+palette = 7=#e5e5e5
+palette = 15=#ffffff
