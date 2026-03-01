@@ -103,8 +103,8 @@ git add -p
 # Review what's staged
 git diff --staged
 
-# Commit with message
-git commit -m "type(scope): description"
+# Commit with subject and body
+git commit --verbose
 ```
 
 ## Amending commits
@@ -112,7 +112,7 @@ git commit -m "type(scope): description"
 Fix the last commit message:
 
 ```bash
-# Amend commit message only
+# Amend commit subject or body only
 git commit --amend
 
 # Amend and add more changes
