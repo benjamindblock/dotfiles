@@ -1,6 +1,6 @@
 ---
 name: git-commit
-description: Generate descriptive commit messages by analyzing git diffs. Use when the user asks for help writing commit messages or reviewing staged changes.
+description: Commit changes to a project with git. Use this skill anytime the user requests for changes to be committed or you are committing changes agentically.
 ---
 
 # Git Commit Helper
@@ -130,6 +130,7 @@ git commit --amend --no-edit
 
 ## Commit message checklist
 
+- [ ] Stage any unstaged files required for the commmit with `git add -p`
 - [ ] Separate subject from body with a blank line
 - [ ] Scope is specific and clear
 - [ ] Subject is under 50 characters
@@ -147,3 +148,5 @@ Don't do *any* of the following:
 - Use vague messages like "update" or "fix stuff"
 - Write paragraphs in the subject
 - Use the past tense
+- Do *not* use the types from Conventional Commits. Use plain language in the
+  subject. Follow the examples.
