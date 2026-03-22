@@ -1,0 +1,13 @@
+[settings]
+idiomatic_version_file_enable_tools = ["ruby"]
+
+[settings.ruby]
+compile = false
+
+[tools]
+go = "latest"
+node = "lts"
+"npm:typescript-language-server" = "latest"
+python = "latest"
+ruby = "4.0.1"
+"npm:typescript" = "latest"

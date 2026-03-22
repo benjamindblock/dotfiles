@@ -23,6 +23,7 @@ export PATH="/opt/homebrew/opt/llvm@14/bin:${PATH}"
 # Odin
 export PATH="${PATH}:$HOME/build/Odin"
 export PATH="${PATH}:$HOME/build/ols"
+export PATH="${PATH}:/Applications/Obsidian.app/Contents/MacOS"
 
 ################################################################
 # END PATH MODIFICATIONS

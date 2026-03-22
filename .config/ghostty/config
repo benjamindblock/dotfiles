@@ -14,17 +14,17 @@ font-feature = -liga
 font-feature = -dlig
 
 cursor-color = #ffffff
-cursor-text = #000000
+cursor-text = #1b1b1b
 cursor-style = block
 cursor-style-blink = false
 shell-integration-features = no-cursor
 
 # torte palette
 foreground = #ffffff
-background = #000000
+background = #1b1b1b
 
 # Black
-palette = 0=#000000
+palette = 0=#1b1b1b
 palette = 8=#7f7f7f
 
 # Red

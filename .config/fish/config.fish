@@ -82,7 +82,7 @@ zoxide init fish | source
 # Abbreviations
 # ==============================================================================
 
-abbr -a vi vim
+abbr -a vi nvim
 abbr -a tf tofu
 abbr -a vimrc 'vim ~/.vimrc'
 abbr -a bashrc 'vim ~/.bashrc'
