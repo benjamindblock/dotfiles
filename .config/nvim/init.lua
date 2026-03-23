@@ -25,10 +25,10 @@ plug("andymass/vim-matchup")
 plug("zaid/vim-rec")
 plug("Tetralux/odin.vim")
 
--- LSP + completion
+-- LSP + linting + completion
+plug("dense-analysis/ale")
 plug("hrsh7th/nvim-cmp")
 plug("hrsh7th/cmp-nvim-lsp")
-plug("ray-x/lsp_signature.nvim")
 
 -- Colors
 -- plug("wincent/base16-nvim")
@@ -105,17 +105,129 @@ opt.path:append("**")
 -- ==============================================================================
 
 -- Load after options so termguicolors is set first.
--- vim.cmd("colorscheme torte")
-
--- Lua
 vim.cmd([[colorscheme torte]])
 
 -- Less visible window separator
-vim.api.nvim_set_hl(0, "WinSeparator", { fg = 1250067 })
+vim.api.nvim_set_hl(0, "WinSeparator", { fg = "#131313" })
 
--- Make it clearly visible which argument we're at.
-local marked = vim.api.nvim_get_hl(0, { name = 'PMenu' })
-vim.api.nvim_set_hl(0, 'LspSignatureActiveParameter', { fg = marked.fg, bg = marked.bg, ctermfg = marked.ctermfg, ctermbg = marked.ctermbg, bold = true })
+-- ==============================================================================
+-- Test Runner
+-- ==============================================================================
+-- Remembers the last test file run on a per-tab basis (via vim.t). Hitting
+-- <CR> in a test file sets it as the current test; hitting <CR> anywhere
+-- else re-runs the most recently set test.
+
+local function SetTestFile(suffix)
+  vim.t.grb_test_file = vim.fn.expand("%") .. suffix
+end
+
+local function RunTests(filename)
+  if vim.fn.expand("%") ~= "" then
+    vim.cmd("w")
+  end
+
+  if vim.fn.executable(filename) == 1 then
+    vim.cmd("!" .. "./" .. filename)
+  elseif vim.fn.filereadable("bin/test") == 1 then
+    vim.cmd("!bin/test " .. filename)
+  elseif vim.fn.filereadable("Gemfile") == 1
+      and vim.fn.glob("test/**/*.rb") ~= "" then
+    vim.cmd("!bin/rails test " .. filename)
+  end
+end
+
+local function RunTestFile(suffix)
+  suffix = suffix or ""
+  local in_test = vim.fn.expand("%"):match("_test%.rb$") ~= nil
+
+  if in_test then
+    SetTestFile(suffix)
+  elseif vim.t.grb_test_file == nil then
+    return
+  end
+
+  RunTests(vim.t.grb_test_file)
+end
+
+-- ==============================================================================
+-- Test / Production File Alternation
+-- ==============================================================================
+-- Switches between app/…/foo.rb ↔ test/…/foo_test.rb, following Rails
+-- conventions for controllers, models, workers, views, helpers, services, and
+-- jobs.
+
+local app_dirs = {
+  "controllers", "models", "workers", "views", "helpers", "services", "jobs"
+}
+
+local function is_in_app(path)
+  for _, dir in ipairs(app_dirs) do
+    if path:match("%f[%w]" .. dir .. "%f[%W]") then
+      return true
+    end
+  end
+  return false
+end
+
+local function AlternateForCurrentFile()
+  local current = vim.fn.expand("%")
+  local in_test = current:match("^test/") ~= nil
+
+  if in_test then
+    -- test → app: strip test/ prefix and _test.rb suffix
+    local new = current:gsub("_test%.rb$", ".rb"):gsub("^test/", "")
+    if is_in_app(new) then
+      new = "app/" .. new
+    end
+    return new
+  else
+    -- app → test: strip app/ prefix (if in an app dir) and add test/ + _test suffix
+    local new = current
+    if is_in_app(new) then
+      new = new:gsub("^app/", "")
+    end
+    new = new:gsub("%.e?rb$", "_test.rb")
+    return "test/" .. new
+  end
+end
+
+local function OpenTestAlternate()
+  vim.cmd("e " .. AlternateForCurrentFile())
+end
+
+-- ==============================================================================
+-- Fuzzy File Finder (fzy)
+-- ==============================================================================
+
+local function fzy_command(choice_cmd, fzy_args, vim_cmd)
+  -- fzy requires a real TTY for its interactive UI; vim.fn.system() provides
+  -- none. Instead we open a small terminal split, run fzy inside it (which
+  -- gives it a proper PTY), and capture the selection in a temp file that we
+  -- read back once the process exits.
+  local tmpfile = vim.fn.tempname()
+  local shell_cmd = string.format(
+    "bash -c %s",
+    vim.fn.shellescape(choice_cmd .. " | fzy " .. fzy_args .. " > " .. tmpfile)
+  )
+
+  vim.cmd("botright 10new")
+  local buf = vim.api.nvim_get_current_buf()
+
+  vim.fn.jobstart(shell_cmd, {
+    term = true,
+    on_exit = function()
+      vim.api.nvim_buf_delete(buf, { force = true })
+      vim.cmd("redraw!")
+      local lines = vim.fn.readfile(tmpfile)
+      os.remove(tmpfile)
+      if lines and #lines > 0 and lines[1] ~= "" then
+        vim.cmd(vim_cmd .. " " .. vim.fn.fnameescape(lines[1]))
+      end
+    end,
+  })
+
+  vim.cmd("startinsert")
+end
 
 -- ==============================================================================
 -- Keymaps
@@ -139,10 +251,39 @@ map("i", "<C-l>", " => ")
 -- Resync syntax highlighting
 map("n", "U", ":syntax on<CR>:syntax sync fromstart<CR>:redraw!<CR>", { silent = true })
 
--- Disable rdoc lookup — crashes the terminal when no rdoc is available.
--- LSP's K (hover) is mapped on LspAttach below, which will override this for
--- buffers where an LSP server is active.
-map("n", "K", "<Nop>")
+-- ALE: LSP navigation and code actions. These are global (not buffer-local) because
+-- ALE no-ops gracefully on buffers with no active LSP server.
+--
+-- K (hover) and Z (detail) both close any existing float first, so one
+-- replaces the other in a single keypress. Pressing the same key twice
+-- toggles the float off. We track which command owns the current float
+-- so we can distinguish "replace" from "toggle off".
+local ale_float_owner = nil
+
+local function ale_float_toggle(cmd)
+  local had_own_float = false
+  for _, win in ipairs(vim.api.nvim_list_wins()) do
+    local config = vim.api.nvim_win_get_config(win)
+    if config.relative ~= "" then
+      if ale_float_owner == cmd then had_own_float = true end
+      vim.api.nvim_win_close(win, true)
+    end
+  end
+  -- Toggle off if we just closed our own float; otherwise open.
+  if had_own_float then
+    ale_float_owner = nil
+  else
+    ale_float_owner = cmd
+    vim.cmd(cmd)
+  end
+end
+
+map("n", "K", function() ale_float_toggle("ALEHover") end,  { silent = true })
+map("n", "Z", function() ale_float_toggle("ALEDetail") end, { silent = true })
+map("n", "<leader>rn", "<Plug>(ale_rename)",           { silent = true })
+map("n", "<C-k>",      "<Plug>(ale_previous_wrap)",    { silent = true })
+map("n", "<C-j>",      "<Plug>(ale_next_wrap)",        { silent = true })
+map("n", "gr",         "<Plug>(ale_find_references)",  { silent = true })
 
 -- Ruby debug puts
 map("n", "<leader>wtf", 'oputs "#" * 90<C-m>puts caller<C-m>puts "#" * 90<Esc>')
@@ -163,118 +304,15 @@ map("n", ",d", function()
 end)
 
 -- Test runner
-map("n", "<CR>", function() RunTestFile() end)
+map("n", "<CR>", RunTestFile)
 
 -- Switch between test and production file
-map("n", "<leader>.", function() OpenTestAlternate() end)
+map("n", "<leader>.", OpenTestAlternate)
 
--- ==============================================================================
--- Fuzzy File Finder (fzy)
--- ==============================================================================
-
-local function fzy_command(choice_cmd, fzy_args, vim_cmd)
-  local ok, selection = pcall(function()
-    return vim.fn.system(choice_cmd .. " | fzy " .. fzy_args)
-  end)
-  vim.cmd("redraw!")
-  if not ok or selection == nil or selection == "" then
-    return
-  end
-  -- Strip trailing newline that system() appends
-  selection = selection:gsub("\n$", "")
-  if selection ~= "" then
-    vim.cmd(vim_cmd .. " " .. vim.fn.fnameescape(selection))
-  end
-end
-
+-- Fuzzy file finder
 map("n", "<leader>t", function()
   fzy_command("fd -t f -H", "", ":e")
 end)
-
--- ==============================================================================
--- Test Runner
--- ==============================================================================
--- Remembers the last test file run on a per-tab basis (via vim.t). Hitting
--- <CR> in a test file sets it as the current test; hitting <CR> anywhere
--- else re-runs the most recently set test.
-
-function RunTestFile(suffix)
-  suffix = suffix or ""
-  local in_test = vim.fn.expand("%"):match("_test%.rb$") ~= nil
-
-  if in_test then
-    SetTestFile(suffix)
-  elseif vim.t.grb_test_file == nil then
-    return
-  end
-
-  RunTests(vim.t.grb_test_file)
-end
-
-function SetTestFile(suffix)
-  vim.t.grb_test_file = vim.fn.expand("%") .. suffix
-end
-
-function RunTests(filename)
-  if vim.fn.expand("%") ~= "" then
-    vim.cmd("w")
-  end
-
-  if vim.fn.executable(filename) == 1 then
-    vim.cmd(":!" .. "./" .. filename)
-  elseif vim.fn.filereadable("bin/test") == 1 then
-    vim.cmd(":!bin/test " .. filename)
-  elseif vim.fn.filereadable("Gemfile") == 1
-      and vim.fn.glob("test/**/*.rb") ~= "" then
-    vim.cmd(":!bin/rails test " .. filename)
-  end
-end
-
--- ==============================================================================
--- Test / Production File Alternation
--- ==============================================================================
--- Switches between app/…/foo.rb ↔ test/…/foo_test.rb, following Rails
--- conventions for controllers, models, workers, views, helpers, services, and
--- jobs.
-
-local app_dirs = {
-  "controllers", "models", "workers", "views", "helpers", "services", "jobs"
-}
-
-local function is_in_app(path)
-  for _, dir in ipairs(app_dirs) do
-    if path:match("%f[%w]" .. dir .. "%f[%W]") then
-      return true
-    end
-  end
-  return false
-end
-
-function AlternateForCurrentFile()
-  local current = vim.fn.expand("%")
-  local in_test = current:match("^test/") ~= nil
-
-  if in_test then
-    -- test → app: strip test/ prefix and _test.rb suffix
-    local new = current:gsub("_test%.rb$", ".rb"):gsub("^test/", "")
-    if is_in_app(new) then
-      new = "app/" .. new
-    end
-    return new
-  else
-    -- app → test: strip app/ prefix (if in an app dir) and add test/ + _test suffix
-    local new = current
-    if is_in_app(new) then
-      new = new:gsub("^app/", "")
-    end
-    new = new:gsub("%.e?rb$", "_test.rb")
-    return "test/" .. new
-  end
-end
-
-function OpenTestAlternate()
-  vim.cmd(":e " .. AlternateForCurrentFile())
-end
 
 -- ==============================================================================
 -- VOoM Note-taking
@@ -347,24 +385,9 @@ autocmd("FileType", {
 })
 
 -- Sass: detect filetype from extension (not reliably detected by default)
-autocmd({ "BufRead", "BufNewFile" }, {
-  group   = vimrc_ex,
-  pattern = "*.sass",
-  callback = function()
-    vim.bo.filetype = "sass"
-  end,
-})
+vim.filetype.add({ extension = { sass = "sass" } })
 
 -- Markdown: 4-space soft tabs + prose format options
-autocmd({ "BufRead", "BufNewFile" }, {
-  group   = vimrc_ex,
-  pattern = { "*.mkd", "*.markdown" },
-  callback = function()
-    vim.bo.autoindent   = true
-    vim.opt_local.formatoptions = "tcroqn2"
-    vim.opt_local.comments      = "n:>"
-  end,
-})
 autocmd("FileType", {
   group   = vimrc_ex,
   pattern = "markdown",
@@ -372,11 +395,14 @@ autocmd("FileType", {
     vim.bo.shiftwidth  = 4
     vim.bo.softtabstop = 4
     vim.bo.expandtab   = true
+    vim.bo.autoindent  = true
+    vim.opt_local.formatoptions = "tcroqn2"
+    vim.opt_local.comments      = "n:>"
   end,
 })
 
 -- VCL: 4-space soft tabs
-autocmd("BufRead", {
+autocmd({ "BufRead", "BufNewFile" }, {
   group   = vimrc_ex,
   pattern = "*.vcl",
   callback = function()
@@ -386,14 +412,33 @@ autocmd("BufRead", {
   end,
 })
 
--- JavaScript / JSON: 2-space soft tabs
+-- JavaScript / TypeScript / JSON: 2-space soft tabs
 autocmd("FileType", {
   group   = vimrc_ex,
-  pattern = { "javascript", "json" },
+  pattern = { "javascript", "javascriptreact", "typescript", "typescriptreact", "json" },
   callback = function()
     vim.bo.shiftwidth  = 2
     vim.bo.softtabstop = 2
     vim.bo.expandtab   = true
+  end,
+})
+
+-- tslsp / deno mutual exclusion
+-- ALE lists both as enabled when both are in g:ale_linters, even when the
+-- custom project_root functions return '' (ALE's built-in definitions load
+-- independently and don't inherit the overrides). Setting b:ale_linters
+-- per-buffer ensures only the appropriate server runs.
+autocmd("FileType", {
+  group   = vimrc_ex,
+  pattern = { "typescript", "typescriptreact", "javascript", "javascriptreact" },
+  callback = function()
+    local has_deno = vim.fn.findfile("deno.json", ".;") ~= ""
+      or vim.fn.findfile("deno.jsonc", ".;") ~= ""
+    if has_deno then
+      vim.b.ale_linters = { "deno" }
+    else
+      vim.b.ale_linters = { "tslsp" }
+    end
   end,
 })
 
@@ -419,23 +464,37 @@ autocmd("FileType", {
 })
 
 -- ==============================================================================
--- LSP Configuration
+-- ALE Configuration
 -- ==============================================================================
--- Uses the native vim.lsp.config / vim.lsp.enable API (Neovim ≥0.11).
+-- ALE manages linting and LSP servers. With g:ale_use_neovim_lsp_api = 1
+-- (the Neovim 0.8+ default), ALE starts LSP servers through Neovim's native
+-- LSP client, so nvim-cmp / cmp-nvim-lsp work without any extra wiring.
 
-vim.diagnostic.config({
-  float = { border = "rounded" },
-})
+-- Only run the linters we explicitly list; suppress ALE's built-in defaults
+-- for filetypes not covered here.
+vim.g.ale_linters_explicit = 1
 
--- Apply rounded borders to the two LSP floating windows that aren't covered
--- by lsp_signature (which has its own config) or nvim-cmp.
-vim.lsp.handlers["textDocument/hover"] =
-  vim.lsp.with(vim.lsp.handlers.hover, { border = "rounded" })
-vim.lsp.handlers["textDocument/signatureHelp"] =
-  vim.lsp.with(vim.lsp.handlers.signature_help, { border = "rounded" })
+vim.g.ale_linters = {
+  typescript      = { "tslsp", "deno" },
+  typescriptreact = { "tslsp", "deno" },
+  javascript      = { "tslsp", "deno" },
+  javascriptreact = { "tslsp", "deno" },
+  ruby            = { "rubocop", "solargraph" },
+  python          = { "ruff" },
+  eruby           = { "herb" },
+}
 
--- Extend default client capabilities with nvim-cmp's LSP additions so that
--- servers know we support snippet completion, resolve support, etc.
+-- Rounded floating windows match the rest of the UI.
+vim.g.ale_floating_preview       = 1
+vim.g.ale_floating_window_border = { "│", "─", "╭", "╮", "╯", "╰", "│", "─" }
+
+-- Show virtual-text diagnostics only on the current line to avoid clutter
+-- in dense files.
+vim.g.ale_virtualtext_cursor = "current"
+
+-- Pass nvim-cmp's extended capabilities to every LSP server ALE starts so
+-- servers advertise snippet completion, resolve support, etc. ALE calls
+-- vim.lsp.start() internally and inherits these global defaults.
 local ok_cmp_lsp, cmp_nvim_lsp = pcall(require, "cmp_nvim_lsp")
 if ok_cmp_lsp then
   vim.lsp.config("*", {
@@ -443,78 +502,62 @@ if ok_cmp_lsp then
   })
 end
 
--- Set buffer-local keymaps and plugins whenever an LSP server attaches.
-autocmd("LspAttach", {
-  group = vimrc_ex,
-  callback = function(ev)
-    local bufnr = ev.buf
-    local bopts = { buffer = bufnr, silent = true }
-
-    map("n", "gd",         vim.lsp.buf.definition,   bopts)
-    map("n", "K",          vim.lsp.buf.hover,         bopts)
-    map("n", "<leader>rn", vim.lsp.buf.rename,        bopts)
-    map("n", "<leader>ca", vim.lsp.buf.code_action,   bopts)
-    map("n", "<C-k>",      vim.diagnostic.goto_prev,  bopts)
-    map("n", "<C-j>",      vim.diagnostic.goto_next,  bopts)
-    map("n", "<leader>a",  vim.diagnostic.open_float, bopts)
-
-    -- Show function signature hints while typing arguments.
-    local ok_sig, lsp_signature = pcall(require, "lsp_signature")
-    if ok_sig then
-      lsp_signature.on_attach({
-        bind         = true,
-        hint_enable  = false,
-        handler_opts = { border = "rounded" },
-      }, bufnr)
-    end
-  end,
+-- Configure the Neovim diagnostics float border globally (used by ALE's
+-- detail window and any direct vim.diagnostic.open_float() calls).
+vim.diagnostic.config({
+  float = { border = "rounded" },
 })
 
--- ts_ls and denols both handle TS/JS. root_markers alone can't express mutual
--- exclusion — it only sets the root, it doesn't gate startup. Instead, ts_ls
--- uses a root_dir function: if a Deno project marker is found above the file,
--- on_dir is never called and the server doesn't start for that buffer.
-vim.lsp.config("ts_ls", {
-  cmd      = { "typescript-language-server", "--stdio" },
-  filetypes = { "typescript", "typescriptreact", "javascript", "javascriptreact" },
-  root_dir = function(bufnr, on_dir)
-    if vim.fs.root(bufnr, { "deno.json", "deno.jsonc" }) then return end
-    local root = vim.fs.root(bufnr, { "tsconfig.json", "jsconfig.json", "package.json" })
-    if root then on_dir(root) end
-  end,
-})
+-- tslsp / deno mutual exclusion is handled by the b:ale_linters autocommand
+-- in the Autocommands section above. The project_root override approach via
+-- ale#linter#Define didn't work reliably — ALE's built-in linter definitions
+-- load independently and don't inherit the custom project_root functions.
+--
+-- tslsp (TypeScript/JavaScript LSP)
+-- ──────────────────────────────────
+-- ALE's built-in `tsserver` linter uses TypeScript's proprietary protocol
+-- ('lsp': 'tsserver'), which ALE explicitly excludes from Neovim's native
+-- LSP client. That means cmp-nvim-lsp never sees the server and completions
+-- don't work. We define a custom `tslsp` linter that uses
+-- typescript-language-server (a standard LSP stdio wrapper around tsserver)
+-- so ALE routes it through vim.lsp.start() and cmp-nvim-lsp can provide
+-- completions.
+--
+-- `'language': ''` is required so ALE falls back to the buffer's filetype
+-- for the LSP languageId. Without it, ALE uses the registration filetype
+-- (always 'typescript' due to the typescriptreact→typescript alias),
+-- causing the server to treat .tsx/.jsx files as plain .ts/.js.
+--
+-- herb (eruby LSP)
+-- ────────────────
+-- herb-language-server is a less common tool; the custom root function returns
+-- empty when no Gemfile is found, keeping eruby buffers clean in projects
+-- that don't use it.
+vim.cmd([[
+  function! s:HerbRoot(buffer) abort
+    let l:found = ale#path#FindNearestFile(a:buffer, 'Gemfile')
+    return empty(l:found) ? '' : fnamemodify(l:found, ':h')
+  endfunction
 
-vim.lsp.config("denols", {
-  cmd       = { "deno", "lsp" },
-  filetypes = { "typescript", "typescriptreact", "javascript", "javascriptreact" },
-  root_dir  = function(bufnr, on_dir)
-    local root = vim.fs.root(bufnr, { "deno.json", "deno.jsonc" })
-    if root then on_dir(root) end
-  end,
-})
+  call ale#linter#Define('eruby', {
+  \   'name':         'herb',
+  \   'lsp':          'stdio',
+  \   'executable':   'herb-language-server',
+  \   'command':      '%e --stdio',
+  \   'project_root': function('s:HerbRoot'),
+  \ })
 
-vim.lsp.config("rubocop", {
-  cmd          = { "rubocop", "--lsp" },
-  filetypes    = { "ruby" },
-  root_markers = { ".rubocop.yml", "Gemfile", ".git" },
-})
-
-vim.lsp.config("ruff", {
-  cmd          = { "ruff", "server" },
-  filetypes    = { "python" },
-  root_markers = { "pyproject.toml", "ruff.toml", ".ruff.toml", ".git" },
-})
-
-vim.lsp.enable({ "ts_ls", "denols", "rubocop", "ruff" })
-
-vim.lsp.config("herb", {
-  cmd          = { "herb-language-server" },
-  filetypes    = { "eruby", "html.erb" },
-  root_markers = { ".git", "Gemfile" },
-})
-if vim.fn.executable("herb-language-server") == 1 then
-  vim.lsp.enable("herb")
-end
+  for s:ft in ['typescript', 'typescriptreact', 'javascript', 'javascriptreact']
+    call ale#linter#Define(s:ft, {
+    \   'name':         'tslsp',
+    \   'lsp':          'stdio',
+    \   'language':     '',
+    \   'executable':   'typescript-language-server',
+    \   'command':      '%e --stdio',
+    \   'project_root': function('ale#handlers#tsserver#GetProjectRoot'),
+    \ })
+  endfor
+]])
 
 -- ==============================================================================
 -- Completion (nvim-cmp)
@@ -523,13 +566,23 @@ end
 local ok_cmp, cmp = pcall(require, "cmp")
 if not ok_cmp then return end
 
+-- Colors for the completion list and documentation windows.
+vim.api.nvim_set_hl(0, "CmpNormal", { bg = "#2d2d2d" })
+vim.api.nvim_set_hl(0, "CmpDocNormal", { bg = "#2d2d2d" })
+
 cmp.setup({
   sources = cmp.config.sources({
     { name = "nvim_lsp" },
   }),
   window = {
-    completion    = cmp.config.window.bordered(),
-    documentation = cmp.config.window.bordered(),
+    completion = {
+      border = "rounded",
+      winhighlight = "Normal:CmpNormal,FloatBorder:Normal,CursorLine:Visual,Search:None",
+    },
+    documentation = {
+      border = "rounded",
+      winhighlight = "Normal:CmpDocNormal,FloatBorder:Normal,CursorLine:Visual,Search:None",
+    }
   },
   mapping = cmp.mapping.preset.insert({
     ["<C-b>"]     = cmp.mapping.scroll_docs(-4),

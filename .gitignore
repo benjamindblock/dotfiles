@@ -18,6 +18,8 @@
 !.config/mise/**
 !.config/nvim/
 !.config/nvim/**
+!.config/rubocop/
+!.config/rubocop/**
 
 !.fdignore
 !.frotzrc
