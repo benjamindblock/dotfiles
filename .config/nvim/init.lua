@@ -18,6 +18,7 @@ plug("vim-voom/VOoM")
 
 -- Search
 plug("jremmen/vim-ripgrep")
+plug("ibhagwan/fzf-lua")
 
 -- Language / syntax
 plug("junegunn/rainbow_parentheses.vim")
@@ -196,37 +197,28 @@ local function OpenTestAlternate()
 end
 
 -- ==============================================================================
--- Fuzzy File Finder (fzy)
+-- Fuzzy File Finder (fzf-lua)
 -- ==============================================================================
 
-local function fzy_command(choice_cmd, fzy_args, vim_cmd)
-  -- fzy requires a real TTY for its interactive UI; vim.fn.system() provides
-  -- none. Instead we open a small terminal split, run fzy inside it (which
-  -- gives it a proper PTY), and capture the selection in a temp file that we
-  -- read back once the process exits.
-  local tmpfile = vim.fn.tempname()
-  local shell_cmd = string.format(
-    "bash -c %s",
-    vim.fn.shellescape(choice_cmd .. " | fzy " .. fzy_args .. " > " .. tmpfile)
-  )
-
-  vim.cmd("botright 10new")
-  local buf = vim.api.nvim_get_current_buf()
-
-  vim.fn.jobstart(shell_cmd, {
-    term = true,
-    on_exit = function()
-      vim.api.nvim_buf_delete(buf, { force = true })
-      vim.cmd("redraw!")
-      local lines = vim.fn.readfile(tmpfile)
-      os.remove(tmpfile)
-      if lines and #lines > 0 and lines[1] ~= "" then
-        vim.cmd(vim_cmd .. " " .. vim.fn.fnameescape(lines[1]))
-      end
-    end,
+local ok_fzf, fzf = pcall(require, "fzf-lua")
+if ok_fzf then
+  fzf.setup({
+    winopts = {
+      -- Bottom-anchored split matching the old fzy layout.
+      split = "botright 10new",
+      preview = {
+        -- Disable treesitter in previews so they use the same regex
+        -- syntax highlighting as the main buffer. Without this,
+        -- selecting a file flickers as treesitter preview colors are
+        -- replaced by regex syntax colors.
+        treesitter = { enabled = false },
+      },
+    },
+    files = {
+      -- Same flags the old fzy mapping used.
+      fd_opts = "--type f --hidden",
+    },
   })
-
-  vim.cmd("startinsert")
 end
 
 -- ==============================================================================
@@ -311,7 +303,7 @@ map("n", "<leader>.", OpenTestAlternate)
 
 -- Fuzzy file finder
 map("n", "<leader>t", function()
-  fzy_command("fd -t f -H", "", ":e")
+  require("fzf-lua").files()
 end)
 
 -- ==============================================================================
@@ -449,6 +441,20 @@ autocmd("FileType", {
   callback = function()
     vim.cmd("RainbowParentheses")
     vim.bo.equalprg = "lispindent.lisp"
+  end,
+})
+
+-- Disable treesitter highlighting so the regex syntax engine is the sole
+-- highlighter. This prevents the brief "flicker" where both systems
+-- load in sequence, and preserves torte's full color palette (which
+-- targets traditional syntax groups, not treesitter @captures).
+-- The treesitter parser itself remains active for other features
+-- (indentation, text objects, etc.) — only the highlighting is removed.
+autocmd("FileType", {
+  group   = vimrc_ex,
+  pattern = "*",
+  callback = function(args)
+    pcall(vim.treesitter.stop, args.buf)
   end,
 })
 
