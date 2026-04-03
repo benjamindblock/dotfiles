@@ -1,20 +1,82 @@
 #!/usr/bin/env bash
+set -euo pipefail
 
-# Change shell to bash.
-chsh -s /bin/bash
+# ==============================================================================
+# Homebrew
+# ==============================================================================
 
-# Install Homebrew
-/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-/opt/homebrew/bin/brew shellenv
+if ! command -v /opt/homebrew/bin/brew &>/dev/null; then
+    echo "==> Installing Homebrew..."
+    /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+fi
 
-# Install vim-plug by downloading and placing into ~/.vim
-curl -fLo $HOME/.vim/autoload/plug.vim --create-dirs \
-    https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+eval "$(/opt/homebrew/bin/brew shellenv)"
 
-# Run OSX customizations
-chmod +x $HOME/bin/osx
-$HOME/bin/osx
+# ==============================================================================
+# Brewfile
+# ==============================================================================
 
-# Install all brew formulae and casks
-cd $HOME/.config
-brew bundle
+echo "==> Installing Homebrew packages..."
+brew bundle --file="$HOME/.config/Brewfile" --no-upgrade
+
+# ==============================================================================
+# Fish Shell
+# ==============================================================================
+
+FISH_PATH="/opt/homebrew/bin/fish"
+
+if ! grep -qx "$FISH_PATH" /etc/shells; then
+    echo "==> Adding Fish to /etc/shells (requires sudo)..."
+    echo "$FISH_PATH" | sudo tee -a /etc/shells
+fi
+
+if [ "$SHELL" != "$FISH_PATH" ]; then
+    echo "==> Setting Fish as default shell..."
+    chsh -s "$FISH_PATH"
+fi
+
+# ==============================================================================
+# vim-plug
+# ==============================================================================
+
+# Install for Vim.
+VIMPLUG_VIM="$HOME/.vim/autoload/plug.vim"
+if [ ! -f "$VIMPLUG_VIM" ]; then
+    echo "==> Installing vim-plug for Vim..."
+    curl -fLo "$VIMPLUG_VIM" --create-dirs \
+        https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+fi
+
+# Install for Neovim (different autoload path).
+VIMPLUG_NVIM="$HOME/.local/share/nvim/site/autoload/plug.vim"
+if [ ! -f "$VIMPLUG_NVIM" ]; then
+    echo "==> Installing vim-plug for Neovim..."
+    curl -fLo "$VIMPLUG_NVIM" --create-dirs \
+        https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+fi
+
+# ==============================================================================
+# Neovim Plugins
+# ==============================================================================
+
+echo "==> Installing Neovim plugins..."
+nvim --headless +PlugInstall +qa || true
+
+# ==============================================================================
+# macOS Defaults
+# ==============================================================================
+
+echo "==> Applying macOS defaults..."
+"$HOME/bin/osx"
+
+# ==============================================================================
+# mise (Language Runtimes)
+# ==============================================================================
+
+if command -v mise &>/dev/null; then
+    echo "==> Installing language runtimes via mise..."
+    mise install --yes
+fi
+
+echo ""
+echo "Done. Quit and relaunch your terminal to start using Fish."

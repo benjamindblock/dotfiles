@@ -1,0 +1,21 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+eval "$(/opt/homebrew/bin/brew shellenv)"
+
+echo "==> Updating Homebrew and installing new packages..."
+brew update
+brew bundle --file="$HOME/.config/Brewfile" --no-upgrade
+brew cleanup --prune=all -s
+
+echo "==> Updating mise runtimes..."
+mise install --yes
+
+echo "==> Updating Neovim plugins..."
+nvim --headless +PlugUpdate +qa
+
+echo "==> Applying macOS defaults..."
+"$HOME/bin/osx"
+
+echo ""
+echo "Done. Restart your terminal to pick up any shell config changes."

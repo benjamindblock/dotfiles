@@ -11,3 +11,4 @@ tmp/**/*
 *.tags
 *.tags.tmp
 SESSION.md
+settings.local.json

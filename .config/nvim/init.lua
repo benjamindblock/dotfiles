@@ -14,7 +14,7 @@ plug("tpope/vim-vinegar")
 plug("junegunn/vader.vim")
 
 -- Outliner
-plug("vim-voom/VOoM")
+plug("benjamindblock/nvim-voom")
 
 -- Search
 plug("jremmen/vim-ripgrep")
@@ -30,9 +30,8 @@ plug("Tetralux/odin.vim")
 plug("dense-analysis/ale")
 plug("hrsh7th/nvim-cmp")
 plug("hrsh7th/cmp-nvim-lsp")
-
--- Colors
--- plug("wincent/base16-nvim")
+plug("hrsh7th/cmp-buffer")
+plug("hrsh7th/cmp-path")
 
 vim.call("plug#end")
 
@@ -50,9 +49,6 @@ vim.g.matchup_popup_options = { border = "rounded" }
 
 -- Netrw: open splits to the right
 vim.g.netrw_altv = 1
-
--- VOoM outline panel width
-vim.g.voom_tree_width = 38
 
 -- ==============================================================================
 -- Options
@@ -281,7 +277,7 @@ map("n", "gr",         "<Plug>(ale_find_references)",  { silent = true })
 map("n", "<leader>wtf", 'oputs "#" * 90<C-m>puts caller<C-m>puts "#" * 90<Esc>')
 
 -- VOoM note-taking
-map("n", ",n", ":VOoM<CR>", { silent = true })
+map("n", ",n", ":Voom<CR>", { silent = true })
 
 -- StarDict lookup in a scratch buffer.
 -- Opens the definition in a new split; ScratchBufferize makes it ephemeral.
@@ -305,17 +301,6 @@ map("n", "<leader>.", OpenTestAlternate)
 map("n", "<leader>t", function()
   require("fzf-lua").files()
 end)
-
--- ==============================================================================
--- VOoM Note-taking
--- ==============================================================================
-
-local function enable_voom()
-  vim.cmd("Voom markdown")
-  print("Note Mode")
-end
-
-vim.api.nvim_create_user_command("VOoM", enable_voom, {})
 
 -- ==============================================================================
 -- Autocommands
@@ -575,11 +560,13 @@ if not ok_cmp then return end
 -- Colors for the completion list and documentation windows.
 vim.api.nvim_set_hl(0, "CmpNormal", { bg = "#2d2d2d" })
 vim.api.nvim_set_hl(0, "CmpDocNormal", { bg = "#2d2d2d" })
+vim.api.nvim_set_hl(0, "NormalFloat", { bg = "#2d2d2d" })
 
 cmp.setup({
-  sources = cmp.config.sources({
-    { name = "nvim_lsp" },
-  }),
+  sources = cmp.config.sources(
+    { { name = "nvim_lsp" } },
+    { { name = "buffer" }, { name = "path" } }
+  ),
   window = {
     completion = {
       border = "rounded",
@@ -593,10 +580,20 @@ cmp.setup({
   mapping = cmp.mapping.preset.insert({
     ["<C-b>"]     = cmp.mapping.scroll_docs(-4),
     ["<C-f>"]     = cmp.mapping.scroll_docs(4),
+    ["<C-j>"]     = cmp.mapping.select_next_item(),
+    ["<C-k>"]     = cmp.mapping.select_prev_item(),
     ['<C-Space>'] = cmp.mapping.complete(),
+    -- Close the popup and stay in insert mode (replaces the old <C-c> behavior).
     ['<C-e>']     = cmp.mapping.abort(),
+    -- Close the popup and exit insert mode in a single keypress.
+    ['<C-c>']     = cmp.mapping(function()
+      cmp.abort()
+      vim.api.nvim_feedkeys(
+        vim.api.nvim_replace_termcodes('<Esc>', true, false, true), 'n', false
+      )
+    end),
     -- Accept currently selected item.
     -- Set `select` to `false` to only confirm explicitly selected items.
-    ['<CR>']      = cmp.mapping.confirm({ select = true, behavior = cmp.ConfirmBehavior.Insert }),
+    ['<CR>']      = cmp.mapping.confirm({ select = false, behavior = cmp.ConfirmBehavior.Insert }),
   }),
 })

@@ -91,6 +91,30 @@ hi DiffChange guifg=#ffffff guibg=#5f87af gui=NONE cterm=NONE
 hi DiffText guifg=#1b1b1b guibg=#c6c6c6 gui=NONE cterm=NONE
 hi DiffDelete guifg=#ffffff guibg=#af5faf gui=NONE cterm=NONE
 
+" Markdown heading levels — each level gets a distinct hue so headings are
+" visually scannable at a glance. Colors are drawn from existing torte hues
+" to keep the palette coherent. H1 is bold to signal top-level structure.
+hi markdownH1 guifg=#ffff60 guibg=NONE gui=bold cterm=bold
+hi markdownH2 guifg=#40ffff guibg=NONE gui=NONE cterm=NONE
+hi markdownH3 guifg=#60ff60 guibg=NONE gui=NONE cterm=NONE
+hi markdownH4 guifg=#ffa500 guibg=NONE gui=NONE cterm=NONE
+hi markdownH5 guifg=#ff80ff guibg=NONE gui=NONE cterm=NONE
+hi markdownH6 guifg=#80a0ff guibg=NONE gui=NONE cterm=NONE
+" Tree-sitter capture groups (Neovim 0.9+)
+hi! link @markup.heading.1.markdown markdownH1
+hi! link @markup.heading.2.markdown markdownH2
+hi! link @markup.heading.3.markdown markdownH3
+hi! link @markup.heading.4.markdown markdownH4
+hi! link @markup.heading.5.markdown markdownH5
+hi! link @markup.heading.6.markdown markdownH6
+" Generic (non-filetype-qualified) TS headings used by some parsers
+hi! link @markup.heading.1 markdownH1
+hi! link @markup.heading.2 markdownH2
+hi! link @markup.heading.3 markdownH3
+hi! link @markup.heading.4 markdownH4
+hi! link @markup.heading.5 markdownH5
+hi! link @markup.heading.6 markdownH6
+
 if s:t_Co >= 256
   hi! link Terminal Normal
   hi! link LineNrAbove LineNr
@@ -163,6 +187,12 @@ if s:t_Co >= 256
   hi DiffChange ctermfg=231 ctermbg=67 cterm=NONE
   hi DiffText ctermfg=16 ctermbg=251 cterm=NONE
   hi DiffDelete ctermfg=231 ctermbg=133 cterm=NONE
+  hi markdownH1 ctermfg=227 ctermbg=NONE cterm=bold
+  hi markdownH2 ctermfg=87  ctermbg=NONE cterm=NONE
+  hi markdownH3 ctermfg=83  ctermbg=NONE cterm=NONE
+  hi markdownH4 ctermfg=214 ctermbg=NONE cterm=NONE
+  hi markdownH5 ctermfg=213 ctermbg=NONE cterm=NONE
+  hi markdownH6 ctermfg=111 ctermbg=NONE cterm=NONE
   unlet s:t_Co
   finish
 endif
@@ -229,6 +259,12 @@ if s:t_Co >= 16
   hi DiffChange ctermfg=white ctermbg=blue cterm=NONE
   hi DiffText ctermfg=black ctermbg=grey cterm=NONE
   hi DiffDelete ctermfg=white ctermbg=magenta cterm=NONE
+  hi markdownH1 ctermfg=yellow      ctermbg=NONE cterm=bold
+  hi markdownH2 ctermfg=cyan        ctermbg=NONE cterm=NONE
+  hi markdownH3 ctermfg=green       ctermbg=NONE cterm=NONE
+  hi markdownH4 ctermfg=darkred     ctermbg=NONE cterm=NONE
+  hi markdownH5 ctermfg=magenta     ctermbg=NONE cterm=NONE
+  hi markdownH6 ctermfg=blue        ctermbg=NONE cterm=NONE
   unlet s:t_Co
   finish
 endif
@@ -292,6 +328,12 @@ if s:t_Co >= 8
   hi DiffChange ctermfg=white ctermbg=darkblue cterm=NONE
   hi DiffText ctermfg=black ctermbg=grey cterm=NONE
   hi DiffDelete ctermfg=white ctermbg=darkmagenta cterm=NONE
+  hi markdownH1 ctermfg=darkyellow   ctermbg=NONE cterm=bold
+  hi markdownH2 ctermfg=darkcyan     ctermbg=NONE cterm=NONE
+  hi markdownH3 ctermfg=darkgreen    ctermbg=NONE cterm=NONE
+  hi markdownH4 ctermfg=darkred      ctermbg=NONE cterm=NONE
+  hi markdownH5 ctermfg=darkmagenta  ctermbg=NONE cterm=NONE
+  hi markdownH6 ctermfg=darkblue     ctermbg=NONE cterm=NONE
   unlet s:t_Co
   finish
 endif

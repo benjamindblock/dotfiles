@@ -8,6 +8,12 @@
 !.claude/skills/
 !.claude/skills/**
 
+!.codex/
+!.codex/AGENTS.md
+!.codex/skills/
+!.codex/skills/**
+.codex/skills/.system
+
 !.config/
 !.config/Brewfile
 !.config/fish/
