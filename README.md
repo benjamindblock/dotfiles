@@ -13,7 +13,7 @@ Standard git repo in the `~` (`$HOME`) directory. No symlinks or managers.
 - **macOS**: Custom defaults (Dock, Finder, animations, screenshots)
 - **Git**: Aliases, pretty log, difftastic, global ignores
 - **AI**: Claude Code and Codex configurations
-- **CLI tools**: fzf, ripgrep, fd, eza, zoxide, direnv, and more (see `.config/Brewfile`)
+- **CLI tools**: fzf, ripgrep, fd, eza, zoxide, direnv, and more (see `.config/Brewfile` and `.config/mise/config.toml`)
 
 ## Bootstrap (Fresh Mac)
 
@@ -40,7 +40,7 @@ Standard git repo in the `~` (`$HOME`) directory. No symlinks or managers.
     - Installs vim-plug for Vim and Neovim
     - Installs Neovim plugins
     - Applies macOS defaults
-    - Installs language runtimes via mise
+    - Installs language runtimes and CLI tools via mise
 7. Quit and relaunch your terminal (you'll now be in Fish)
 8. Launch `Hammerspoon.app` — select "Keep in Dock", "Launch at Login"
 9. (Optional) To use a different git identity for work, create `$HOME/Work/.gitconfig`:

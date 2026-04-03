@@ -7,10 +7,27 @@ compile = false
 [tools]
 go = "latest"
 node = "lts"
-"npm:typescript-language-server" = "latest"
 python = "latest"
 ruby = "4.0.1"
-"npm:typescript" = "latest"
+
+# CLI tools (migrated from Brewfile)
+"aqua:aws/aws-cli" = "latest"
+"aqua:Wilfred/difftastic" = "latest"
+"aqua:direnv/direnv" = "latest"
+"aqua:sharkdp/fd" = "latest"
+"aqua:junegunn/fzf" = "latest"
+"aqua:cli/cli" = "latest"
+"aqua:tomnomnom/gron" = "latest"
+"aqua:BurntSushi/ripgrep" = "latest"
+"aqua:astral-sh/ruff" = "latest"
+"aqua:koalaman/shellcheck" = "latest"
+"aqua:typst/typst" = "latest"
+
+# npm tools
 "npm:@herb-tools/language-server" = "latest"
-"npm:eslint" = "latest"
 "npm:@openai/codex" = "latest"
+"npm:eslint" = "latest"
+"npm:prettier" = "latest"
+"npm:typescript" = "latest"
+"npm:typescript-language-server" = "latest"
+"npm:yarn" = "latest"
