@@ -1,21 +1,49 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
+# ==============================================================================
+# Output helpers
+# ==============================================================================
+
+step() { printf "\n\033[1m  ──▶  %s\033[0m\n" "$*"; }
+ok()   { printf "  \033[32m✓\033[0m  %s\n" "$*"; }
+err()  { printf "  \033[31m✗\033[0m  %s\n" "$*" >&2; exit 1; }
+
 eval "$(/opt/homebrew/bin/brew shellenv)"
 
-echo "==> Updating Homebrew and installing new packages..."
+# ==============================================================================
+# Homebrew
+# ==============================================================================
+
+step "Homebrew packages"
 brew update
 brew bundle --file="$HOME/.config/Brewfile" --no-upgrade
 brew cleanup --prune=all -s
+ok "Updated"
 
-echo "==> Updating mise runtimes..."
+# ==============================================================================
+# mise
+# ==============================================================================
+
+step "mise runtimes"
 mise install --yes
+ok "Updated"
 
-echo "==> Updating Neovim plugins..."
+# ==============================================================================
+# Neovim plugins
+# ==============================================================================
+
+step "Neovim plugins"
 nvim --headless +PlugUpdate +qa
+ok "Updated"
 
-echo "==> Applying macOS defaults..."
+# ==============================================================================
+# macOS Defaults
+# ==============================================================================
+
+step "macOS defaults"
 "$HOME/bin/osx"
+ok "Applied"
 
-echo ""
-echo "Done. Restart your terminal to pick up any shell config changes."
+printf "\n"
+ok "Update complete. Restart your terminal to pick up any shell config changes."
