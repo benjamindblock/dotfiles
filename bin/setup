@@ -89,8 +89,10 @@ ok "Applied"
 step "Language runtimes (mise)"
 if command -v mise &>/dev/null; then
     mise install --yes
+    ok "Installed"
+else
+    ok "Skipped (mise not found)"
 fi
-ok "Installed"
 
 # ==============================================================================
 # Work directory
@@ -100,13 +102,16 @@ step "Work directory"
 WORK_GITCONFIG="$HOME/Work/.gitconfig"
 WORK_TEMPLATE="$HOME/Work/.gitconfig.template"
 if [ ! -f "$WORK_GITCONFIG" ]; then
+    if [ ! -f "$WORK_TEMPLATE" ]; then
+        err "Work/.gitconfig.template not found — is the dotfiles repo fully checked out?"
+    fi
     cp "$WORK_TEMPLATE" "$WORK_GITCONFIG"
     printf "\n"
-    printf "    ┌──────────────────────────────────────────────────────┐\n"
-    printf "    │  ACTION REQUIRED: Edit ~/Work/.gitconfig and set    │\n"
-    printf "    │  your work name and email before cloning any work   │\n"
-    printf "    │  repositories.                                       │\n"
-    printf "    └──────────────────────────────────────────────────────┘\n"
+    printf "    ┌───────────────────────────────────────────────────────┐\n"
+    printf "    │  ACTION REQUIRED: Edit ~/Work/.gitconfig and set     │\n"
+    printf "    │  your work name and email before cloning any work    │\n"
+    printf "    │  repositories.                                        │\n"
+    printf "    └───────────────────────────────────────────────────────┘\n"
     printf "\n"
 fi
 ok "Ready"
