@@ -43,18 +43,10 @@ Standard git repo in the `~` (`$HOME`) directory. No symlinks or managers.
     - Installs language runtimes and CLI tools via mise
 7. Quit and relaunch your terminal (you'll now be in Fish)
 8. Launch `Hammerspoon.app` — select "Keep in Dock", "Launch at Login"
-9. (Optional) To use a different git identity for work, create `$HOME/Work/.gitconfig`:
-    ```
-    [user]
-      name = Example Name
-      email = example@work.com
-    ```
-    The default identity (set in `~/.gitconfig`) is:
-    ```
-    [user]
-      name = Ben Block
-      email = benjamindblock@gmail.com
-    ```
+9. Edit `~/Work/.gitconfig` with your work name and email — `bin/setup`
+   created this file from `~/Work/.gitconfig.template`. All repos cloned
+   under `~/Work/` will use this identity. Commits will be blocked until
+   the placeholder values are replaced.
 
 ## Updates
 
