@@ -1,0 +1,6 @@
+[user]
+	name = YOUR NAME
+	email = YOUR@WORK.EMAIL
+
+[core]
+	hooksPath = ~/Work/.githooks

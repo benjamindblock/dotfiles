@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+
+PERSONAL_EMAIL="benjamindblock@gmail.com"
+configured_email=$(git config user.email)
+
+if [ "$configured_email" = "$PERSONAL_EMAIL" ]; then
+  printf "\n  \033[31m✗\033[0m  Commit blocked: personal email detected in a work repo.\n\n"
+  printf "     Configured: %s\n\n" "$configured_email"
+  printf "     Edit ~/Work/.gitconfig and set your work identity:\n\n"
+  printf "       [user]\n"
+  printf "         name  = Your Name\n"
+  printf "         email = your@work.email\n\n"
+  exit 1
+fi

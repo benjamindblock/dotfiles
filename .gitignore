@@ -29,7 +29,7 @@
 
 !.fdignore
 !.frotzrc
-!.gitconfig
+!/.gitconfig
 !.githelpers
 !.gitignore
 !.gitignore_global
@@ -58,5 +58,10 @@
 
 !bin/
 !bin/**
+
+!Work/
+!Work/.gitconfig.template
+!Work/.githooks/
+!Work/.githooks/pre-commit
 
 .DS_Store
