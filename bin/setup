@@ -2,47 +2,58 @@
 set -euo pipefail
 
 # ==============================================================================
+# Output helpers
+# ==============================================================================
+
+step() { printf "\n\033[1m  ──▶  %s\033[0m\n" "$*"; }
+ok()   { printf "  \033[32m✓\033[0m  %s\n" "$*"; }
+err()  { printf "  \033[31m✗\033[0m  %s\n" "$*" >&2; exit 1; }
+
+# ==============================================================================
 # Homebrew
 # ==============================================================================
 
+step "Homebrew"
 if ! command -v /opt/homebrew/bin/brew &>/dev/null; then
-    echo "==> Installing Homebrew..."
+    echo "    Installing..."
     /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 fi
-
 eval "$(/opt/homebrew/bin/brew shellenv)"
+ok "Ready"
 
 # ==============================================================================
 # Brewfile
 # ==============================================================================
 
-echo "==> Installing Homebrew packages..."
+step "Homebrew packages"
 brew bundle --file="$HOME/.config/Brewfile" --no-upgrade
+ok "Installed"
 
 # ==============================================================================
 # Fish Shell
 # ==============================================================================
 
+step "Fish shell"
 FISH_PATH="/opt/homebrew/bin/fish"
 
 if ! grep -qx "$FISH_PATH" /etc/shells; then
-    echo "==> Adding Fish to /etc/shells (requires sudo)..."
+    echo "    Adding Fish to /etc/shells (requires sudo)..."
     echo "$FISH_PATH" | sudo tee -a /etc/shells
 fi
 
 if [ "$SHELL" != "$FISH_PATH" ]; then
-    echo "==> Setting Fish as default shell..."
+    echo "    Setting Fish as default shell..."
     chsh -s "$FISH_PATH"
 fi
+ok "Configured"
 
 # ==============================================================================
 # vim-plug
 # ==============================================================================
 
-# Install for Vim.
+step "vim-plug"
 VIMPLUG_VIM="$HOME/.vim/autoload/plug.vim"
 if [ ! -f "$VIMPLUG_VIM" ]; then
-    echo "==> Installing vim-plug for Vim..."
     curl -fLo "$VIMPLUG_VIM" --create-dirs \
         https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 fi
@@ -50,33 +61,55 @@ fi
 # Install for Neovim (different autoload path).
 VIMPLUG_NVIM="$HOME/.local/share/nvim/site/autoload/plug.vim"
 if [ ! -f "$VIMPLUG_NVIM" ]; then
-    echo "==> Installing vim-plug for Neovim..."
     curl -fLo "$VIMPLUG_NVIM" --create-dirs \
         https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 fi
+ok "Installed"
 
 # ==============================================================================
 # Neovim Plugins
 # ==============================================================================
 
-echo "==> Installing Neovim plugins..."
+step "Neovim plugins"
 nvim --headless +PlugInstall +qa || true
+ok "Installed"
 
 # ==============================================================================
 # macOS Defaults
 # ==============================================================================
 
-echo "==> Applying macOS defaults..."
+step "macOS defaults"
 "$HOME/bin/osx"
+ok "Applied"
 
 # ==============================================================================
 # mise (Language Runtimes)
 # ==============================================================================
 
+step "Language runtimes (mise)"
 if command -v mise &>/dev/null; then
-    echo "==> Installing language runtimes via mise..."
     mise install --yes
 fi
+ok "Installed"
 
-echo ""
-echo "Done. Quit and relaunch your terminal to start using Fish."
+# ==============================================================================
+# Work directory
+# ==============================================================================
+
+step "Work directory"
+WORK_GITCONFIG="$HOME/Work/.gitconfig"
+WORK_TEMPLATE="$HOME/Work/.gitconfig.template"
+if [ ! -f "$WORK_GITCONFIG" ]; then
+    cp "$WORK_TEMPLATE" "$WORK_GITCONFIG"
+    printf "\n"
+    printf "    ┌──────────────────────────────────────────────────────┐\n"
+    printf "    │  ACTION REQUIRED: Edit ~/Work/.gitconfig and set    │\n"
+    printf "    │  your work name and email before cloning any work   │\n"
+    printf "    │  repositories.                                       │\n"
+    printf "    └──────────────────────────────────────────────────────┘\n"
+    printf "\n"
+fi
+ok "Ready"
+
+printf "\n"
+ok "Setup complete. Quit and relaunch your terminal to start using Fish."
