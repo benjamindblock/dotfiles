@@ -8,11 +8,23 @@ fi
 # Disable menu bar transparency
 defaults write NSGlobalDomain AppleEnableMenuBarTransparency -bool false
 
+# Reduce transparency system-wide (affects menu bar, sidebars, Dock)
+defaults write com.apple.universalaccess reduceTransparency -bool true
+
+# Reduce motion (suppresses parallax and some transition animations)
+defaults write com.apple.universalaccess reduceMotion -bool true
+
+# Opt out of Liquid Glass rendering globally (Tahoe 26.x)
+defaults write -g com.apple.SwiftUI.DisableSolarium -bool true
+
 # Always show scrollbars
 defaults write NSGlobalDomain AppleShowScrollBars -string "Always"
 
 # Disable opening and closing window animations
 defaults write NSGlobalDomain NSAutomaticWindowAnimationsEnabled -bool false
+
+# Suppress Quick Look panel open/close animation
+defaults write -g QLPanelAnimationDuration -float 0
 
 # Disable Mission Control Animations
 defaults write com.apple.dock expose-animation-duration -int 0
@@ -20,8 +32,12 @@ defaults write com.apple.dock expose-animation-duration -int 0
 # Increase window resize speed for Cocoa applications
 defaults write NSGlobalDomain NSWindowResizeTime -float 0.001
 
-# Disable auto-correct
+# Disable auto-correct and all other automatic text mangling
 defaults write NSGlobalDomain NSAutomaticSpellingCorrectionEnabled -bool false
+defaults write NSGlobalDomain NSAutomaticCapitalizationEnabled -bool false
+defaults write NSGlobalDomain NSAutomaticDashSubstitutionEnabled -bool false
+defaults write NSGlobalDomain NSAutomaticQuoteSubstitutionEnabled -bool false
+defaults write NSGlobalDomain NSAutomaticPeriodSubstitutionEnabled -bool false
 
 # Require password immediately after sleep or screen saver begins
 defaults write com.apple.screensaver askForPassword -int 1
@@ -45,8 +61,9 @@ defaults write com.apple.finder ShowStatusBar -bool true
 # Display full POSIX path as Finder window title
 defaults write com.apple.finder _FXShowPosixPathInTitle -bool true
 
-# Avoid creating .DS_Store files on network volumes
+# Avoid creating .DS_Store files on network and USB/external volumes
 defaults write com.apple.desktopservices DSDontWriteNetworkStores -bool true
+defaults write com.apple.desktopservices DSDontWriteUSBStores -bool true
 
 # Disable the warning when changing a file extension
 defaults write com.apple.finder FXEnableExtensionChangeWarning -bool false
@@ -78,9 +95,6 @@ defaults write com.apple.Dock autohide-delay -float 0
 # Remove the animation when hiding/showing the Dock (actually, make it fast. If you want to remove, use 0)
 defaults write com.apple.dock autohide-time-modifier -float 0.25
 
-# Enable the 2D Dock
-defaults write com.apple.dock no-glass -bool true
-
 # Automatically hide and show the Dock
 defaults write com.apple.dock autohide -bool true
 
@@ -104,10 +118,11 @@ defaults write com.apple.dock autohide-delay -float 0
 # Showing and hiding Mission Control, command+numbers
 defaults write com.apple.dock expose-animation-duration -float 0
 
-# Showing and hiding Launchpad
-defaults write com.apple.dock springboard-show-duration -float 0
+# Disable Mail send/reply animations
+defaults write com.apple.mail DisableReplyAnimations -bool true
+defaults write com.apple.mail DisableSendAnimations -bool true
 
 # Kill affected applications
-for app in Finder Dock SystemUIServer; do killall "$app" > /dev/null 2>&1; done
+for app in Finder Dock SystemUIServer Mail; do killall "$app" > /dev/null 2>&1; done
 
 echo "OSX Hacks Done. Note that some of these changes require a logout/restart to take effect."
