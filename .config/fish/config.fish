@@ -84,12 +84,14 @@ zoxide init fish | source
 # ==============================================================================
 
 abbr -a vi nvim
+abbr -a vim nvim
 abbr -a tf tofu
-abbr -a vimrc 'vim ~/.vimrc'
-abbr -a bashrc 'vim ~/.bashrc'
-abbr -a ghostrc 'vim ~/.config/ghostty/config'
-abbr -a fishrc 'vim ~/.config/fish/config.fish'
-abbr -a todo 'vim ~/Documents/todo.txt'
+abbr -a vimrc 'nvim ~/.vimrc'
+abbr -a nvimrc 'nvim ~/.config/nvim/init.lua'
+abbr -a bashrc 'nvim ~/.bashrc'
+abbr -a ghostrc 'nvim ~/.config/ghostty/config'
+abbr -a fishrc 'nvim ~/.config/fish/config.fish'
+abbr -a todo 'nvim ~/Documents/todo.txt'
 abbr -a follow 'tail -f -n +1'
 abbr -a tls 'tmux ls'
 
