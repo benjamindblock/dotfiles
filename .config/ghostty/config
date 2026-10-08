@@ -1,6 +1,7 @@
 keybind = global:ctrl+grave_accent=toggle_quick_terminal
 
 font-family = "Misc Fixed 6x13"
+# font-family = "ProFontX"
 font-size = 12
 
 # font-family = "tewi"
