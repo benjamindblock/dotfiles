@@ -18,6 +18,7 @@ fish_add_path /opt/homebrew/bin
 fish_add_path /opt/homebrew/opt/postgresql@16/bin
 # Use brew curl over system curl.
 fish_add_path /opt/homebrew/opt/curl/bin
+fish_add_path /Applications/love.app/Contents/MacOS
 
 # ==============================================================================
 # Environment Variables
