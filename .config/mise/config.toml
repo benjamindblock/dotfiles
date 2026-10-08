@@ -25,7 +25,6 @@ ruby = "4.0.1"
 
 # npm tools
 "npm:@herb-tools/language-server" = "latest"
-"npm:@openai/codex" = "latest"
 "npm:eslint" = "latest"
 "npm:prettier" = "latest"
 "npm:typescript" = "latest"
