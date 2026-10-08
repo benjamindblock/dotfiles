@@ -26,6 +26,9 @@ plug("andymass/vim-matchup")
 plug("zaid/vim-rec")
 plug("Tetralux/odin.vim")
 
+-- Treesitter
+plug("nvim-treesitter/nvim-treesitter", { ["do"] = ":TSUpdate" })
+
 -- LSP + linting + completion
 plug("dense-analysis/ale")
 plug("hrsh7th/nvim-cmp")
@@ -106,6 +109,42 @@ vim.cmd([[colorscheme torte]])
 
 -- Less visible window separator
 vim.api.nvim_set_hl(0, "WinSeparator", { fg = "#131313" })
+
+-- ==============================================================================
+-- Treesitter
+-- ==============================================================================
+-- Provides parsers for indentation, text objects, and incremental selection.
+-- Highlighting is disabled separately (see the FileType * autocommand below)
+-- to preserve torte's regex-based syntax colors.
+
+local ok_ts, ts_configs = pcall(require, "nvim-treesitter.configs")
+if ok_ts then
+  ts_configs.setup({
+    ensure_installed = {
+      "bash",
+      "css",
+      "dockerfile",
+      "fish",
+      "go",
+      "html",
+      "javascript",
+      "json",
+      "lua",
+      "markdown",
+      "python",
+      "ruby",
+      "scss",
+      "sql",
+      "tsx",
+      "typescript",
+      "vim",
+      "vimdoc",
+      "yaml",
+    },
+    highlight = { enable = false },
+    indent    = { enable = true },
+  })
+end
 
 -- ==============================================================================
 -- Test Runner
