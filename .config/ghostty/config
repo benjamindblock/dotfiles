@@ -14,10 +14,10 @@ font-feature = -calt
 font-feature = -liga
 font-feature = -dlig
 
-cursor-color = #ffffff
+cursor-color = #00ff00
 cursor-text = #1b1b1b
 cursor-style = block
-cursor-style-blink = false
+cursor-style-blink = true
 shell-integration-features = no-cursor
 
 # torte palette
