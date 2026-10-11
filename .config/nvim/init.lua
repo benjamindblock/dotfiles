@@ -257,6 +257,91 @@ if ok_fzf then
 end
 
 -- ==============================================================================
+-- Zen Mode (distraction-free writing)
+-- ==============================================================================
+-- vim.o works like :set, so window options change in the current window.
+-- Toggle off from the same window to restore them there.
+
+local zen_opts = {
+  number         = false,
+  relativenumber = false,
+  -- "number" would fall back to a separate sign column once numbers are off.
+  signcolumn     = "no",
+  cursorline     = false,
+  fillchars      = "eob: ",
+  showtabline    = 0,
+  ruler          = false,
+  showmode       = false,
+  showcmd        = false,
+}
+
+local zen_saved = nil
+
+-- Sentence-pair manuscripts (book2): above a `---` line, non-blank lines
+-- alternate source sentence, own sentence. Headings sit outside the pairs
+-- and restart the alternation. Buffers without `---` are left alone.
+local zen_ns    = vim.api.nvim_create_namespace("zen")
+local zen_group = vim.api.nvim_create_augroup("zen", { clear = true })
+
+vim.api.nvim_set_hl(0, "ZenSourceSentence", { fg = "#606060" })
+vim.api.nvim_set_hl(0, "ZenOwnSentence",    { fg = "#ffffff" })
+
+local function highlight_sentences(buf)
+  vim.api.nvim_buf_clear_namespace(buf, zen_ns, 0, -1)
+  local lines = vim.api.nvim_buf_get_lines(buf, 0, -1, false)
+
+  local separator = nil
+  for i, line in ipairs(lines) do
+    if line:match("^%-%-%-%s*$") then
+      separator = i
+      break
+    end
+  end
+  if not separator then return end
+
+  local count = 0
+  for i = 1, separator - 1 do
+    local line = lines[i]
+    if line:match("^#") then
+      count = 0
+    elseif line:match("%S") then
+      count = count + 1
+      vim.api.nvim_buf_set_extmark(buf, zen_ns, i - 1, 0, {
+        end_col  = #line,
+        hl_group = count % 2 == 1 and "ZenSourceSentence" or "ZenOwnSentence",
+      })
+    end
+  end
+end
+
+local function toggle_zen()
+  if zen_saved then
+    for name, value in pairs(zen_saved) do
+      vim.o[name] = value
+    end
+    zen_saved = nil
+    vim.api.nvim_clear_autocmds({ group = zen_group })
+    for _, buf in ipairs(vim.api.nvim_list_bufs()) do
+      vim.api.nvim_buf_clear_namespace(buf, zen_ns, 0, -1)
+    end
+  else
+    zen_saved = {}
+    for name, value in pairs(zen_opts) do
+      zen_saved[name] = vim.o[name]
+      vim.o[name] = value
+    end
+    highlight_sentences(vim.api.nvim_get_current_buf())
+    vim.api.nvim_create_autocmd({ "TextChanged", "TextChangedI" }, {
+      group    = zen_group,
+      buffer   = 0,
+      callback = function(args) highlight_sentences(args.buf) end,
+    })
+  end
+end
+
+vim.api.nvim_create_user_command("Zen", toggle_zen, {})
+
+-- ==============================================================================
 -- Keymaps
 -- ==============================================================================
 
@@ -316,7 +401,7 @@ map("n", "gr",         "<Plug>(ale_find_references)",  { silent = true })
 map("n", "<leader>wtf", 'oputs "#" * 90<C-m>puts caller<C-m>puts "#" * 90<Esc>')
 
 -- VOoM note-taking
-map("n", ",n", ":Voom<CR>", { silent = true })
+map("n", ",n", ":VoomToggle<CR>", { silent = true })
 
 -- StarDict lookup in a scratch buffer.
 -- Opens the definition in a new split; ScratchBufferize makes it ephemeral.
@@ -340,6 +425,9 @@ map("n", "<leader>.", OpenTestAlternate)
 map("n", "<leader>t", function()
   require("fzf-lua").files()
 end)
+
+-- Zen mode (distraction-free writing)
+map("n", "<leader>z", toggle_zen)
 
 -- ==============================================================================
 -- Autocommands
