@@ -25,6 +25,8 @@
 !.config/mise/**
 !.config/nvim/
 !.config/nvim/**
+!.config/rex/
+!.config/rex/**
 !.config/rubocop/
 !.config/rubocop/**
 
