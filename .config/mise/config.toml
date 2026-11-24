@@ -30,3 +30,4 @@ ruby = "4.0.1"
 "npm:typescript" = "latest"
 "npm:typescript-language-server" = "latest"
 "npm:yarn" = "latest"
+"npm:cf" = { version = "latest", prerelease = true }
