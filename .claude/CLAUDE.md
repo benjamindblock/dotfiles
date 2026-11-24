@@ -7,12 +7,17 @@
 
 ### SESSION.md
 
-While working, if you come across any bugs, missing features, or other
-oddities about the implementation, structure, or workflow, **add a
-concise description of them to SESSION.md** to defer solving such
-incidental tasks until later. You do not need to fix them all straight
-away unless they block your progress; writing them down is often
-sufficient. **Do not write your accomplishments into this file.**
+SESSION.md is only for problems I should actually look at because you
+could not reach a satisfactory or logical compromise, solution, or
+decision on your own. **Add a concise description of each such problem
+to SESSION.md.** If you can make a reasonable call, make it and move on
+without logging it.
+
+- Quirks of third-party data, tools, or formats (exports, APIs, vendor
+  files) are not problems. Handle them, and record any durable handling
+  in the project's CLAUDE.md instead.
+- **Do not write your accomplishments into this file.**
+- Delete SESSION.md once it's empty.
 
 ## Git workflow
 
@@ -27,8 +32,8 @@ When writing commit messages, ensure that you explain any non-obvious
 trade-offs we've made in the design or implementation.
 
 Wrap any prose (but not code) in the commit message to match git commit
-conventions, including the title. Also, follow semantic commit
-conventions for the commit title.
+conventions, including the title. Write the title as a plain imperative
+sentence, with no `type:` prefix (`feat:`, `fix:`, `docs:` and so on).
 
 When you refer to types or very short code snippets, place them in
 backticks. When you have a full line of code or more than one line of
