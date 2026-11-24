@@ -67,7 +67,9 @@ local opt = vim.opt
 
 -- Visual
 opt.termguicolors = true
-opt.background    = "dark"
+-- 'background' is deliberately left unset. Neovim detects it from Ghostty's
+-- background color and updates it whenever macOS switches between light and
+-- dark mode; setting it here would switch that detection off.
 opt.cursorline    = true
 opt.number        = true
 opt.relativenumber = true
@@ -110,13 +112,12 @@ opt.path:append("**")
 -- Colorscheme
 -- ==============================================================================
 
--- Load after options so termguicolors is set first.
-vim.cmd([[colorscheme torte]])
--- Light alternative for daylight use (yorickpeterse/vim-paper).
--- vim.cmd([[colorscheme paper]])
-
--- Less visible window separator
-vim.api.nvim_set_hl(0, "WinSeparator", { fg = "#131313" })
+-- Load after options so termguicolors is set first. bdb_torte holds both the
+-- dark (torte) and light palettes and picks one from 'background', so it
+-- also owns the colors for the window separator, :Zen, and completion
+-- popups -- anything set here with nvim_set_hl would be wiped the first
+-- time the theme switches.
+vim.cmd([[colorscheme bdb_torte]])
 
 -- ==============================================================================
 -- Treesitter
@@ -291,8 +292,7 @@ local zen_saved = nil
 local zen_ns    = vim.api.nvim_create_namespace("zen")
 local zen_group = vim.api.nvim_create_augroup("zen", { clear = true })
 
-vim.api.nvim_set_hl(0, "ZenSourceSentence", { fg = "#606060" })
-vim.api.nvim_set_hl(0, "ZenOwnSentence",    { fg = "#ffffff" })
+-- ZenSourceSentence / ZenOwnSentence colors live in colors/bdb_torte.lua.
 
 local function highlight_sentences(buf)
   vim.api.nvim_buf_clear_namespace(buf, zen_ns, 0, -1)
@@ -742,10 +742,8 @@ vim.cmd([[
 local ok_cmp, cmp = pcall(require, "cmp")
 if not ok_cmp then return end
 
--- Colors for the completion list and documentation windows.
-vim.api.nvim_set_hl(0, "CmpNormal", { bg = "#2d2d2d" })
-vim.api.nvim_set_hl(0, "CmpDocNormal", { bg = "#2d2d2d" })
-vim.api.nvim_set_hl(0, "NormalFloat", { bg = "#2d2d2d" })
+-- Colors for the completion list and documentation windows (CmpNormal,
+-- CmpDocNormal, NormalFloat) live in colors/bdb_torte.lua.
 
 cmp.setup({
   sources = cmp.config.sources(

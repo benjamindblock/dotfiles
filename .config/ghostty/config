@@ -14,44 +14,15 @@ font-feature = -calt
 font-feature = -liga
 font-feature = -dlig
 
-cursor-color = #00ff00
-cursor-text = #1b1b1b
 cursor-style = block
 cursor-style-blink = true
 shell-integration-features = no-cursor
 
-# torte palette
-foreground = #ffffff
-background = #1b1b1b
-
-# Black
-palette = 0=#1b1b1b
-palette = 8=#7f7f7f
-
-# Red
-palette = 1=#fd9f9f
-palette = 9=#ffa500
-
-# Green
-palette = 2=#00cd00
-palette = 10=#4EBA65
-
-# Yellow
-palette = 3=#fdfd5f
-palette = 11=#ffff00
-
-# Blue
-palette = 4=#7FA0FF
-palette = 12=#8770ff
-
-# Magenta
-palette = 5=#cd00cd
-palette = 13=#ff00ff
-
-# Cyan
-palette = 6=#00cdcd
-palette = 14=#00ffff
-
-# White
-palette = 7=#e5e5e5
-palette = 15=#ffffff
+# Colors follow macOS appearance: Light mode loads themes/bdb_torte_light,
+# Dark mode loads themes/bdb_torte_dark (the torte palette). Ghostty swaps
+# every open window when the system flips, and Neovim follows along by
+# noticing the background change (see nvim/colors/bdb_torte.lua).
+#
+# Don't set colors (foreground, background, palette, cursor-color) directly
+# in this file: anything set here overrides *both* themes.
+theme = light:bdb_torte_light,dark:bdb_torte_dark

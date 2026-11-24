@@ -1,0 +1,48 @@
+# bdb_torte_dark: the torte palette Ghostty has always used at night.
+#
+# Selected automatically when macOS is in Dark mode (see `theme =` in
+# ../config). Its light sibling is bdb_torte_light. Neovim's matching
+# colorscheme is ~/.config/nvim/colors/bdb_torte.lua; keep the 16 palette
+# entries below in sync with its `dark.terminal` table.
+
+foreground = #ffffff
+background = #1b1b1b
+
+cursor-color = #00ff00
+cursor-text = #1b1b1b
+
+# The light theme raises this as a safety net. Set it back to the default
+# explicitly so switching to dark always undoes it.
+minimum-contrast = 1
+
+# Black
+palette = 0=#1b1b1b
+palette = 8=#7f7f7f
+
+# Red (bright red is orange on purpose)
+palette = 1=#fd9f9f
+palette = 9=#ffa500
+
+# Green
+palette = 2=#00cd00
+palette = 10=#4EBA65
+
+# Yellow
+palette = 3=#fdfd5f
+palette = 11=#ffff00
+
+# Blue
+palette = 4=#7FA0FF
+palette = 12=#8770ff
+
+# Magenta
+palette = 5=#cd00cd
+palette = 13=#ff00ff
+
+# Cyan
+palette = 6=#00cdcd
+palette = 14=#00ffff
+
+# White
+palette = 7=#e5e5e5
+palette = 15=#ffffff

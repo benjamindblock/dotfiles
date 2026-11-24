@@ -1,0 +1,70 @@
+# bdb_torte_light: daytime sibling of bdb_torte_dark.
+#
+# Selected automatically when macOS is in Light mode (see `theme =` in
+# ../config). Neovim's matching colorscheme is
+# ~/.config/nvim/colors/bdb_torte.lua; keep the 16 palette entries below in
+# sync with its `light.terminal` table.
+#
+# Each ANSI slot keeps its job from the dark palette (git hashes are still
+# "yellow", additions still "green") but is darkened until it reads solidly
+# on the grey background: every colored slot is at least ~4.5:1 against it,
+# most well above. Yellow becomes a dark ochre -- no yellow text on light.
+
+foreground = #000000
+background = #eeeeee
+
+# A darker green than the dark theme's #00ff00: pure lime nearly vanishes on
+# light grey.
+cursor-color = #00b000
+cursor-text = #000000
+
+# Black stays black. Programs that print "black" mean dark text, and
+# programs that paint a black background expect light text on it.
+palette = 0=#1b1b1b
+palette = 8=#5f5f5f
+
+# Red (bright red is orange, as in the dark palette)
+palette = 1=#b00000
+palette = 9=#a14000
+
+# Green
+palette = 2=#0b6b00
+palette = 10=#236b2f
+
+# Yellow -> dark ochre
+palette = 3=#6e5000
+palette = 11=#7d5b00
+
+# Blue
+palette = 4=#1a3ab8
+palette = 12=#4b30c8
+
+# Magenta
+palette = 5=#8a008a
+palette = 13=#a800a8
+
+# Cyan
+palette = 6=#005f66
+palette = 14=#00707a
+
+# White stays light. Tools written for dark terminals mostly use white as a
+# fill behind dark text (fzf's selected line, status bars); keeping it light
+# keeps those readable. White *text* on our light background is caught by
+# minimum-contrast below.
+palette = 7=#d0d0d0
+palette = 15=#ffffff
+
+# Safety net for colors we don't control: any program that prints text too
+# close to the background (white text, pastel 256-color man-page colors,
+# a tool's own "bright yellow") gets that text redrawn in black instead.
+# Our own colors are all above this threshold, so it never touches them.
+minimum-contrast = 3
+
+# Man pages. config.fish colors man output with 256-color slots 74 (bold
+# headings), 146 (underlined args) and 246 (standout/info), all pastels that
+# minimum-contrast would flatten to plain black. Darker versions of the same
+# hues keep headings and arguments distinguishable. Only those three slots
+# change, and only in the light theme.
+palette = 74=#1f5f8a
+palette = 146=#45458f
+palette = 246=#5f5f5f
